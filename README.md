@@ -1,3 +1,5 @@
+> A journey of a thousand miles begins with a single step
+
 # Umbraco RFCs
 
 Most changes, including bug fixes and documentation improvements can be implemented and reviewed via the normal GitHub pull request workflow.
