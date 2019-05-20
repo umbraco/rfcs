@@ -50,6 +50,9 @@ We use the following list of questions to highlight the priorities that we think
   - [Alternatives](#alternatives)
   - [Out of Scope](#out-of-scope)
   - [Unresolved Issues](#unresolved-issues)
+    - [Reasons for change](#reasons-for-change)
+    - [Action points](#action-points)
+    - [Proposed approach](#proposed-approach)
   - [Related RFCs (where are we in roadmap?)](#related-rfcs-where-are-we-in-roadmap)
   - [Contributors](#contributors)
 
@@ -159,23 +162,27 @@ Based on the key priorities and highlighted actions, our proposed approach conta
 
 ## Out of Scope
 
-List any items out of scope for this RFC. Use this to try to steer the discussion to be as specific as possible to the RFC details.
+These are areas that have been deliberately left unanswered, and will be considered using the comments and community feedback provided after this RFC has been closed.
+
+- What is the best-suited JS framework for the set of requirements?
+- What is the best-suited test framework for the set of requirements?
+- What is the best-suited CSS toolchain?
 
 ## Unresolved Issues
 
 These are the areas that we are hoping to receive input from the community on:
 
-Reasons for change
+### Reasons for change
 - Are there other key priorities that should be taken into account when considering the future of the back-office?
 - Have we covered the main key areas that will improve the front-end going forwards?
 - Are there any other questions or concerns that should be covered?
 
-Action points
+### Action points
 - Do the highlighted action points contribute to this improvement process?
 - Are there other action points that you believe is more important to focus on at this stage?
 - Are there action points that need to be clarified or expanded on?
 
-Proposed approach
+### Proposed approach
 - Does the proposed approach make sense within the context of the project scope?
 - Are there other approaches that should be explored before a final decision is made?
 
