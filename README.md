@@ -1,11 +1,24 @@
 > A journey of a thousand miles begins with a single step
 
+
 # Umbraco RFCs
 
-Most changes, including bug fixes and documentation improvements can be implemented and reviewed via the normal GitHub pull request workflow.
+A request for contribution is a proposal of a change/ new feature that will be reviewed and discussed by Umbraco HQ and community. 
+
+In using RFCs will:
+* enable individual contributors to help make decisions.
+* allow domain experts to have input in decisions.
+* manage the risk of decisions made.
+* have a snapshot of context for the future.
+* transparency of decision making by Umbraco HQ teams.
+
+
+Most changes, including bug fixes and documentation improvements can be implemented and reviewed via the normal GitHub pull request workflow. Questions or discussions on potential changes should be on Our until further defined to the RFC format.
 
 Some changes though are "substantial", and we ask that these be put through more of a design process to produce a consensus.
 The "RFC" (request for contributions) process is intended to provide a consistent and controlled way for Umbraco HQ and community to collaborate on important decisions on the codebase.
+
+As the name suggests, this is an invitation to contribute to the conversation with suggestions and ideas. Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md)
 
 ## This repository & the RFC process
 
