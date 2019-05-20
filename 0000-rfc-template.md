@@ -8,7 +8,7 @@ Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfc
 
 ## Intended Audience
 
-The intended audience for this RFC is technical users and developers.
+The intended audience for this RFC is: {list recommeneded audience groups}
 
 ## Summary
 
@@ -38,9 +38,9 @@ List any items out of scope for this RFC. Use this to try to steer the discussio
 
 ## Unresolved Issues
 
-The answers that we are hoping to get from the community HQ is:
+The answers that we are hoping to get from the community & Umbraco HQ is:
 
-## Related RFCs (where are we in roadmap?)
+## Related RFCs 
 
 List any other related RFCs. Provide links where you can.
 
