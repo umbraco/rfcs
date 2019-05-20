@@ -70,7 +70,15 @@ A criteria for this project is also an editor experience that results in less "f
 
 ### Performance
 
-For a comparison we've made a short screencap of a throttled slow 3G connection and load a page with either 10 TinyMCE-editors or 10 L'Éditeur-editeurs. Each of the editors contain the same content.
+For a comparison we've made a short screencap of a throttled slow 3G connection and load a page with a single editor and also an example with either 10 TinyMCE-editors or 10 L'Éditeur-editeurs. Each of the editors contain the same content.
+
+A page with a TinyMCE on one page:
+
+![One TinyMCE on one page](Assets/Gifs/SingleTinyMCE_Slow_3G_2.gif)
+
+A page with a L'Editeur on one page:
+
+![One L'Éditeur on one page](Assets/Gifs/SingleLEditeur_Slow_3G_2.gif)
 
 A page with 10 TinyMCE's on one page:
 
@@ -81,6 +89,8 @@ A page with 10 L'Editeurs on one page:
 ![Multiple L'Editeurs on one page](Assets/Gifs/MultipleLEditeurs_Slow3G_3_WithContent.gif)
 
 The difference between the loading times are really big. A page with 10 L'Editeurs only creates 5 requests (2 requests in total for all L'Editeur datatypes) and is directly rendered. A page with 10 TinyMCE's creates 33 requests (3 requests per datatype). The reason is that TinyMCE instantiates a new iframe for each editor and each editor makes three requests (a css-file, a stylesheet and another request (umbraco/backoffice/UmbracoApi/Stylesheet/GetRulesByName?name=). L'editeur only loads once; one stylesheet and one javascript file.
+
+Even with just one editor - a obviously more common scenario - the difference is huge.
 
 ## Drawbacks
 
