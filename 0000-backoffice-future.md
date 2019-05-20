@@ -6,7 +6,7 @@ Request for Contribution (RFC) 0000 : _Future of the Back-Office Front-End_
 
 Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md)
 
-## Intended Audience
+## Intended audience
 
 The intended audience for this RFC is technical users and developers.
 
@@ -29,33 +29,6 @@ Our motivation for changing the project and selecting a new approach for the fro
 ## Opportunities
 
 We use the following list of questions to highlight the priorities that we think are most important. For each priority there is some reflection on why the current state of the project is unsatisfactory, an approach to how this could be improved and (where possible) an action we could take to address this.
-
-### Quick navigation
-
-- [RFC: Future of the Back-Office Front-End](#rfc-future-of-the-back-office-front-end)
-  - [Code of conduct](#code-of-conduct)
-  - [Intended Audience](#intended-audience)
-  - [Summary](#summary)
-  - [Motivation](#motivation)
-  - [Opportunities](#opportunities)
-    - [Quick navigation](#quick-navigation)
-    - [1. How might we make the code more developer-friendly?](#1-how-might-we-make-the-code-more-developer-friendly)
-    - [2. How might we make the code easier to understand?](#2-how-might-we-make-the-code-easier-to-understand)
-    - [3. How might we make developers feel more confident committing code?](#3-how-might-we-make-developers-feel-more-confident-committing-code)
-    - [4. How might we make it easier for people to get started?](#4-how-might-we-make-it-easier-for-people-to-get-started)
-    - [5. How might we make it easier to contribute?](#5-how-might-we-make-it-easier-to-contribute)
-    - [6. How do we enable user experience improvements?](#6-how-do-we-enable-user-experience-improvements)
-  - [Proposed Approach](#proposed-approach)
-  - [Drawbacks](#drawbacks)
-  - [Alternatives](#alternatives)
-  - [Out of Scope](#out-of-scope)
-  - [Unresolved Issues](#unresolved-issues)
-    - [Reasons for change](#reasons-for-change)
-    - [Action points](#action-points)
-    - [Proposed approach](#proposed-approach)
-  - [Related RFCs (where are we in roadmap?)](#related-rfcs-where-are-we-in-roadmap)
-  - [Contributors](#contributors)
-
 
 ### 1. How might we make the code more developer-friendly?
 
