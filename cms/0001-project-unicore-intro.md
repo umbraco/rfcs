@@ -4,7 +4,7 @@ Request for Contribution (RFC) 1 : _Introduction & Strategy_
 
 ## Code of conduct
 
-Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/code-of-conduct.md)
+Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md)
 
 ## Intended Audience
 
