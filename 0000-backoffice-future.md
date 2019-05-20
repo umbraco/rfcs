@@ -1,4 +1,4 @@
-# RFC Name
+# RFC: Future of the Back-Office Front-End
 
 Request for Contribution (RFC) 0000 : _Future of the Back-Office Front-End_
 
