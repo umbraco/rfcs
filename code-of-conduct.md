@@ -1,4 +1,4 @@
-# Code of conduct
+# Umbraco RFC Code of conduct
 
 1. We respect the [”Our” code of conduct](https://our.umbraco.com/code-of-conduct)
 2. Participants extend respect and courtesy to their community peers at all times. Treat others as you would like to be treated. This also goes for treating the Umbraco HQ with respect.
