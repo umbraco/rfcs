@@ -38,7 +38,7 @@ List any items out of scope for this RFC. Use this to try to steer the discussio
 
 ## Unresolved Issues
 
-The answers that we are hoping to get from the community HQ is:
+The answers that we are hoping to get from the community & Umbraco HQ is:
 
 ## Related RFCs 
 
