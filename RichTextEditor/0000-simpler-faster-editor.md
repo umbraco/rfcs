@@ -6,7 +6,7 @@ Request for Contribution (RFC) 0000 : _Simpler and Faster Rich Text Editor_
 
 Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md)
 
-## Intended Audience
+## Intended Audience 
 
 The intended audience for Project L'Éditeur is two fold:
 * Content creators, editors and other people who use the rich text editor on a daily basis
@@ -22,13 +22,13 @@ We would like the new editor to automatically import photos that are dragged or 
 
 We don't want the editor to be a page builder, grid or in other ways an editor for advanced landing pages, but we want to enable that the editor can be used as a part of a page builder.
 
-We believe that the Trix-editor by Basecamp ticks most boxes and should be used as the foundation for L'Éditeur.
+We believe that the [Trix-editor by Basecamp](https://trix-editor.org/) ticks most boxes and should be used as the foundation for L'Éditeur.
 
 ## Motivation
 
-Umbraco's mission is about _helping you deliver delightful digital experiences by making Umbraco friendly, simpler and social_. While we beleive that Umbraco has one best editor experiences for a generic cms, we do believe that for core content editing we can do better.
+Umbraco's mission is about _helping you deliver delightful digital experiences by making Umbraco friendly, simpler and social_. While we believe that Umbraco has one best editor experiences for a generic cms, we do believe that for core content editing we can do better.
 
-We've been impressed with the content creation experiences of Medium and we've been researching and comparing how to create different types of content in different ways in Umbraco. From the Rich Text Editor, to the Grid to using 3rd party packages.
+We've been impressed with the content creation experiences of [Medium](https://yabwe.github.io/medium-editor/demo.html) and we've been researching and comparing how to create different types of content in different ways in Umbraco. From the Rich Text Editor, to the Grid to using 3rd party packages.
 
 We believe that the current solutions provided in Umbraco are either too basic or too advanced and there's room for a modern and focused Rich Text Editor that is faster and less bloated than the current TinyMCE based one and where the focus for the features should be centered around improving the workflow and speed of content creators.
 
@@ -46,13 +46,16 @@ We'll base Project L'Éditeur on the Trix editor by Basecamp. It serves our purp
 ✅ Easy to extend
 ✅ Support for bringing custom formats
 ✅ Support for multiple instances on the same document (including Nested Content / Grid)
+✅ Trix Editor is an open-source project (MIT licensed), [actively developed](https://github.com/basecamp/trix/graphs/code-frequency), issues are being resolved and in use for Basecamp.
 
 We have the current prioritization for features:
-1. Basic formatting (bold, italic, lists)
+1. Basic formatting (bold, italic, unordered and ordered lists)
 1. Pick internal and external links
 1. Custom formatting based on own styles
-1. Copy/paste or dragging images should create them as media items and relate to the page
+1. Copy/paste or dragging images should create them as media items and relate to the page (smart copy/paste)
 1. Style the editor to match Umbraco UX styles
+1. Documentation about the configuration and extensibility of the editor 
+1. Research the accessibility of the editor itself, and the output of the editor
 
 2. Custom (and configurable) image formatting (Medium.com editor style)
 2. Support for embedding videos and tweets (and turn it into correct markup)
@@ -61,13 +64,17 @@ We have the current prioritization for features:
 3. Support for inserting Umbraco Macros
 3. Table editor
 
-We have a working prototype of Trix editor working as an RTE inside of Umbraco and it's significantly faster. We'll update this RFCs with performance comparisons.
+We have a working prototype of Trix editor working as an RTE inside of Umbraco and it's significantly faster. We'll update this RFC with performance comparisons.
 
 A criteria for this project is also an editor experience that results in less "flicker" in the back office as editors and content loads, so the interface will appear more calm.
 
 ## Drawbacks
 
 While L'Éditeur will bring many benefits to the editors, there's also features that will be missing such as editing tables. We believe that this can be solved later and that in the interim the TinyMCE based RTE will still exist.
+
+A small drawback is that the Trix editor is built with Coffeescript. If we need to edit core concepts of the Trix editor, that might be a risk.
+
+
 
 ## Alternatives
 
@@ -79,9 +86,10 @@ We've been researching and testing a number of open and closed sourced RTEs, inc
 * https://www.froala.com
 * https://www.slatejs.org
 * https://yabwe.github.io/medium-editor/demo.html
-* Textbox.io
-* Summernote.org
+* https://textbox.io/
+* https://summernote.org/
 * https://gist.github.com/abauzac/bf4969a521cce232c812f1c24ef549ec
+* https://wordpress.org/gutenberg/
 
 ## Out of Scope
 
