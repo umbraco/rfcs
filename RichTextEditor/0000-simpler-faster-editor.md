@@ -68,6 +68,20 @@ We have a working prototype of Trix editor working as an RTE inside of Umbraco a
 
 A criteria for this project is also an editor experience that results in less "flicker" in the back office as editors and content loads, so the interface will appear more calm.
 
+### Performance
+
+For a comparison we've made a short screencap of a throttled slow 3G connection and load a page with either 10 TinyMCE-editors or 10 L'Éditeur-editeurs. Each of the editors contain the same content.
+
+A page with 10 TinyMCE's on one page:
+
+![Multiple RTE's on one page](Assets/Gifs/MultipleRTE_Slow3G_3_WithContent.gif)
+
+A page with 10 L'Editeurs on one page:
+
+![Multiple L'Editeurs on one page](Assets/Gifs/MultipleLEditeurs_Slow3G_3_WithContent.gif)
+
+The difference between the loading times are really big. A page with 10 L'Editeurs only creates 5 requests (2 requests in total for all L'Editeur datatypes) and is directly rendered. A page with 10 TinyMCE's creates 33 requests (3 requests per datatype). The reason is that TinyMCE instantiates a new iframe for each editor and each editor makes three requests (a css-file, a stylesheet and another request (umbraco/backoffice/UmbracoApi/Stylesheet/GetRulesByName?name=). L'editeur only loads once; one stylesheet and one javascript file.
+
 ## Drawbacks
 
 While L'Éditeur will bring many benefits to the editors, there's also features that will be missing such as editing tables. We believe that this can be solved later and that in the interim the TinyMCE based RTE will still exist.
