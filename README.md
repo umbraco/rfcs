@@ -19,3 +19,13 @@ This repository is intended to be used for reviewing submitted RFCs. The process
 * Submit a pull request. As a pull request the RFC will receive design feedback from the larger community, and the author should be prepared to revise it in response.
 * An RFC may be rejected by the team after public discussion has settled and comments have been made summarizing the rationale for rejection. A member of the team should then close the RFCs associated pull request.
 * An RFC may be accepted at the close of its final comment period. A team member will merge the RFCs associated pull request, at which point the RFC will become 'active'.
+
+### The RFC life-cycle
+
+When an RFC is accepted then the process of implementing it may begin in the code repository. Being accepted does not imply anything about the priority of having it implemented and doesn't necessarily indicate that it's in active development.
+
+Modifications to active RFCs can be done in followup PRs. 
+
+## Credits
+
+Umbraco's RFC process is inspired by the [React RFC process](https://github.com/reactjs/rfcs), [Rust RFC process](https://github.com/rust-lang/rfcs), and [IETF RFC](https://www.ietf.org/standards/rfcs/) documents
