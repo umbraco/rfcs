@@ -37,16 +37,16 @@ The outcome of this project will be a new editor that's fast, supports elements 
 ## Detailed Design
 
 We'll base Project L'Éditeur on the Trix editor by Basecamp. It serves our purpose and ticks almost all our boxes for a modern rich text editor for Umbraco:
-✅ Fast and Javascript based with no usage of iFrames
-✅ Outputs clean and accessible markup
-✅ Basic RTE features such as bold, italic
-✅ Great concept of "Attachments" for items to be included in RTE but not be editable (such as embeds, macros and photos)
-✅ Great support for copy/paste including detecting dragged/copied images
-✅ Configurable and easy to style
-✅ Easy to extend
-✅ Support for bringing custom formats
-✅ Support for multiple instances on the same document (including Nested Content / Grid)
-✅ Trix Editor is an open-source project (MIT licensed), [actively developed](https://github.com/basecamp/trix/graphs/code-frequency), issues are being resolved and in use for Basecamp.
+* ✅ Fast and Javascript based with no usage of iFrames
+* ✅ Outputs clean and accessible markup
+* ✅ Basic RTE features such as bold, italic
+* ✅ Great concept of "Attachments" for items to be included in RTE but not be editable (such as embeds, macros and photos)
+* ✅ Great support for copy/paste including detecting dragged/copied images
+* ✅ Configurable and easy to style
+* ✅ Easy to extend
+* ✅ Support for bringing custom formats
+* ✅ Support for multiple instances on the same document (including Nested Content / Grid)
+* ✅ Trix Editor is an open-source project (MIT licensed), [actively developed](https://github.com/basecamp/trix/graphs/code-frequency), issues are being resolved and in use for Basecamp.
 
 We have the current prioritization for features:
 1. Basic formatting (bold, italic, unordered and ordered lists)
