@@ -12,21 +12,37 @@ The intended audience for this RFC is technical users and developers.
 
 ## Summary
 
+Give an intoduction summary to your RFC.
+
 ## Motivation
+
+Why are we doing this? What is the expected outcome?
+
+Please explain the motivation & advantages to this RFC.
 
 ## Detailed Design
 
+This is the main part of the RFC. How do you see this being implemented in Umbraco?
+
 ## Drawbacks
+
+Discuss any disadvantages or sideeffects of this RFC.
 
 ## Alternatives
 
+Are there any alternatives in approach that could be taken? 
+
 ## Out of Scope
+
+List any items out of scope for this RFC. Use this to try to steer the discussion to be as specific as possible to the RFC details.
 
 ## Unresolved Issues
 
 The answers that we are hoping to get from the community HQ is:
 
 ## Related RFCs (where are we in roadmap?)
+
+List any other related RFCs. Provide links where you can.
 
 ## Contributors
 
