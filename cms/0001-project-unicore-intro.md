@@ -53,7 +53,9 @@ the end of this document.
 
 ### Critical Path diagram
 
-//TODO: Insert Image
+---
+![Project Unicore Diagram](assets/diagram.png)
+---
 
 *   The diagonal (top left to bottom right) is the “Critical Path” that will be taken to get to a .Net Core build. 
 *   ![#a998ba](https://placehold.it/15/a998ba/000000?text=+) Purple: Main components of the “Critical Path”
