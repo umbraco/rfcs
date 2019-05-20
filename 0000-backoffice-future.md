@@ -32,17 +32,26 @@ We use the following list of questions to highlight the priorities that we think
 
 ### Quick navigation
 
-[How might we make the code more developer-friendly?](#1-how-might-we-make-the-code-more-developer-friendly)
-
-[How might we make the code easier to understand?](#2-how-might-we-make-the-code-easier-to-understand)
-
-[How might we make developers feel more confident committing code?](#3-how-might-we-make-developers-feel-more-confident-committing-code)
-
-[How might we make it easier for people to get started?](#4-how-might-we-make-it-easier-for-people-to-get-started)
-
-[How might we make it easier to contribute?](#5-how-might-we-make-it-easier-to-contribute)
-
-[How do we enable user experience improvements?](#6-how-do-we-enable-user-experience-improvements)
+- [RFC: Future of the Back-Office Front-End](#rfc-future-of-the-back-office-front-end)
+  - [Code of conduct](#code-of-conduct)
+  - [Intended Audience](#intended-audience)
+  - [Summary](#summary)
+  - [Motivation](#motivation)
+  - [Opportunities](#opportunities)
+    - [Quick navigation](#quick-navigation)
+    - [1. How might we make the code more developer-friendly?](#1-how-might-we-make-the-code-more-developer-friendly)
+    - [2. How might we make the code easier to understand?](#2-how-might-we-make-the-code-easier-to-understand)
+    - [3. How might we make developers feel more confident committing code?](#3-how-might-we-make-developers-feel-more-confident-committing-code)
+    - [4. How might we make it easier for people to get started?](#4-how-might-we-make-it-easier-for-people-to-get-started)
+    - [5. How might we make it easier to contribute?](#5-how-might-we-make-it-easier-to-contribute)
+    - [6. How do we enable user experience improvements?](#6-how-do-we-enable-user-experience-improvements)
+  - [Proposed Approach](#proposed-approach)
+  - [Drawbacks](#drawbacks)
+  - [Alternatives](#alternatives)
+  - [Out of Scope](#out-of-scope)
+  - [Unresolved Issues](#unresolved-issues)
+  - [Related RFCs (where are we in roadmap?)](#related-rfcs-where-are-we-in-roadmap)
+  - [Contributors](#contributors)
 
 
 ### 1. How might we make the code more developer-friendly?
@@ -62,8 +71,6 @@ __Proposed approach:__ Making consistent implementations would reduce the amount
 __Proposed actions:__ 
 - Introduce a library of available components that could be used to demonstrate building blocks that developers can use.
 - Introduce strong typing to the JavaScript to surface available types/properties through IDE/intellisense.
-
----
 
 __2.2 Current barrier:__ Currently, the legacy back-office code is built on outdated software patterns which means that a developer swapping from more current JavaScript frameworks to working in the back-office is forced to make a fairly substantial context switch. This requires valuable effort and increases the overhead for developers to jump in and out of back-office code. 
 
@@ -90,8 +97,6 @@ __Proposed approach:__ Pooling these resources into a single source of truth wou
 __Proposed actions:__ 
 - Create a dedicated Front-End space on “our” to collect code examples and tutorials in a single location
 - Provide a repository of best practise templates for custom property editors, sections, packages, tests etc
-
----
 
 __4.2 Current barrier:__ If you want to contribute to the current back-office then it is necessary to have the entire core project running on your environment. Getting the project set-up is well documented but can experience issues and require troubleshooting.
 
