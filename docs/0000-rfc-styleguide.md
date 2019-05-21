@@ -65,7 +65,6 @@ Categories of words we like to avoid are
 
 ### Layout rules
 
-We need to make sure, for consistency that we have simple layout rules.   
 As a documentation visitor, if the documentation has consistent: tone of voice, punctuation, and simple layout paradigms, it improves the ease at which the information can be consumed and understood.
 
 #### Code examples
@@ -82,7 +81,7 @@ With the tooling like [Vale](https://errata-ai.github.io/vale/) we are able to e
 
 The Github repo could have (currently in development) a health check on every commit to be sure that commit adheres to the rules.
 
-Next to the tooling, the documentation curator team is able to follow the guides.  They currently have no written notes on what should be accepted or rejected from the PR's.
+In addition to automated tooling, the documentation curator team will use the style guide when reviewing documentation additions.
 
 #### Suggested Vale rules
 
@@ -97,9 +96,10 @@ We have set up some suggested rules based on best practises and limiting the imp
 
 ## Drawbacks
 
-* It might be intimidating if they try to contribute if they get errors after submitting a PR.
+* It might be intimidating if contributors try to submit documentation and receive errors after submitting a PR.
+* It might be demotivating if the errors appear to be 'trivial' to the contributor - particularly if the contributor is providing information that is completely missing from the documentation. We don't want the reputation that you have to jump through hoops to contribute - and so how the guide is applied is therefore important.
 * It might be off-putting for people where English is not their native language.
-* The rules might be so strict it has issues with parts (code examples, ...) of the documentation.
+* The rules might be too strict - and automated issues are flagged with parts of the contribution that are technical terms eg. errors with code examples...
 * It might be limiting if there are too many rules to adhere too.
 
 ## Alternatives
