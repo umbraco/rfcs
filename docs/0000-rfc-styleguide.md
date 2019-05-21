@@ -1,6 +1,6 @@
-# RFC Name
+# RFC Style guide for documentation
 
-Request for Contribution (RFC) 0000 : _Style guide_
+Request for Contribution (RFC) 0000 : _Style guide for documentation_
 
 ## Code of conduct
 
