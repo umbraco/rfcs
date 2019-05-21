@@ -15,7 +15,7 @@ The intended audience for this RFC is:
 
 ## Summary
 
-What kind of language and punctation rules should be set on the documentation.
+What kind of voice, language and punctuation rules should 'guide contribution' to the Umbraco documentation
 
 ## Motivation
 
