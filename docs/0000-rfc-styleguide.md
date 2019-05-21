@@ -27,22 +27,54 @@ It will help curators evaluate contributions consistently.
 
 ### Usage of language
 
-The audience for Umbraco documentation includes many where English is not their native language. Therefore documentation should be simple, easy to understand and use short words, use everyday English and keep sentence length down.
+The used language should be in plain English, should avoid 
 
-While there has never been an official guide on the language being used. What words to we try to avoid. What kind of tone do we keep when writing (e.g. friendly, ...).
+### Plain English
 
-We try to avoid words like simply, just and obviously. We should explain why we would like to avoid these words and create a list of words we try to avoid and a list of words that we must avoid.
+The audience for Umbraco documentation includes many where English is not their native language. Therefore documentation should be  written with an international audience in mind. The used language should be simple, easy to understand. 
 
-There are different types of documentation, reference, tutorial, etc - leading by 'code examples' is an international approach.
+If in doubt, the document [How to write plain English](http://www.plainenglish.co.uk/files/howto.pdf) from plainenglish.co.uk, gives a good idea on what we expect. 
+
+In summary: 
+
+* Use short words
+* use everyday English
+* keep sentence length down
+* prefer active verbs
+* Use lists where appropriate
+
+#### Tone of voice
+
+Language should be friendly and direct. But not intimidating.
+You can address the reader if you are telling a story, but should avoid this in most parts of the documentation.
+
+Where possible documentation should be gender neutral.
 
 Not all humor translates, not all cultures have the same sense of humor or will understand sarcasm in the same way, therefore documentation should we written neutrally.  
 
+There are different types of documentation, reference, tutorial, etc - leading by 'code examples' is an international approach.
+
 Unless writing a tutorial, we should try to avoid... "you then have to do this, then set this, and then you just do this" try to avoid addressing the reader as 'you' - focus the writing on the words which describe the steps or details of the documentation. Tutorials are different, here the language needs to take the reader on a journey through the tutorial.
+
+#### Words to avoid
+
+Categories of words we like to avoid are 
+
+* negative words (like swearing) or words which are know to have a very negative context
+* words can make the user feel stupid, therefor try avoiding the following words: simply, just and obviously. 
 
 ### Layout rules
 
 We need to make sure, for consistency that we have simple layout rules.   
 As a documentation visitor, if the documentation has consistent: tone of voice, punctuation, and simple layout paradigms, it improves the ease at which the information can be consumed and understood.
+
+#### Code examples
+
+Make sure the examples are marked appropriately in order to have correct syntax highlighting.
+
+* Examples should not contain foreign languages for variables.
+* Try to adhere to the [.editorconfig](https://github.com/umbraco/Umbraco-CMS/blob/v8/dev/.editorconfig) style rules from the Umbraco-CMS repository.
+* Code examples should not contain any commercial references like company names orther than Umbraco
 
 ### Method of enforcement 
 
@@ -52,7 +84,7 @@ The Github repo could have (currently in development) a health check on every co
 
 Next to the tooling, the documentation curator team is able to follow the guides.  They currently have no written notes on what should be accepted or rejected from the PR's.
 
-### Suggested rules
+#### Suggested Vale rules
 
 We have set up some suggested rules based on best practises and limiting the impact they will have for contributors:
 
