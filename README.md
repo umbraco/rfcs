@@ -18,7 +18,7 @@ The "RFC" (request for contributions) process is intended to provide a consisten
 
 As the name suggests, this is an invitation to contribute to the conversation with suggestions and ideas. Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md)
 
-[Active RFCs](https://github.com/umbraco/rfcs/pulls)
+### [See Active RFCs](https://github.com/umbraco/rfcs/pulls)
 
 ## The Umbraco RFC process
 
