@@ -11,9 +11,8 @@ Using an RFC process will:
 * have a snapshot of context for the future.
 * facilitate the transparency of decision making by Umbraco HQ teams.
 
-Most changes, including small features, bug fixes and documentation improvements can be implemented and reviewed via the normal GitHub pull request workflow. Questions or discussions on potential changes should be on Our until further defined to the RFC format.
+Most changes, including small features, bug fixes and documentation improvements can be implemented and reviewed via the normal GitHub pull request workflow. __Questions or discussions on more substantial changes should first be done on https://our.umbraco.com until further defined to the RFC format if one is deemed necessary.__
 
-Some changes though are "substantial", and we ask that these be put through more of a design process to produce a consensus.
 The "RFC" (request for contributions) process is intended to provide a consistent and controlled way for Umbraco HQ and community to collaborate on important decisions on the codebase.
 
 As the name suggests, this is an invitation to contribute to the conversation with suggestions and ideas. Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md)
@@ -37,10 +36,6 @@ An RFC may be closed (not accepted) after public discussion has settled and comm
 When an RFC is accepted, then the process of implementing it may begin in the code repository. Being accepted does not imply anything about the priority of having it implemented and doesn't necessarily indicate that it's in active development.
 
 Modifications to 'active' RFCs can be done in followup Pull Requests.
-
-### Creating an RFC
-
-Before submitting an RFC, please ensure the HQ is aware that you are submitting an RFC. This process generally means that an idea has been discussed on a public forum such as https://our.umbraco.com and Umbraco HQ has been in touch with you.
 
 #### Instructions
 
