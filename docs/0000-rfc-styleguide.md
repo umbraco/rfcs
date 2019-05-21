@@ -1,6 +1,6 @@
-# RFC Name
+# RFC Style guide for documentation
 
-Request for Contribution (RFC) 0000 : _Style guide_
+Request for Contribution (RFC) 0000 : _Style guide for documentation_
 
 ## Code of conduct
 
@@ -27,11 +27,7 @@ What kind of voice, language and punctuation rules should 'guide contribution' t
 
 ### Usage of language
 
-The used language should be in plain English, should avoid 
-
-### Plain English
-
-The audience for Umbraco documentation includes many where English is not their native language. Therefore documentation should be written with an international audience in mind. The used language should be simple and easy to understand. 
+The audience for Umbraco documentation includes many where English is not their native language. Therefore documentation should be  written with an international audience in mind. The used language should be simple, easy to understand. 
 
 If in doubt, the document [How to write plain English](http://www.plainenglish.co.uk/files/howto.pdf) from plainenglish.co.uk, gives a good idea on what we expect. 
 
