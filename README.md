@@ -3,7 +3,7 @@
 
 # Umbraco RFCs
 
-A request for contribution is a detailed proposal for a significant change or new feature that will be reviewed and discussed by Umbraco HQ and community. 
+A request for contribution (RFC) is a detailed proposal for a significant change or new feature that will be reviewed and discussed by Umbraco HQ and community. 
 
 In using RFCs will:
 * enable individual contributors to help make decisions.
