@@ -30,7 +30,9 @@ An RFC will be submitted in the form of a [Pull Request](https://github.com/umbr
 
 ### The RFC life-cycle
 
-When an RFC is posted as a PR it is then open for contribution. At some point, a member of HQ will tag the RFC as having a final comment period which will generally be one or two weeks. An RFC may be accepted at the close of its final comment period. A team member will merge the RFCs associated pull request, at which point the RFC will become 'active'. An RFC may be rejected by the team after public discussion has settled and comments have been made summarizing the rationale for rejection. A member of the team should then close the RFCs associated pull request. In some cases once an RFC is closed, comments may be locked and if a follow up RFC is proposed, another PR will be submitted.
+When an RFC is posted as a PR it is then open for contribution. At some point, a member of HQ will tag the RFC as having a final comment period which will generally be one or two weeks. An RFC may be accepted at the end of its final comment period and a team member will merge the RFCs associated pull request which will mean the RFC is 'active'. 
+
+An RFC may be closed (not accepted) after public discussion has settled and comments have been made summarizing the rationale for being rejected. An RFCs associated PR is closed if this occurs. Other reasons an RFC may not be accepted is if it doesn't contain the appropriate information or if the RFC was submitted without previous discussion or HQ knowledge about it's intentions. In some cases once an RFC is closed, comments may be locked and if a follow up RFC is proposed, another PR will be submitted. 
 
 When an RFC is accepted, then the process of implementing it may begin in the code repository. Being accepted does not imply anything about the priority of having it implemented and doesn't necessarily indicate that it's in active development.
 
