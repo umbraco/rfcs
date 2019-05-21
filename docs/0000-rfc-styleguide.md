@@ -19,9 +19,9 @@ What kind of voice, language and punctuation rules should 'guide contribution' t
 
 ## Motivation
 
-Provide a consistent writing style and tone of voice to improve readability and ultimately comprehension of information.
-Make first-time contributors feel more confident on the approach to creating documentation.
-Help curators evaluate contributions consistently.
+* Provide a consistent writing style and tone of voice to improve readability and ultimately comprehension of information.
+* Make first-time contributors feel more confident on the approach to creating documentation.
+* Help curators evaluate contributions consistently.
 
 ## Detailed Design
 
