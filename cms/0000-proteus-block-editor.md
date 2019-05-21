@@ -12,13 +12,14 @@ The intended audience for this RFC is: technical users, developers & creators of
 
 ## Summary
 
-We would like to find a global, structured and standard solution for storing structured data in complex Umbraco editors. That includes how the Grid-editor / DocType Grid Editor (DTGE) / LeBlender Editor, Nested / Stacked / Inner Content editors etc, must manipulate and store data.
+We would like to define a standard for storing structured data as a foundation for complex Umbraco editors, such as Grid-editor / DocType Grid Editor (DTGE) / LeBlender Editor, Nested / Stacked / Inner Content editors, etc.
 
 This project has the codename [Proteus](https://en.wikipedia.org/wiki/Proteus), named after the Greek god whom was "capable to assume many forms"; and that is exactly what we want to achieve with this RFC.
 
 **The short term goals are:**
-- Standardizes the way we store Umbraco elements.
-- Having a core framework for element manipulation to eventually implement packages like: Grid, Nested Content or other Element oriented packages (out-of-scope for this RFC).
+- Standardise the way we utilise Umbraco elements
+- Provide a standard for separating content from presentation data within complex editors
+- Having a core framework for element manipulation to eventually implement packages like: Grid, Nested Content or other `PublishedElement` oriented packages (out-of-scope for this RFC)
 - Make sure that all the content is structured, easy to manipulate, predictable and indexed properly.
 
 **The long term goals are:**
@@ -27,12 +28,13 @@ This project has the codename [Proteus](https://en.wikipedia.org/wiki/Proteus), 
 
 ## Motivation
 
-At this moment there a several complex editors that store this complex data in it’s own way. This makes it less reusable. Furthermore, design or implementation specific configuration is often mixed with the data, which restricts the flexibility and reusability of some editors (e.g. Grid)
+Currently there are many complex editors, both in Core and as community packages, that store complex data structurees in their own way. This makes the data more difficult to consume and re-use. Furthermore, design or implementation specific configuration is often mixed with the data, which restricts the flexibility and reusability of some editors (e.g. Grid).
 
-Grid, DTGE, Leblender, Nested / Stacked / Inner Content have no consistent way of storing structured data, which makes it challenging or impossible for data manipulation, including: 
+The varying implementations result in equally varying developer experiences when utilising these editors. Having a common foundation for data storage means we can share common functionality across many parts of the CMS, and secure a more uniform developer experience.
+
+The lack of consistency makes it challenging or impossible for data manipulation, including: 
 - Indexing the information
 - No way to reuse the data
-- No consistency between the data model of these packages
 
 ## Detailed Design
 
@@ -45,9 +47,9 @@ Each block would be comprised of...
 
 **Content:** Element-type based content item (`IPublishedElement`)
   - Element Types are Document Types without any routable settings (e.g. templates, URL)
-  - In the short term (phase 1), the element data will be stored as JSON. In the long term (phase 2) this JSON could be replaced by and UDI which could be a link to an IPublishedElement.
+  - In the short term the element data will be stored as JSON. In the long term this JSON could be replaced by and UDI which could be a link to an IPublishedElement.
 
-**Example of a list of blocks:**
+### Example of a list of blocks:
 
 ```
 [
@@ -64,23 +66,24 @@ Each block would be comprised of...
 ]
 ```
 
-By storing this data in a standardized way it would make it possible in the future to create several data types that share the same concept of storing data. In that way you could swap a property from “Nested Content” to “Grid” and vice versa. 
+By storing this data in a standardised way it would be possible to create several data types that share the same concept of storing data. As an added benefit, it becomes easy to swap a property from "Nested Content" to "Grid" (for example) and vice versa, as the underlying data is still the same.
 
-This will also make it possible to come up with your own data type, but use the same concept of storage.
+The foundation should supply a means of customising the editor experience on a per-implementation basis. This could be in the form of inline previews, an inline editing experience, interactive map, or anything you can imagine!
 
-In phase 2 the "content" element will simply be a reference to an `UDI`, which is a `PublishedElement` => `"content": "umb://document-type/..."` This unlocks the possibility for variant blocks, segmentation and scheduled publishing blocks in the future. It also means multiple blocks could share the same underlying content item, and therefore make reusability of content far simpler across the CMS.
+In the future blocks could store a reference to a published document (`IPublishedElement`) as a `UDI`, rather than embedded JSON objects. This unlocks the possibility for variant blocks, segmentation and scheduled publishing blocks by leveraging similar behaviour already in the Core CMS. It also means multiple blocks could share the same underlying content item, and therefore make reusability of content far simpler across the CMS.
 
 ## Drawbacks
 
 Compatibility between existing complex editors (Grid, Nested / Stacked / Inner Content, DTGE, etc) and the proposed model will unfortunately not be possible.
 
-Due to this, block based implementations of existing complex editors might need to be maintained alongside the existing editors for a while. This could cause confusion for users about which editors to be using.
+Due to this, block based implementations of existing complex editors might need to be maintained alongside the existing editors for a while. This could cause confusion for developers about which editors to be using.
 
 An upgrade or migration path between specific editors could be defined at a later stage.
 
 ## Out of Scope
 
 - Creating new implementations of existing complex editors as block-based editors - separate RFCs will be proposed to determine the exact approaches per editor
+- Creating a mechanism to create and maintain PublishedElements as distinct documents in the database
 - Extending behaviour of `IPublishedElement`, including permissions and scheduled publishing
 
 ## Unresolved Issues
@@ -93,13 +96,6 @@ The answers that we are hoping to get from the community & Umbraco HQ is:
   - How do we handle required fields?
   - How do we handle custom field validation (e.g. via RegEx)?
 
-Additionally, with the proposed change of storing PublishedElements as documents in phase 2...
-- When do we create / edit / delete element documents?
- - Should a document be created the first time a PublishedElement is added into a content item?
- - Should a element document be deleted when the last reference to it is deleted from a content item?
-- What is the flow for an editor picking an existing element to reuse it elsewhere?
-- How do we handle rollbacks & versioning when a reference to to a UDI is stored in a content item? What if that UDI no longer exists?
-
 ## Contributors
 
 This RFC was compiled by:
@@ -108,5 +104,5 @@ This RFC was compiled by:
 - [Nathan Woulfe](https://twitter.com/nathanwoulfe) (community)
 - [Kenn Jacobsen](https://twitter.com/KennJacobsen_DK) (community)
 - [Jeffrey Schoemaker](https://twitter.com/jschoemaker1984) (community)
-- [Antoine Giraud](https://twitter.com/nathanwoulfe) (aaantoinee)
+- [Antoine Giraud](https://twitter.com/aaantoinee) (community)
 - [Niels Hartvig](https://twitter.com/thechiefunicorn) (HQ)
