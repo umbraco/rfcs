@@ -19,7 +19,7 @@ What kind of voice, language and punctuation rules should 'guide contribution' t
 
 ## Motivation
 
-To make sure that there is a consistent writing style and to improve readability we want to include some rules.  
+To provide a consistent writing style and tone of voice to improve readability and ultimately comprehension of information.
 It will make first time contributors feel more confident on the approach to make documentation.
 
 ## Detailed Design
@@ -35,7 +35,7 @@ We try to avoid words like simply, just, ...  We should explain why we would lik
 ### Layout rules
 
 We need to make sure, for consistency that we have simple layout rules.   
-As a documentation visitor, having the same punctuation and layout improves documentation. 
+As a documentation visitor, if the documentation has consistent: tone of voice, punctuation, and simple layout paradigms, it improves the ease at which the information can be consumed and understood.
 
 ### Method of enforcement 
 
