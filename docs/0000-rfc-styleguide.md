@@ -45,6 +45,17 @@ The github repo could have (currently in development) a health check on every co
 
 Next to the tooling, the documentation curator team is able to follow the guides.  They currently have no written notes on what should be accepted or rejected from the PR's.
 
+### Suggested rules
+
+We have set up some suggested rules based on best practises and limiting the impact they will have for contributors:
+
+- **HeadingsPunctuation**: Warns you when using punctuation at the end of a heading
+- **Hyperbolic**: Warns you when using words such as _simple, just, easily and actually_
+- **ListStart**: Warns you when starting a list option with lower case
+- **SentenceLength**: Warns you when writing sentences with more than 40 words in them
+- **Spacing**: Warns you when having more than 1 space in succession in an article
+- **Terms**: Warns you when using a blacklisted term and suggests a replacement - could be from _back-office_ to _backoffice_
+
 ## Drawbacks
 
 * It might be intimidating if they try to contribute if they get errors after submitting a PR.
