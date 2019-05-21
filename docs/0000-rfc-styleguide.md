@@ -10,7 +10,7 @@ Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfc
 
 The intended audience for this RFC is: 
 
-* documentation contributors
+* Documentation contributors
 * HQ developers
 
 ## Summary
@@ -38,9 +38,9 @@ If in doubt, the document [How to write plain English](http://www.plainenglish.c
 In summary: 
 
 * Use short words
-* use everyday English
-* keep sentence length down
-* prefer active verbs
+* Use everyday English
+* Keep sentence length down
+* Prefer active verbs
 * Use lists where appropriate
 
 #### Tone of voice
@@ -60,8 +60,8 @@ Unless writing a tutorial, we should try to avoid... "you then have to do this, 
 
 Categories of words we like to avoid are 
 
-* negative words (like swearing) or words which are know to have a very negative context
-* words can make the user feel stupid, therefor try avoiding the following words: simply, just and obviously. 
+* Negative words (like swearing) or words which are know to have a very negative context
+* Words can make the user feel stupid, therefor try avoiding the following words: simply, just and obviously. 
 
 ### Layout rules
 
@@ -108,7 +108,7 @@ There are currently no alternatives.  We should know if we need a style guide.
 
 ## Out of Scope
 
-* discussing tooling, this is an RFC about the content of a style guide.
+* Discussing tooling, this is an RFC about the content of a style guide.
 
 ## Unresolved Issues
 
@@ -121,7 +121,7 @@ The answers that we are hoping to get from the community & Umbraco HQ is:
 
 ## Related RFCs 
 
-* there are no related RFCs
+* There are no related RFCs
 
 ## Contributors
 
