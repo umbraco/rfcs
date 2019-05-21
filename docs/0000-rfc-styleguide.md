@@ -19,9 +19,9 @@ What kind of voice, language and punctuation rules should 'guide contribution' t
 
 ## Motivation
 
-To provide a consistent writing style and tone of voice to improve readability and ultimately comprehension of information.
-It will make first-time contributors feel more confident on the approach to make documentation.
-It will help curators evaluate contributions consistently.
+Provide a consistent writing style and tone of voice to improve readability and ultimately comprehension of information.
+Make first-time contributors feel more confident on the approach to creating documentation.
+Help curators evaluate contributions consistently.
 
 ## Detailed Design
 
@@ -31,41 +31,51 @@ The used language should be in plain English, should avoid
 
 ### Plain English
 
-The audience for Umbraco documentation includes many where English is not their native language. Therefore documentation should be  written with an international audience in mind. The used language should be simple, easy to understand. 
+The audience for Umbraco documentation includes many where English is not their native language. Therefore documentation should be written with an international audience in mind. The used language should be simple and easy to understand. 
 
 If in doubt, the document [How to write plain English](http://www.plainenglish.co.uk/files/howto.pdf) from plainenglish.co.uk, gives a good idea on what we expect. 
 
 In summary: 
 
-* Use short words
+* use short words
 * use everyday English
 * keep sentence length down
 * prefer active verbs
-* Use lists where appropriate
+* use lists where appropriate
+* annotate screenshots for accessibility
 
 #### Tone of voice
 
 Language should be friendly and direct. But not intimidating.
-You can address the reader if you are telling a story, but should avoid this in most parts of the documentation.
+You can address the reader if you are telling a story, eg as part of a Tutorial - but should avoid this in most parts of the documentation.
 
 Where possible documentation should be gender neutral.
 
-Not all humor translates, not all cultures have the same sense of humor or will understand sarcasm in the same way, therefore documentation should we written neutrally.  
+Not all humor/humour translates, not all cultures have the same sense of humor or will understand sarcasm in the same way, therefore documentation should be written neutrally.  
 
 There are different types of documentation, reference, tutorial, etc - leading by 'code examples' is an international approach.
 
-Unless writing a tutorial, we should try to avoid... "you then have to do this, then set this, and then you just do this" try to avoid addressing the reader as 'you' - focus the writing on the words which describe the steps or details of the documentation. Tutorials are different, here the language needs to take the reader on a journey through the tutorial.
+Unless writing a tutorial, we should try to avoid... "you then have to do this, then set this, and then you just do this" try to avoid addressing the reader as 'you' - focus the writing on the words which describe the steps or details of the documentation.
+Tutorials are slightly different, here the language needs to take the reader on a journey through the tutorial.
 
 #### Words to avoid
 
 Categories of words we like to avoid are 
 
-* negative words (like swearing) or words which are know to have a very negative context
-* words can make the user feel stupid, therefor try avoiding the following words: simply, just and obviously. 
+* negative words (like swearing) or words which are known to have a negative context
+* words can make the user feel stupid, therefore try avoiding the following connecting words: simply, just, of course and obviously. 
 
 ### Layout rules
 
-As a documentation visitor, if the documentation has consistent: tone of voice, punctuation, and simple layout paradigms, it improves the ease at which the information can be consumed and understood.
+Making pages follow a consistent simple layout will mean regular visitors to the documentation will learn the conventions, and improve the experience of interacting with the documentation.
+Consider 'different journeys' to access documentation - introduction, deep dive or quick reference lookup.
+Embedding of screenshots - consistent annotation approach.
+Informative Tips, Warnings styled and delivered consistently
+
+### Navigation
+
+Clear language in navigation structure, leading visitors through the documentation.
+Landing pages for sections and topics
 
 #### Code examples
 
@@ -73,7 +83,7 @@ Make sure the examples are marked appropriately in order to have correct syntax 
 
 * Examples should not contain foreign languages for variables.
 * Try to adhere to the [.editorconfig](https://github.com/umbraco/Umbraco-CMS/blob/v8/dev/.editorconfig) style rules from the Umbraco-CMS repository.
-* Code examples should not contain any commercial references like company names orther than Umbraco
+* Code examples should not contain any commercial references like company names other than Umbraco
 
 ### Method of enforcement 
 
@@ -104,7 +114,7 @@ We have set up some suggested rules based on best practises and limiting the imp
 
 ## Alternatives
 
-There are currently no alternatives.  We should know if we need a style guide.
+There are currently no alternatives... other than continuing without a style guide and manually reviewing submissions for perceived quality.
 
 ## Out of Scope
 
@@ -118,6 +128,7 @@ The answers that we are hoping to get from the community & Umbraco HQ is:
 * What sort of rules should be enforced?
 * What rules should not be enforced?
 * If multi-lingual documentation is introduced how could style guides be managed per language?
+* Would having a style guide make a difference to whether you would be more or less likely to contribute to the community documentation.
 
 ## Related RFCs 
 
