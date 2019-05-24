@@ -46,7 +46,7 @@ The main goals are:
 
 ## Detailed Design
 
-The block editor is a specific implementation of the Proteus blocks (refer to RFC 1).
+The block editor is a specific implementation of the Proteus blocks (refer to RFC 11).
 
 As mentioned before, this editor is about managing list of block to build entire pages. In this example you see the backoffice on the left side, and the visual representation on the right side:
 
@@ -113,8 +113,8 @@ Use Nested content and DTGE (not yet compatible with V8)) with the grid to build
 
 ## Related RFCs 
 
-RFC 1: Proteus
-- [RFC 1: Proteus](https://github.com/umbraco/rfcs/blob/731e1872323a2e3a8c4cd8c91524c795f3c5efa3/cms/0000-proteus-block-editor.md)
+RFC 11: Proteus
+- [RFC 11: Proteus](https://github.com/umbraco/rfcs/blob/731e1872323a2e3a8c4cd8c91524c795f3c5efa3/cms/0000-proteus-block-editor.md)
 
 ## Contributors
 
