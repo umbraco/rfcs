@@ -28,7 +28,7 @@ This project has the codename [Proteus](https://en.wikipedia.org/wiki/Proteus), 
 
 ## Motivation
 
-Currently there are many complex editors, both in Core and as community packages, that store complex data structurees in their own way. This makes the data more difficult to consume and re-use. Furthermore, design or implementation specific configuration is often mixed with the data, which restricts the flexibility and reusability of some editors (e.g. Grid).
+Currently there are many complex editors, both in Core and as community packages, that store complex data structures in their own way. This makes the data more difficult to consume and re-use. Furthermore, design or implementation specific configuration is often mixed with the data, which restricts the flexibility and reusability of some editors (e.g. Grid).
 
 The varying implementations result in equally varying developer experiences when utilising these editors. Having a common foundation for data storage means we can share common functionality across many parts of the CMS, and secure a more uniform developer experience.
 
