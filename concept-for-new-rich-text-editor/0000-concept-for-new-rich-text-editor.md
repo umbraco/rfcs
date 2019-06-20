@@ -53,7 +53,7 @@ We have the current prioritization for features:
 
 1. Ability to insert links to files from the media library.
 
-1. The stored data should contain nesecary information to transer (Media-element needs to have UDI of the media-item stored).
+1. The stored data should contain relational information to ensure data can be transfered between enviroments (Media-element needs to have UDI of the media-item stored).
 
 1. The data should be posible to output as presentable HTML, without begin aware that the data might was parsed to be able to present everything.
 
