@@ -53,7 +53,7 @@ We have the current prioritization for features:
 
 1. Ability to insert links to files from the media library.
 
-1. The stored data should contain nesecary information to transer (Media-element needs to have UDI of the media-item stored).
+1. The stored data should contain relational information to ensure data can be transfered between enviroments (Media-element needs to have UDI of the media-item stored).
 
 1. The copied data from the RTE should contain nesecary information to avoid uploading the same image again (if proven that it existis in the pasted enviroements).
 
