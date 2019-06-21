@@ -1,6 +1,6 @@
 # RFC Name
 
-Request for Contribution (RFC) 0000 : Proteus Block Editor
+Request for Contribution (RFC) 0000 : Block-based data structure interoperability (Project Proteus)
 
 ## Code of conduct
 
