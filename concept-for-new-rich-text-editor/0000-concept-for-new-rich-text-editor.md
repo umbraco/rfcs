@@ -29,7 +29,16 @@ The outcome of this project should be a new property-editor that's fast, support
 
 We believe that we should accommondate a better the editorial experience when working with rich text in Umbraco.
 
+We want to make a simpler writting experience for Content Creators, the actions available in the UI should be minimized to a bare minimum of entry-actions, that can unfold several sub-actions. This should make the first impression simple, and provide a intuative selection of features that enable the editor to think less about the features presented.
+
+Developers should be able to make configurations on a data-type instance level. Meaning that we should be able to have both an extensive configuration and a simple configuration in the same BackOffice.
+
+Configuration should be simple, and configuring costum styles or embed options should be made posible in a simple way with the ability to go advanced if needed.
+
+
 ## Detailed Design
+
+### Feature set
 
 Our requirements for a Rich Text Editor implementation.
 
@@ -41,7 +50,7 @@ We have the current prioritization for features:
 
 3. Apply internal and external links.
 
-4. Ability to create custom text formatting (supporting block and inline formatting).
+4. Ability to create custom text formatting (supporting block and inline formatting, allowing formats to be combined by begin addiative to other formats).
 
 5. Usage of a stylesheet to style text appearence.
 
@@ -83,7 +92,31 @@ We have the current prioritization for features:
 
 24. Documentation on how to write extentions.
 
-25. Support for tables (if the choosen editor support it)
+25. Support for tables (if the choosen editor supports it)
+
+
+### Use cases
+
+We have defined a few use-cases that should be used when comparing different choices/implementations.
+
+##### Technical article
+Writting a techincal article would require the format options to underline the needs of presenting data in proper ways. Displaying diagrams with descriptions adjacent to it and present textual information in list formats is some of the key features for this use-case. Its also nesecary to make quotes with a clear visual representation of the source. The need for costum format options would be needed to display equations, recipies or code. Format options that can be additive to other format options can be nesecary, example the ability to superscript parts of a word keeping the format of the sentence (example a headline with a superscript character).
+
+##### Blog post
+Light content thats easy to read is offen done by gathering other medias than text. The ability to spicy up your content with Images, Video and Social Media Posts is a must. And it should be posible within a shift move, without having to work with code.
+
+##### Reworking the content
+Seeing your content in the right context offen gives new perspectives to the structure of your message. Editors would have to change and move the content around to adjust it to the layout of the website. This means that everything should have the ability to be moved and copied/pasted. A paragraph should be able to be split up and have a headline inserted or made from a line of the paragraph.
+
+
+### Measurable improvements
+
+To clarify what an improved implementation means for us, we have identified a list of things to be improved:
+
+* Time it takes to get to the fully initialized state.
+* Minimize both visual and interactional interuptions while initiliazing the editor.
+* Simplify the configuration of custom format options, without compromissing the options to define wether a format should be a block or inline, addative or solo.
+* Simplifyied experience when importing a new image.
 
 
 ## Drawbacks
@@ -106,7 +139,9 @@ On idea level everything regarding this idea is in scope.
 The answers that we are hoping to get from the community & Umbraco HQ is:
 
 * Which Rich Text Editor should we use?
-* Should the editor store its data as HTML or JSON?
+* Are there other use-cases we should accommodate?
+* Any other improvements we should be meassuring?
+* Should the editor store its data as HTML, JSON or another format?
 * Which extension points should be available?
 * How do we ensure good data, what can we do to avoid malformed HTML?
 * Any important features we have missed?
@@ -114,7 +149,7 @@ The answers that we are hoping to get from the community & Umbraco HQ is:
 * How should the Rich Text Editor be named?
 * How should images dragged into the RTE be handled?
 
-## Related RFCs 
+## Related RFCs
 
 * project L'Éditeur (https://github.com/umbraco/rfcs/pull/5)
 
