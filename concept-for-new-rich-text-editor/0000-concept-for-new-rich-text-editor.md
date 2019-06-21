@@ -15,21 +15,19 @@ The intended audience for this RFC is:
 
 ## Summary
 
-We would like to replace the current TinyMCE based editor with something simpler and faster, that focus on basic content creation.
+We would like to provide a Rich Text Editor experience that would enable content creators to work faster and simpler than our current implementation of TinyMCE 4.
 
-We would like for the new editor to be able to support a faster workflow for content creators while knowing that they likely create their drafts outside the CMS and then copy their text into the editor.
+The new implementation must be easy for developers to setup and configure on a data-type instance basis.
 
-We would like the new editor to automatically import photos that are dragged or copied into the editor as Media items without the editor needing to do anything.
+We would like the new editor to automatically import photos that are dragged or copied into the editor as Media items.
 
-We don't want the editor to be a page builder, grid or in other ways an editor for advanced landing pages, but we want to enable that the editor can be used as a part of a page builder.
+We want to focus on basic content creation, the editor should not be a page builder, grid or in other ways an editor for advanced landing pages, but we want to enable that the editor can be used as a part of a page builder.
+
+The outcome of this project should be a new property-editor that's fast, supports elements that are considered basic part of modern content such as Photos, Headers, Quotes, Formatting, Embeds of both Video and Social Media Posts. For content more advanced than that, we believe this project can be used as a part of block based editors rather than trying to solve that on its own.
 
 ## Motivation
 
-Umbraco's mission is about _helping you deliver delightful digital experiences by making Umbraco friendly, simpler and social_.
-
-We believe that the current solutions provided in Umbraco are either too basic or too advanced and there's room for a modern and focused Rich Text Editor that is faster and less bloated than the current TinyMCE based one and where the focus for the features should be centered around improving the workflow and speed of content creators.
-
-The outcome of this project will be a new editor that's fast, supports elements that are considered basic part of modern content such as Photos, Quotes, Formatting, Embeds of both Video and Social. For content more advanced than that, we believe this project can be used as a part of block based editors rather than trying to solve that on its own.
+We believe that we should accommondate a better the editorial experience when working with rich text in Umbraco.
 
 ## Detailed Design
 
@@ -39,62 +37,65 @@ We have the current prioritization for features:
 
 1. Basic text formatting (bold, italic, unordered and ordered lists).
 
-1. Ability change format of selected text/paragraph in one action.
+2. Ability change format of selected text/paragraph in one action.
 
-1. Apply internal and external links.
+3. Apply internal and external links.
 
-1. Ability to create custom text formatting (supporting block and inline formatting).
+4. Ability to create custom text formatting (supporting block and inline formatting).
 
-1. Usage of a stylesheet to style text appearence.
+5. Usage of a stylesheet to style text appearence.
 
-1. Copy/paste or dragging images should create them as media items.
+6. Pasted or dropped images should be created as media items.
 
-1. Ability to insert images from the media library.
+7. Ability to insert images from the media library.
 
-1. Ability to insert links to files from the media library.
+8. Ability to insert links to files from the media library.
 
-1. The stored data should contain relational information to ensure data can be transfered between enviroments (Media-element needs to have UDI of the media-item stored).
+9. The stored data should contain relational information to ensure data can be transfered between enviroments (Media-element needs to have UDI of the media-item stored).
 
-1. The copied data from the RTE should contain nesecary information to avoid uploading the same image again (if proven that it existis in the pasted enviroements).
+10. The copied data from the RTE should contain nesecary information to avoid uploading the same image again (if proven that it existis in the pasted enviroments).
 
-1. The data should be posible to output as presentable HTML, without begin aware that the data might was parsed to be able to present everything.
+11. The value of the property should be posible to output as presentable HTML, without the developer being aware that the data might was parsed to be able to present everything.
 
-1. Copy/paste or drag styled text and media from another source, example Microsoft Word. Ensure an acceptable conversion to the format options available.
+12. Copy/paste or drag styled text and media from another source, example Microsoft Word. Ensure an acceptable conversion to the format options available.
 
-1. Style the editor UI to match Umbraco UI.
+13. Style the editor UI to match Umbraco UI.
 
-1. Documentation about configuration options of the RTE.
+14. Documentation about configuration options of the RTE.
 
-1. Ensure accessibility of the editor itself.
+15. Ensure accessibility of the editor itself.
 
-1. Ensure the output of the editor follows common accessibility practice.
+16. Ensure the output of the editor follows common accessibility practice.
 
-1. Support for embedding videos from YouTube and Vimeo (and turn it into correct markup).
+17. Support for embedding videos from YouTube and Vimeo (and turn it into correct markup).
 
-1. Support for embedding social media posts from Facebook and Twitter (and turn it into correct markup).
+18. Support for embedding social media posts from Facebook and Twitter (and turn it into correct markup).
 
-1. Support for extending embedding options.
+19. Support for extending embedding options.
 
-1. Support for custom html snippets (such as inserting pre-styled Call To Action buttons).
+20. Support for custom html snippets (such as inserting pre-styled Call To Action buttons).
 
-1. Support for inserting Umbraco Macros.
+21. Support for inserting Umbraco Macros.
 
-1. Easy to use across the solution, since it could be used by different types of packages.
+22. Easy to use across the solution, since it could be used by different types of packages.
 
-1. Documentation on implementation.
+23. Documentation on implementation.
 
-1. Documentation on how to write extentions.
+24. Documentation on how to write extentions.
 
-1. Support for tables.
+25. Support for tables (if the choosen editor support it)
 
 
 ## Drawbacks
 
-* TinyMCE cant be removed immidiatly, meaning that there would be two different types of Rich Text Editors available. This would cause confusion.
+* TinyMCE cant be removed immidiatly, meaning that there would be two different types of Rich Text Editors available. This could cause confusion.
 
 ## Alternatives
 
-Everything is open at the current state.
+* Keep using TinyMCE, but investigate wether the implementation can be improved.
+* Investigate wether TinyMCE can improve the experience if upgraded to version 5.
+* Limit our feature set to be able to implement a even simpler RTE. To then use our energy on a Block Based Layout property-editor that enables compositions of Text, Media, Video, Social Media Posts and other block types.
+* Is there another alternative that you think we should look into?
 
 ## Out of Scope
 
@@ -109,7 +110,7 @@ The answers that we are hoping to get from the community & Umbraco HQ is:
 * Which extension points should be available?
 * How do we ensure good data, what can we do to avoid malformed HTML?
 * Any important features we have missed?
-* How can we minimize the problems of having two Rich text Editors at the same time?
+* How can we minimize the confusion of having two Rich text Editors available?
 * How should the Rich Text Editor be named?
 * How should images dragged into the RTE be handled?
 
