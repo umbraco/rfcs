@@ -1,13 +1,12 @@
 # Creating an RFC
 
-_Most changes, including small features, bug fixes and documentation improvements can be implemented and reviewed via the normal GitHub pull request workflow. **Questions or discussions on more substantial changes should first be done on https://our.umbraco.com until further defined to the RFC format if one is deemed necessary.**_
-
 When creating an RFC, ensure that it meets these criteria:
 
+* Most changes, including small features, bug fixes and documentation improvements can be implemented and reviewed via the normal GitHub pull request workflow. __Questions or discussions on more substantial changes should first be done on https://our.umbraco.com until further defined to the RFC format if one is deemed necessary.__
 * The RFC should be a proposal, whether this is a technical proposal or an idea, it must propose an outcome.
 * All topics for the RFC based on [the template](0000-rfc-template.md) must be known in advance of creating the RFC.
 
-__Important__: _When submitting an RFC, it is the Author's responsibility to keep the RFC updated based on feedback made on the RFC. Therefor the Author must be willing to take on this responsibility before submitting an RFC._
+__Important__: _When submitting an RFC, it is the Author's responsibility to keep the RFC updated based on feedback made on the RFC. Therefor the Author must be willing to take on this responsibility before submitting an RFC and/or allow collaboration on their PR with other Authors._
 
 ## Instructions
 
