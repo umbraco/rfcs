@@ -55,6 +55,8 @@ We have the current prioritization for features:
 
 1. The stored data should contain nesecary information to transer (Media-element needs to have UDI of the media-item stored).
 
+1. The copied data from the RTE should contain nesecary information to avoid uploading the same image again (if proven that it existis in the pasted enviroements).
+
 1. The data should be posible to output as presentable HTML, without begin aware that the data might was parsed to be able to present everything.
 
 1. Copy/paste or drag styled text and media from another source, example Microsoft Word. Ensure an acceptable conversion to the format options available.
