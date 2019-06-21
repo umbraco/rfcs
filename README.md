@@ -14,8 +14,6 @@ The RFC process will:
 * Manage the risk of decisions made.
 * Have a snapshot of context for the future.
 
-Most changes, including small features, bug fixes and documentation improvements can be implemented and reviewed via the normal GitHub pull request workflow. __Questions or discussions on more substantial changes should first be done on https://our.umbraco.com until further defined to the RFC format if one is deemed necessary.__
-
 Please read and respect the __[RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md)__
 
 ### [See Active RFCs](https://github.com/umbraco/rfcs/pulls)
