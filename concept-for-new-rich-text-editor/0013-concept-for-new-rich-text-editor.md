@@ -1,6 +1,6 @@
 # RFC Name
 
-Request for Contribution (RFC) 0000 — Concept For New Rich text Editor
+Request for Contribution (RFC) 0013 — Concept For New Rich text Editor
 
 ## Code of conduct
 
