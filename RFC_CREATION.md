@@ -1,6 +1,13 @@
 # Creating an RFC
 
+When creating an RFC, ensure that it meets these criteria:
+
+* The RFC should be a proposal, whether this is a technical proposal or an idea, it must propose an outcome.
+* All topics for the RFC based on [the template](0000-rfc-template.md) must be known in advance of creating the RFC.
+
 __Important__: _When submitting an RFC, it is the Author's responsibility to keep the RFC updated based on feedback made on the RFC. Therefor the Author must be willing to take on this responsibility before submitting an RFC._
+
+## Instructions
 
 * Fork this repository
 * Copy {tempate-name} to /{product}/0000-my-feature.md (where 'my-feature' is descriptive) Don't assign an RFC number yet as this must match the number of the pull request that you will later submit. For example: /CMS/0000-dotnetCore.md

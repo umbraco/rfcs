@@ -23,7 +23,7 @@ In some cases it will make more sense to close an RFC and start over again if th
 
 ## Acceptance
 
-When Umbraco HQ decides to finalize an RFC it will be tagged (`final-comment-period`) as having a final comment period which will generally be one or two weeks. An RFC may be accepted at the end of its final comment period and the associated pull request will be merged.
+When Umbraco HQ decides to finalize an RFC it will be tagged (`final-comment-period`) as having a final comment period which will generally be one or two weeks. An RFC may be accepted at the end of its final comment period and the associated pull request will be merged. When accepted, the RFC must be up to date and accurate and will represent the final intention of the RFC.
 
 An RFC may be closed (not accepted) after discussion has settled and comments have been made summarizing the rationale for being rejected. An RFC's associated PR is closed if this occurs. Other reasons an RFC may not be accepted is if it doesn't contain the appropriate information or if the RFC was submitted without previous discussion or HQ knowledge about it's intentions. In some cases once an RFC is closed, comments may be locked and if a follow up RFC is proposed, another PR will be submitted. 
 
