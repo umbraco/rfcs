@@ -46,23 +46,23 @@ We have the current prioritization for features:
 
 1. Basic text formatting (bold, italic, unordered and ordered lists).
 
-2. Ability change format of selected text/paragraph in one action.
+2. Ability change format of selected text/paragraph in one action(not necessary one click).
 
 3. Apply internal and external links.
 
 4. Ability to create custom text formatting (supporting block and inline formatting, allowing formats to be combined by begin addiative to other formats).
 
-5. Usage of a stylesheet to style text appearence.
+5. Pasted or dropped images should be created as media items.
 
-6. Pasted or dropped images should be created as media items.
+6. Ability to insert images from the media library.
 
-7. Ability to insert images from the media library.
+7. Ability to insert links to files from the media library.
 
-8. Ability to insert links to files from the media library.
+8. The stored data should contain relational information to ensure data can be transfered between enviroments (Media-element needs to have UDI of the media-item stored).
 
-9. The stored data should contain relational information to ensure data can be transfered between enviroments (Media-element needs to have UDI of the media-item stored).
+9. The copied data from the RTE should contain nesecary information to avoid uploading the same image again (if proven that it existis in the pasted enviroments).
 
-10. The copied data from the RTE should contain nesecary information to avoid uploading the same image again (if proven that it existis in the pasted enviroments).
+10. Usage of a stylesheet to style text appearence.
 
 11. The value of the property should be posible to output as presentable HTML, without the developer being aware that the data might was parsed to be able to present everything.
 
