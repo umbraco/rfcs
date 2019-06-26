@@ -1,0 +1,167 @@
+@import url(trix.css);
+html {
+  height: 100%;
+  font-size: 10px; }
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.4;
+  background-color: #FBF7F0; }
+  @media (min-width: 1080px) {
+    body {
+      font-size: calc(1.2em + 0.5vw); } }
+
+p {
+  margin: 1.5em auto; }
+
+a, a:visited {
+  color: #038930; }
+
+.layout {
+  max-width: 90em;
+  margin: 0 auto; }
+  @media (min-width: 1080px) {
+    .layout {
+      min-height: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: stretch; } }
+
+.intro {
+  max-width: 30em;
+  margin: 0 auto;
+  padding: 2em;
+  text-align: center; }
+  @media (min-width: 1080px) {
+    .intro {
+      max-width: 100%;
+      flex: 0 0 17em;
+      padding: 1em 3em;
+      text-align: left; } }
+
+@media (min-width: 1080px) {
+  .intro__inner {
+    position: fixed;
+    max-width: 16em; } }
+
+.trix-container {
+  position: relative;
+  flex-grow: 1;
+  max-width: 45em;
+  margin: 0 auto;
+  padding: 1em;
+  background-color: #fff;
+  box-shadow: -0.4rem 0.4rem 2rem rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 0.3rem; }
+  @media (min-width: 1080px) {
+    .trix-container {
+      max-width: 100%;
+      padding: 2em; } }
+  .trix-container:before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 1em;
+    right: 0;
+    bottom: 0;
+    left: -1em;
+    background-color: #fff;
+    border-top-left-radius: 0.3rem;
+    box-shadow: -0.2rem 0.2rem 1rem rgba(0, 0, 0, 0.1); }
+
+.trix-container__inner {
+  max-width: 40em;
+  margin: 0 auto; }
+
+.title {
+  margin: 0.5em 0 0 0;
+  font-size: 400%;
+  font-weight: bold;
+  line-height: 1.2; }
+  @supports (-webkit-background-clip: text) {
+    .title {
+      font-size: 500%;
+      background: url("/images/rainbow.svg") #0090ff repeat center center;
+      background-size: 500px auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      -webkit-text-stroke: 0.1rem rgba(0, 0, 0, 0.1);
+      text-shadow: 0.2rem 0.2rem rgba(255, 255, 255, 0.2); }
+      @media (min-width: 1080px) {
+        .title {
+          background-size: 550px auto;
+          background-position: center left -200px; } } }
+
+.subtitle {
+  margin: 0;
+  font-size: 135%;
+  font-weight: bold;
+  line-height: 1.2; }
+
+@media (min-width: 1080px) {
+  .small {
+    font-size: 85%; } }
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 1rem 2rem;
+  background-color: #3cb371;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  line-height: normal;
+  -webkit-appearance: none;
+  border: 0.1rem solid #038930;
+  border-radius: 0.3rem;
+  box-shadow: 0 0.2rem 0 #038930; }
+  .button:visited {
+    color: #fff; }
+  .button:hover {
+    color: #fff;
+    background-color: #319b5c;
+    cursor: pointer;
+    text-decoration: none; }
+
+.trix-content h1 {
+  margin-bottom: 0.4em; }
+.trix-content .attachment--preview {
+  margin: 0.6em 0; }
+
+trix-toolbar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: -0.1rem;
+  font-family: sans-serif;
+  background-color: #fff;
+  z-index: 10;
+  padding: 1em 0; }
+  trix-toolbar .trix-button-group {
+    margin-bottom: 0; }
+
+trix-editor {
+  border: none;
+  min-height: 320px !important; }
+
+.fullscreen {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  min-height: 100vh;
+  padding: 0 1em 1em 1em; }
+  .fullscreen trix-toolbar {
+    flex-shrink: 0; }
+  .fullscreen trix-editor {
+    flex: 1 0 auto;
+    padding: 0;
+    min-height: 0 !important; }
