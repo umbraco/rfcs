@@ -6,8 +6,6 @@ When creating an RFC, ensure that it meets these criteria:
 * The RFC should be a proposal, whether this is a technical proposal or an idea, it must propose an outcome.
 * All topics for the RFC based on [the template](0000-rfc-template.md) must be known in advance of creating the RFC.
 
-__Important__: _When submitting an RFC, it is the Author's responsibility to keep the RFC updated based on feedback made on the RFC. Therefor the Author must be willing to take on this responsibility before submitting an RFC and/or allow collaboration on their PR with other Authors._
-
 ## Instructions
 
 * Fork this repository
@@ -15,3 +13,5 @@ __Important__: _When submitting an RFC, it is the Author's responsibility to kee
 * Fill in the RFC. Put care into the details ensuring to provide information. RFCs that do not present convincing motivation, demonstrate understanding of the impact of the design, or are disingenuous about the drawbacks or alternatives tend to be poorly-received.
 * Submit a pull request. As a pull request the RFC will receive design feedback from Umbraco HQ and the community, **and the author should be prepared to revise it in response**.
 * (optional) Now that you have submitted a pull request, you can now assign the RFC number in the filename and title. This must always match the PR number to make the PR easy to find after the RFC has been merged. It's OK to skip this as it can be done while the RFC is being merged.
+
+_**Note**: It is the responsibility of the RFC Author(s) to keep the RFC updated with any changes needed while the RFC is open so that readers of the RFC are always reading the most up-to-date version. Similarly the Author must make sure the RFC is up-to-date at the end of the RFC process when it is either accepted or closed._

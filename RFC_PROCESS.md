@@ -4,22 +4,20 @@ This repository is intended to be used for reviewing submitted RFCs.
 
 ## Process outline
 
-* An RFC [pull request is made](RFC_CREATION.md) and thereby [open for comments](#Reviewing).
-* The RFC will be [updated, closed or restarted if necessary](#Updating) by the Author based on feedback.
+* An RFC [pull request is made](RFC_CREATION.md) by Umbraco HQ and thereby [open for comments](#Reviewing).
+* The RFC may may be [updated, closed or restarted if necessary](#Updating) by the Author if they choose to.
 * When Umbraco HQ decides to finalize the RFC, it will be tagged for final comments and a deadline will be provided.
-* At the provided deadline the [RFC will be accepted or closed](#Acceptance) by HQ.
+* At the provided deadline the [RFC will be accepted or closed](#Acceptance) by Umbraco HQ.
 
 ## Reviewing
 
-An RFC will be submitted in the form of a [Pull Request](https://github.com/umbraco/rfcs/pulls). Contribution to the conversation will be done via comments on the Pull Request itself while the PR is open.
+An RFC will be submitted in the form of a [Pull Request](https://github.com/umbraco/rfcs/pulls). Comments can be made directly on the Pull Request itself while the PR is open.
 
 ## Updating
 
-The RFC may need to be updated while the RFC is open to reflect decision made based on current feedback. It is the Author's responsibility to keep the RFC up to date. There may be multiple authors for an RFC which can be achieved by granting other GitHub users contribution access to the submitting PR. 
+The RFC should always reflect it's current state and the Author(s) may update the RFC to reflect any decisions made while it is open. 
 
-At any given time, the RFC should reflect it's current status based on feedback. 
-
-In some cases it will make more sense to close an RFC and start over again if the feedback indicates that the scope or purpose of the RFC should be radically changed.
+In some cases it will make more sense to close an RFC and start over again if the scope or purpose of the RFC should be radically changed.
 
 ## Acceptance
 

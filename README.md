@@ -2,7 +2,7 @@
 
 # Umbraco RFCs
 
-The Umbraco RFC (request for comments) process is intended to provide a consistent and controlled way for Umbraco HQ to facilitate the transparency of decisions made for features and changes in Umbraco products.
+The Umbraco RFC (request for comments) process is intended to provide a consistent way for Umbraco HQ to facilitate the transparency of decisions made for features and changes in Umbraco products.
 
 An Umbraco RFC is a proposal for a significant change or a new feature. 
 
