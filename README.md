@@ -24,10 +24,10 @@ This repository is intended to be used for reviewing submitted RFCs.
 
 ### Process outline
 
-* An RFC [pull request is made](RFC_CREATION.md) and thereby [open for comments](RFC_PROCESS.md#Reviewing).
-* The RFC will be [updated, closed or restarted if necessary](RFC_PROCESS.md#Updating) by the Author based on feedback.
+* An RFC [pull request is made](RFC_CREATION.md) by Umbraco HQ and thereby [open for comments](#Reviewing).
+* The RFC may may be [updated, closed or restarted if necessary](#Updating) by the Author if they choose to.
 * When Umbraco HQ decides to finalize the RFC, it will be tagged for final comments and a deadline will be provided.
-* At the provided deadline the [RFC will be accepted or closed](RFC_PROCESS.md#Acceptance) by HQ.
+* At the provided deadline the [RFC will be accepted or closed](#Acceptance) by Umbraco HQ.
 * [Implementation](RFC_PROCESS.md#Implementation) may begin.
 
 _For more info follow the links in the bullet points above or [click here](RFC_PROCESS.md) to see the full process document_
