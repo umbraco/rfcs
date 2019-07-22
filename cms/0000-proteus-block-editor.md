@@ -1,6 +1,6 @@
 # RFC Name
 
-Request for Contribution (RFC) 0000 : Block-based data structure interoperability (Project Proteus)
+Request for Contribution (RFC) 0011 : Block-based data structure interoperability (Project Proteus)
 
 ## Code of conduct
 
@@ -23,8 +23,8 @@ This project has the codename [Proteus](https://en.wikipedia.org/wiki/Proteus), 
 - Make sure that all the content is structured, easy to manipulate, predictable and indexed properly.
 
 **The long term goals are:**
-- Make the element shareable, stored as elements in database.
-- Use variants and segmentation at element level
+- Make the element shareable, stored as elements in database. (out-of-scope for this RFC)
+- Use variants and segmentation at element level (out-of-scope for this RFC)
 
 ## Motivation
 
@@ -38,20 +38,22 @@ The lack of consistency makes it challenging or impossible for data manipulation
 
 ## Detailed Design
 
-We propose creating a uniform way to store a structured, single dimension, list of blocks.
+We propose creating a uniform way to store the data of a complex editor. The data will contain a single dimension list of blocks alongside the `layout` of these blocks. 
 
 Each block would be comprised of...
 
-**Settings:** Configuration options to store use-case specific settings alongside the content (`key-value pair`)
-  - Settings could be edited either through a UI or directly by concrete implementations of block-based editors in AngularJS code
-
 **Content:** Element-type based content item (`IPublishedElement`)
   - Element Types are Document Types without any routable settings (e.g. templates, URL)
-  - In the short term the element data will be stored as JSON. In the long term this JSON could be replaced by and UDI which could be a link to an IPublishedElement.
+  - In the short term the element data will be stored as JSON and each element will have it's own UDI assigned
+
+**Settings:** Configuration options to store use-case specific settings alongside the content (`IPublishedElement`)
+  - Settings for each block is based on an Element type just like the `Content` above which provides a consistent experience for both developers and editors to manage editing either `Content` or `Settings`
+
+
 
 ### Example of a list of blocks:
 
-```
+```json
 [
   {
     "settings": {
@@ -59,42 +61,96 @@ Each block would be comprised of...
       "setting2": "blue"
     }, 
     "content": {
-      ...
+      "udi": "umb://content/fffba547615b4e9ab4ab2a7674845bc9",
+      "title": "Hello"
     }
   },
-  ...
+  {
+    "settings": {
+      "setting1": false,
+      "setting2": "red"
+    }, 
+    "content": {
+      "udi": "umb://content/e7dba547615b4e9ab4ab2a7674845bc9",
+      "title": "World"
+    }
+  }
 ]
 ```
 
-By storing this data in a standardised way it would be possible to create several data types that share the same concept of storing data. As an added benefit, it becomes easy to swap a property from "Nested Content" to "Grid" (for example) and vice versa, as the underlying data is still the same.
+### Layout
 
-The foundation should supply a means of customising the editor experience on a per-implementation basis. This could be in the form of inline previews, an inline editing experience, interactive map, or anything you can imagine!
+Alongside the list of blocks stored, the editor will also store a Layout. The Layout will reference each content item in the list of blocks by it's UDI. The Layout object in the json will be key/value pairs where the `key` is the editor's alias. This is required because some editors will not store a simple one dimensional array layout structure such as Nested Content, other more complicated editors like the grid will store references to the blocks with it's own layout structure. By defining each layout with the alias of the editor it means developers can in theory swap the underlying property editor without losing data and while keeping the layout preserved by the previous editor.
 
-In the future blocks could store a reference to a published document (`IPublishedElement`) as a `UDI`, rather than embedded JSON objects. This unlocks the possibility for variant blocks, segmentation and scheduled publishing blocks by leveraging similar behaviour already in the Core CMS. It also means multiple blocks could share the same underlying content item, and therefore make reusability of content far simpler across the CMS.
+#### Example of full JSON
+
+```json
+{
+  "layout": {
+    "nestedContent": ["umb://content/fffba547615b4e9ab4ab2a7674845bc9", "umb://content/e7dba547615b4e9ab4ab2a7674845bc9"]
+  },
+  "blocks": [
+    {
+      "settings": {
+        "setting1": true,
+        "setting2": "blue"
+      }, 
+      "content": {
+        "udi": "umb://content/fffba547615b4e9ab4ab2a7674845bc9",
+        "title": "Hello"
+      }
+    },
+    {
+      "settings": {
+        "setting1": false,
+        "setting2": "red"
+      }, 
+      "content": {
+        "udi": "umb://content/e7dba547615b4e9ab4ab2a7674845bc9",
+        "title": "World"
+      }
+    }
+  ]
+}
+
+```
+
+### Strongly typed
+
+Both content and settings are strongly typed as `IPublishedElement`. The layout can be strongly typed too but will be up to the editor to define. This means we can have a generic c# representation of this data like:
+
+```cs
+
+public interface IBlockData<TContent, TSettings, TLayout>
+  where TContent: IPublishedElement
+  where TSettings: IPublishedElement
+{
+    TContent Content { get; }
+    TSettings Settings { get; }
+}
+```
+
+Which also means these can be Models Builder strongly typed models too. 
+
+### Future
+
+In the future blocks could be stored in the database as a document rather than embedded JSON objects. This unlocks the possibility for variant blocks, segmentation and scheduled publishing blocks by leveraging similar behaviour already in the Core CMS. It also means multiple blocks could share the same underlying content item, and therefore make reusability of content far simpler across the CMS. (This part is out of the scope of this RFC).
 
 ## Drawbacks
 
 Compatibility between existing complex editors (Grid, Nested / Stacked / Inner Content, DTGE, etc) and the proposed model will unfortunately not be possible.
 
-Due to this, block based implementations of existing complex editors might need to be maintained alongside the existing editors for a while. This could cause confusion for developers about which editors to be using.
+Due to this, block based implementations of existing complex editors might need to be maintained alongside the existing editors for a while. This could cause confusion for developers about which editors to be using, however the old ones can be marked as deprecated so they no longer show up in the back office for new projects.
 
 An upgrade or migration path between specific editors could be defined at a later stage.
 
 ## Out of Scope
 
 - Creating new implementations of existing complex editors as block-based editors - separate RFCs will be proposed to determine the exact approaches per editor
-- Creating a mechanism to create and maintain PublishedElements as distinct documents in the database
+- Creating a mechanism to create and maintain PublishedElements as distinct documents in the database (Ability to share block data between editors)
 - Extending behaviour of `IPublishedElement`, including permissions and scheduled publishing
-
-## Unresolved Issues
-
-The answers that we are hoping to get from the community & Umbraco HQ is:
-
-- Is this the best data structure for storing blocks?
-- Once the element is sharable, how do we manage the data manipulation (Edit, remove) between the different implemented block-based editors (e.g. Nested Content to Grid)
-- How can we best handle validation while editing blocks content, given the many forms block editors can take (e.g. infinite editors, inline, etc)?
-  - How do we handle required fields?
-  - How do we handle custom field validation (e.g. via RegEx)?
+- Use variants and segmentation at element level (out-of-scope for this RFC)
+- Validation of complex editors - We have the capability for this already but more prototypes and docs need to be written
 
 ## Contributors
 
@@ -106,3 +162,4 @@ This RFC was compiled by:
 - [Jeffrey Schoemaker](https://twitter.com/jschoemaker1984) (community)
 - [Antoine Giraud](https://twitter.com/aaantoinee) (community)
 - [Niels Hartvig](https://twitter.com/thechiefunicorn) (HQ)
+- [Shannon Deminick](https://twitter.com/shazwazza) (HQ)
