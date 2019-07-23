@@ -61,7 +61,7 @@ Each block would be comprised of...
       "setting2": "blue"
     }, 
     "content": {
-      "udi": "umb://content/fffba547615b4e9ab4ab2a7674845bc9",
+      "udi": "umb://element/fffba547615b4e9ab4ab2a7674845bc9",
       "title": "Hello"
     }
   },
@@ -71,7 +71,7 @@ Each block would be comprised of...
       "setting2": "red"
     }, 
     "content": {
-      "udi": "umb://content/e7dba547615b4e9ab4ab2a7674845bc9",
+      "udi": "umb://element/e7dba547615b4e9ab4ab2a7674845bc9",
       "title": "World"
     }
   }
@@ -80,14 +80,14 @@ Each block would be comprised of...
 
 ### Layout
 
-Alongside the list of blocks stored, the editor will also store a Layout. The Layout will reference each content item in the list of blocks by it's UDI. The Layout object in the json will be key/value pairs where the `key` is the editor's alias. This is required because some editors will not store a simple one dimensional array layout structure such as Nested Content, other more complicated editors like the grid will store references to the blocks with it's own layout structure. By defining each layout with the alias of the editor it means developers can in theory swap the underlying property editor without losing data and while keeping the layout preserved by the previous editor.
+Alongside the list of blocks stored, the editor will also store a Layout. The Layout will reference each content item in the list of blocks by it's UDI. The Layout object in the json will be key/value pairs where the `key` is the Property Editor alias. This is required because some editors will not store a simple one dimensional array layout structure such as Nested Content, other more complicated editors like the grid will store references to the blocks with it's own layout structure. By defining each layout with the alias of the Property Editor it means developers can in theory swap the underlying property editor without losing data and while keeping the layout preserved by the previous editor.
 
 #### Example of full JSON
 
 ```json
 {
   "layout": {
-    "nestedContent": ["umb://content/fffba547615b4e9ab4ab2a7674845bc9", "umb://content/e7dba547615b4e9ab4ab2a7674845bc9"]
+    "Umbraco.NestedContent": ["umb://element/fffba547615b4e9ab4ab2a7674845bc9", "umb://element/e7dba547615b4e9ab4ab2a7674845bc9"]
   },
   "blocks": [
     {
@@ -96,7 +96,7 @@ Alongside the list of blocks stored, the editor will also store a Layout. The La
         "setting2": "blue"
       }, 
       "content": {
-        "udi": "umb://content/fffba547615b4e9ab4ab2a7674845bc9",
+        "udi": "umb://element/fffba547615b4e9ab4ab2a7674845bc9",
         "title": "Hello"
       }
     },
@@ -106,7 +106,7 @@ Alongside the list of blocks stored, the editor will also store a Layout. The La
         "setting2": "red"
       }, 
       "content": {
-        "udi": "umb://content/e7dba547615b4e9ab4ab2a7674845bc9",
+        "udi": "umb://element/e7dba547615b4e9ab4ab2a7674845bc9",
         "title": "World"
       }
     }
