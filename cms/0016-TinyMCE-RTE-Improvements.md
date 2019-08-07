@@ -9,18 +9,22 @@ Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfc
 ## Intended Audience
 
 The intended audience for this RFC is:
-* Developers & implementors of Umbraco
+* Developers, implementors & editors
 
 ## Summary
 
-This RFC is to give specific details and implmentations on how we plan to improve the existing implementation of the TinyMCE version 4 rich text editor.
+This RFC is to give specific details on how we plan to improve the existing implementation of the TinyMCE version 4 rich text editor.
 
 
 ## Motivation
 This has been a follow up RFC from #5 & #15 where it has been discusssed that the rich text editor could be improved and enhanced to help give content editors a better experience when authoring or ammending content in the CMS.
 
+The motivation from #15 isn't really much different from this one: We would like to provide a Rich Text Editor experience that would enable content creators to work faster and simpler than our current implementation. We want the rich text editor to be fully configurable at the data type level instead of relying on a global configuration file like it currently does. The rich text editor should handle drag and drop and copy and paste of images nicely along with copy/pasting of Word documents. Common elements should be supported out of the box such as headers, quotes without having to add custom styles to a stylesheet. We also want to improve the current OEmbed functionality to include things like social media posts.
+
 
 ## Detailed Design
+
+The Rich Text Editor improvements will be based on the current rich text editor library that the Umbraco CMS uses which will be the latest version of TinyMCE 4.x.
 
 The following improvements to the TinyMCE editor are planned and in another round we can do further iterative improvements.
 
@@ -28,18 +32,23 @@ The following improvements to the TinyMCE editor are planned and in another roun
 We have verified with a CodePen sample to ensure we could get TinyMCE to support this. We will allow a prevalue configuration of the editor in Umbraco to set a folder location of where to store pasted and dragged images in the media library. A future iteration could improve this further and prompt the user on where they would like to store the image/s in the media library.
 
 **Reduce inital load time and file size of TinyMCE into the browser**<br/>
-Utilize Client Dependancy Framework that is shipped with Umbraco to help reduce the initial file size.
+We will prototype various ways to improve the perceived initial load time of TinyMCE. We will be looking at minification and compression techniques along with loading some of it's assets in behind the scenes before the editor is rendered.
 
 **Improve the loading experience** <br/>
 Use Tiny's `init_inistance_callback` property to remove Umbraco's own loader as opposed to the current implementation of checking it the Tiny library is loaded.
 
 **Improve the experience with pasting from Word documents**<br/>
-Use Tiny's event `before_paste` to notify us when content is being pasted into the editor. This event already notifies us if the content was copied from Word, so we can use the pasted content to some JavaScript open source library or C# library to help clean up the HTML markup & formatting.
+Use Tiny's event `before_paste` to notify us when content is being pasted into the editor. This event already notifies us if the content was copied from Word, so we can use the pasted content to some JavaScript open source library or C# library to help clean up the HTML markup & formatting and thus remove any flicker associated with the editor loading.
+
+We would like to allow developers to enhance this themselves by replacing this functionality if they choose too with already existing plugins such as the paid plugin by [TinyMCE PowerPaste](https://apps.tiny.cloud/products/powerpaste/)
+
+**Improve moving un-editable elements**<br/>
+For non-editable elements inserted into the rich text editor (such as macros, or OEmbed content) we want to allow for moving these elements in a nicer way by allowing copy/pasting or moving of these elements.
 
 
 ## Drawbacks
 
-There should be no to little drawbacks to this, as this project can be iterative and add improvements and enhancements to the existing editor that we all currently use.
+There should be no drawbacks to this, as this project can be iterative and add improvements and enhancements to the existing editor that we all currently use.
 
 
 ## Alternatives
