@@ -33,6 +33,9 @@ Utilize Client Dependancy Framework that is shipped with Umbraco to help reduce 
 **Improve the loading experience** <br/>
 Use Tiny's `init_inistance_callback` property to remove Umbraco's own loader as opposed to the current implementation of checking it the Tiny library is loaded.
 
+**Improve the experience with pasting from Word documents**<br/>
+Use Tiny's event `before_paste` to notify us when content is being pasted into the editor. This event already notifies us if the content was copied from Word, so we can use the pasted content to some JavaScript open source library or C# library to help clean up the HTML markup & formatting.
+
 
 ## Drawbacks
 
