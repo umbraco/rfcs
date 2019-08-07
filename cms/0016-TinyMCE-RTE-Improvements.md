@@ -1,6 +1,6 @@
 # RFC Name
 
-Request for Contribution (RFC) 0000 : TinyMCE RTE Improvements
+Request for Contribution (RFC) 0016 : TinyMCE RTE Improvements
 
 ## Code of conduct
 
