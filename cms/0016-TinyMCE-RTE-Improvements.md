@@ -35,7 +35,7 @@ We have verified with a CodePen sample to ensure we could get TinyMCE to support
 We will prototype various ways to improve the perceived initial load time of TinyMCE. We will be looking at minification and compression techniques along with loading some of it's assets in behind the scenes before the editor is rendered.
 
 **Improve the loading experience** <br/>
-Use Tiny's `init_inistance_callback` property to remove Umbraco's own loader as opposed to the current implementation of checking it the Tiny library is loaded.
+Use Tiny's `init_inistance_callback` property to remove Umbraco's own loader as opposed to the current implementation of checking it the TinyMCE library is loaded.
 
 **Improve the experience with pasting from Word documents**<br/>
 Use Tiny's event `before_paste` to notify us when content is being pasted into the editor. This event already notifies us if the content was copied from Word, so we can use the pasted content to some JavaScript open source library or C# library to help clean up the HTML markup & formatting and thus remove any flicker associated with the editor loading.
@@ -61,9 +61,9 @@ Trix was propsoed it had a cleaner HTML output, however from testing the editor 
 **Loading and Rendering**<br/>
 Trix is a more leightweight library and is able to load very quickly, however when considering the functionality and additions that the TinyMCE editor can currently do. It is an unfair comparisson.
 
-We are aware that Tiny takes longer to do its initial load into the backoffice for the first request due to the size of the library, but subsequent requests regardless if Tiny uses an IFrame or not it is fractionaly slower than rendering the editor and its contents than Trix. As mentioned above we aim to reduce the initial file size to help with the first render of a TinyMCE editor.
+We are aware that TinyMCE takes longer to do its initial load into the backoffice for the first request due to the size of the library, but subsequent requests regardless if TinyMCE uses an IFrame or not it is fractionaly slower than rendering the editor and its contents than Trix. As mentioned above we aim to reduce the initial file size to help with the first render of a TinyMCE editor.
 
-One thing from our testing we noticed that the current implementation of Tiny when testing with a slow/throttled network connection will load several times. This is due to an implemntation flaw where we currently check that the Tiny library is loaded. Due to the way Tiny has been developed checking the presence of the main library is loaded is not the best way to know if an editor is ready. We plan to fix this as part of our improvements as Tiny gives us a callback function to notify us when it has fully loaded and initilased the editor to help the jarring experience of several loading phases.
+One thing from our testing we noticed that the current implementation of TinyMCE when testing with a slow/throttled network connection will load several times. This is due to an implemntation flaw where we currently check that the TinyMCE library is loaded. Due to the way TinyMCE has been developed checking the presence of the main library is loaded is not the best way to know if an editor is ready. We plan to fix this as part of our improvements as TinyMCE gives us a callback function to notify us when it has fully loaded and initilased the editor to help the jarring experience of several loading phases.
 
 
 ## Out of Scope
