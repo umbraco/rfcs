@@ -81,6 +81,15 @@ Make sure the examples are marked appropriately in order to have correct syntax 
 * Try to adhere to the [.editorconfig](https://github.com/umbraco/Umbraco-CMS/blob/v8/dev/.editorconfig) style rules from the Umbraco-CMS repository.
 * Code examples should not contain any commercial references like company names other than Umbraco.
 
+#### Tutorial markup
+
+To ensure easy to follow tutorials the following styles will be required in any written text of the tutorial:
+
+- Use _**Bold Italic**_ for specific terms. Examples: Content Node; Property Editor; Document Type
+- Use [Exact Text] to indicate UI items for when they need to click on it or when you are referencing them
+- Use "Input value" for things you want readers to type into inputs
+- Use `Inline code` for names of properties, methods, namespaces, etc.
+
 ### Method of enforcement 
 
 With the tooling like [Vale](https://errata-ai.github.io/vale/) we are able to enforce rules. Contributors should be able to checkout the documentation repository for the Our documentation and check whether or not it can pass the enforced rules.
