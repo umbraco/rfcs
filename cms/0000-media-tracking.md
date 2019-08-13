@@ -1,6 +1,6 @@
 # RFC Name
 
-Request for Contribution (RFC) 0000 : _Umbraco media tracking_
+Request for Contribution (RFC) 0017 : _Umbraco media item tracking_
 
 ## Code of conduct
 
