@@ -48,7 +48,9 @@ By editing each row/cell in the side panel it means we can render all property t
 
 #### Customized rendering
 
-The block editor data type configuration will allow the developer to define a custom view to render the block editor. This means a developer can completely customize how an editor visualizes and works with the content blocks. The aim is to make implementing a custom view easy where the developer can re-use as many components as possible to get a customized view working quickly. On the other hand, by supplying a custom view a developer has enormous flexibility to entirely change how the rendering works.
+The block editor data type configuration will allow the developer to define a custom view to render the block editor. This means a developer can completely customize how an editor visualizes and works with the content blocks. By default blocks will be listed in rows with a default implementation to visualize what each row represents - like a name and icon. However if a custom view is specified the developer can customize how the editor visualizes and works with the content and in most cases it will look like and represent what will be rendered on the front-end. As an example, the image above is using a custom view to render out each block.
+
+The aim is to make implementing a custom view easy where the developer can re-use as many components as possible to get a customized view working quickly. On the other hand, by supplying a custom view a developer has enormous flexibility to entirely change how the rendering works.
 
 ### Setting up the block editor
 
