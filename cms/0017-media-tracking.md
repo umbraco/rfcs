@@ -15,11 +15,11 @@ The intended audience for this RFC is:
 
 ## Summary
 
-We would like to allow Umbraco to natively be able to track references between items so that users can visually see how items are interlinked and where they are used. For example, we want to allow users to be able to see where a particular media item is being referenced, or for a developer to see what content is using a particular Macro.
+We would like to enable Umbraco to natively track references between items so that users can visually see how items are interlinked and where they are used. For example, we want to allow users to be able to see where a particular media item is being referenced, or for a developer to see what content is using a particular Macro.
 
 For this RFC we will focus on Media tracking.
 
-The goal of this RFC is to detail the MVP (Minimum Viable Product) for an initial release of Media tracking in the CMS. In the future, we will add further support for tracking Umbraco item relations.
+The goal of this RFC is to detail the MVP (Minimum Viable Product) for an initial release of Media tracking in the CMS and shed light on any issues or pitfalls with the approach described below. In the future, we will add further support for tracking Umbraco item relations.
 
 ## Motivation
 
