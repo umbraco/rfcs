@@ -1,6 +1,6 @@
 # RFC Style Guide for Documentation
 
-Request for Contribution (RFC) 0000 : _Style guide for documentation_
+Request for Contribution (RFC) 0009 : _Style guide for documentation_
 
 ## Code of Conduct
 
