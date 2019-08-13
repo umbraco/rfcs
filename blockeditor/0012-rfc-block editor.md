@@ -8,7 +8,10 @@ Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfc
 
 ## Intended Audience
 
-The intended audience for this RFC is mainly for editors and segundly for developers.
+The intended audience:
+ 
+* Umbraco developers
+* Umbraco editors
 
 ## Summary
 
