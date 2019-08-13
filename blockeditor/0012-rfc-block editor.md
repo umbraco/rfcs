@@ -47,7 +47,7 @@ There are two different ways to work with the block editor (configurable by sett
 
 1. **Standard display:** Blocks can be edited inline on form format (the way NestedContent works)
 ![\[IMG\]](assets/GridStyleexamples3.jpg)
-1. **Contextual display:** Blocks can be edited into the Umbraco right pane (infinite editing, the way LeBlender and DTGE used to do in v7) with a preview of the block on the main panel. The editor clicks on the block, and the right panel opens with its properties.
+1. **Contextual display:** Blocks can be edited into the Umbraco right pane (infinite editing, the way LeBlender and DTGE used to do in v7) with a preview of the block on the main panel. The editor clicks on the block, and the right panel opens with its properties. 
 ![\[IMG\]](assets/GridStyleexamples4.jpg)
 
 In order for the contextual display to work, a custom stylesheet will need to be applied to the datatype which will be used when rendering the contextual editor.
@@ -95,7 +95,11 @@ This editor may be competing with community built editors such as Stacked Conten
 ## Unresolved Issues
 
 * Validation: We will need to prototype validation for block editing. We have the capability to do this in the CMS now but we will need to enhance/simplify the implementation and make sure that it's consistent. This goes for both client side and server side validation. There will be some challenges with this too since editing of blocks can be done a couple of different ways: inline vs contextual
-* Contextual display: Need to investigate the best way to inject custom styles to render the block editor in the main panel so that it renders the way a developer wants it to be displayed so that it can look like how it will be rendered on the front-end.
+* Contextual display: Need to investigate the best way to inject custom styles to render the block editor in the main panel so that it renders the way a developer wants it to be displayed so that it can look like how it will be rendered on the front-end. Currently the idea is to configure a custom angular view to display this 'preview' but it seems like this needs to be much easier to do that creating an entirely brand new view with all of the required functionality for previewing (and any interactions)
+* The upload control is notorious for not working with these types of editors, it will probably remain that way but we'll need to deal with that somehow
+* Need to determine how a block is named, with Nested Content this is done with an angular template which is not very intuitive but it could also be an option
+* How will we deal with Groups (tabs)? In the contextual format this is fine because the groups are accordian based and they just render as a normal content editor, however in the Standard mode how will this work?
+
 
 ## Related RFCs 
 
