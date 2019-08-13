@@ -14,25 +14,19 @@ The intended audience for this RFC is mainly for editors and segundly for develo
 
 A new back-office editor that handles common page structure editing in a simple and intuitive way. The main concept of the editor is to manage list of blocks that represents a web page's structure, where each block is both a collection of content and a way to configure that collection to be rendered. Each content block and configuration is defined by an Element Type to make administrating and editing with the new Block editor consistent.
 
-This editor aims to be an alternative to the popular editors in Umbraco version 7 such as the Grid, Stacked Content, LeBlender and Doc Type Grid Editor.
+This editor aims to be an alternative to the popular editors in Umbraco version 7 such as Stacked Content and Nested Content. This editor also aims to be a foundation for other complex editors in the future and it's components will be able to be re-used to develop alternatives to other popular version 7 editors such as The Grid, LeBlender, and Doc Type Grid Editor.
 
 ![\[IMG\]](assets/GridStyleexamples1.jpg)
 
 ## Motivation
 
-- The current Grid implementation has issues and although it seems like a 'page builder' type of editor it is not. 
-- It very challenging for the editor with the current grid to know what
-   they are currently editing.
-- Creating a new page from scratch with the grid requires too many clicks, is 
-   time consuming and the content is hard to maintain.
-- The Grid data is not structured, hard to index and impossible to reuse.
-- The grid is usually too flexible and become too complex and hard to work with.
-- The current grid adds dependencies between the CMS and how the design or UI has to be done. 
-- We need a new solution for V8 especially since the popular alternatives such as Doc Type Grid Editor and Stacked Content are not yet v8 ready and we are hoping to make support for such editors more robust with the new block editor.
+* We need a good foundation for building complex editors with a strongly typed data structure. This foundation will eventually power a new grid based editor.
+* We need a new solution for V8 especially since the popular alternatives such as Stacked Content are not yet v8 ready and the new block editor should be a good replacement.
+* Umbraco currently doesn't have a 'page builder' type of editor which it needs. The current Grid implementation seems like a 'page builder' type of editor it is not. 
 
 ## Detailed Design
 
-This editor is about managing list of block to build entire pages. In this example you see the backoffice on the left side, and the visual representation on the right side:
+This editor is about managing list of blocks to build entire pages. In this example you see the backoffice on the left side, and the visual representation on the right side:
 
 ![\[IMG\]](assets/GridStyleexamples2.jpg)
 
@@ -43,28 +37,27 @@ This editor is about managing list of block to build entire pages. In this examp
 
 ### Working with content
 
-There are two different ways to work with the block editor (configurable by setting):
+Working with content for each row/cell will be done by clicking on an edit button to launch the content editor panel (using infinite editing, similar to the way LeBlender and Doc Type Grid Editor used to do in v7). Each row/cell can have it's own configuration applied to it and editing the configuration is achieved in the same way as editing content but instead by clicking on a configuration button. 
 
-1. **Standard display:** Blocks can be edited inline on form format (the way NestedContent works)
-![\[IMG\]](assets/GridStyleexamples3.jpg)
-1. **Contextual display:** Blocks can be edited into the Umbraco right pane (infinite editing, the way LeBlender and DTGE used to do in v7) with a preview of the block on the main panel. The editor clicks on the block, and the right panel opens with its properties. 
+By editing each row/cell in the side panel it means we can render all property types for an Element Type and all Property Groups, unlike the editing experience with Nested Content where we can only render properties on a single group.
+
 ![\[IMG\]](assets/GridStyleexamples4.jpg)
 
-In order for the contextual display to work, a custom stylesheet will need to be applied to the datatype which will be used when rendering the contextual editor.
+#### Customized rendering
+
+The block editor data type configuration will allow the developer to define a custom view to render the block editor. This means a developer can completely customize how an editor visualizes and works with the content blocks. The aim is to make implementing a custom view easy where the developer can re-use as many components as possible to get a customized view working quickly. On the other hand, by supplying a custom view a developer has enormous flexibility to entirely change how the rendering works.
 
 ### Setting up the block editor
 
 The way to set a new block editor is quick similar on how nested content work:
 
 1. Create new Element Types, one for each type of "Content" block and one for each type of "Config"
-1. Create a new data type using the "block editor" property editor configure it:
-	* Type of visualisation: standard or contextual
-	* Choose the previously created Elements Types for your "Content" blocks and then choose their associated "Config" types
+1. Create a new data type using the "block editor" property editor and configure it to use the previously created Elements Types for your "Content" blocks and then choose their associated "Config" types
 1. Use this new data type as property type for your document types
 
 ### Complex layouts?
 
-The block editor simply stores an array (linear list) of data. This will work for most pages structures since developers can apply any custom styling they want to render this data. However in somce cases a page's structure may be more complicated and in those cases it is certainly possible to put another block editor inside of a block (nested block editors).
+The block editor simply stores an array (linear list) of data. This will work for most pages structures since developers can apply any custom styling they want to render this data. However in somce cases a page's structure may be more complicated and in those cases it is certainly possible to put another block editor inside of a block (nested block editors). Since each row/cell contains it's own config, this config can be used to define any number of layout options.
 
 **Example:** if a separation of blocks into columns is needed, a first level of blocks can be created as "splitters" and then "Content" block can be placed into them. 
 
@@ -95,10 +88,8 @@ This editor may be competing with community built editors such as Stacked Conten
 ## Unresolved Issues
 
 * Validation: We will need to prototype validation for block editing. We have the capability to do this in the CMS now but we will need to enhance/simplify the implementation and make sure that it's consistent. This goes for both client side and server side validation. There will be some challenges with this too since editing of blocks can be done a couple of different ways: inline vs contextual
-* Contextual display: Need to investigate the best way to inject custom styles to render the block editor in the main panel so that it renders the way a developer wants it to be displayed so that it can look like how it will be rendered on the front-end. Currently the idea is to configure a custom angular view to display this 'preview' but it seems like this needs to be much easier to do that creating an entirely brand new view with all of the required functionality for previewing (and any interactions)
 * The upload control is notorious for not working with these types of editors, it will probably remain that way but we'll need to deal with that somehow
 * Need to determine how a block is named, with Nested Content this is done with an angular template which is not very intuitive but it could also be an option
-* How will we deal with Groups (tabs)? In the contextual format this is fine because the groups are accordian based and they just render as a normal content editor, however in the Standard mode how will this work?
 
 
 ## Related RFCs 
