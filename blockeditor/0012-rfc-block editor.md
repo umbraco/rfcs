@@ -25,7 +25,7 @@ This editor aims to be an alternative to the popular editors in Umbraco version 
 
 * We need a good foundation for building complex editors with a strongly typed data structure. This foundation will eventually power a new grid based editor.
 * We need a new solution for V8 especially since the popular alternatives such as Stacked Content are not yet v8 ready and the new block editor should be a good replacement.
-* Umbraco currently doesn't have a 'page builder' type of editor which it needs. The current Grid implementation seems like a 'page builder' type of editor it is not. 
+* Umbraco currently doesn't have a 'page builder' type of editor which it needs. The current Grid implementation seems like a 'page builder' but it is not designed this way and trying to make it work as a 'page builder' is cumbersome.
 
 ## Detailed Design
 
@@ -62,7 +62,7 @@ The way to set a new block editor is quick similar on how nested content work:
 
 ### Complex layouts?
 
-The block editor simply stores an array (linear list) of data. This will work for most pages structures since developers can apply any custom styling they want to render this data. However in somce cases a page's structure may be more complicated and in those cases it is certainly possible to put another block editor inside of a block (nested block editors). Since each row/cell contains it's own config, this config can be used to define any number of layout options.
+The block editor simply stores an array (linear list) of data. This will work for most pages structures since developers can apply any custom styling they want to render this data. However in some cases a page's structure may be more complicated and in those cases it is certainly possible to put another block editor inside of a block (nested block editors). Since each row/cell contains it's own config, this config can be used to define any number of layout options.
 
 **Example:** if a separation of blocks into columns is needed, a first level of blocks can be created as "splitters" and then "Content" block can be placed into them. 
 
