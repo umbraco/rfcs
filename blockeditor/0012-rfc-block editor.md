@@ -88,7 +88,7 @@ This editor may be competing with community built editors such as Stacked Conten
 * The new implementation of the grid. This RFC is not about creating a new grid v2. 
 * Dealing with culture variance and multi-lingual implementations. The initial build of the block editor with be an MVP (Minimum viable product). In the future we will look into how this block editor can support content variance at the block level.
 * Sharing a block's content between different content items or editors. In the future this may be possible but is not part of the initial implementation.
-* Inline editing of content blocks on the front-end when previewing content.
+* Inline editing of content blocks, either on the front-end when previewing content or in the back office. Content blocks will only be edited by the slide out panel.
 
 ## Unresolved Issues
 
