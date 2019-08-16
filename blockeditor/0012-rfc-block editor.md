@@ -46,11 +46,21 @@ By editing each row/cell in the side panel it means we can render all property t
 
 ![\[IMG\]](assets/GridStyleexamples4.jpg)
 
+#### Default rendering
+
+There wil be a default rendering of blocks in the back office which will be relatively simple. Each block will be represented by a row showing the name of the block, it's icon along with the edit/config/delete buttons. The default rendering will also allow for nested blocks if the developer chooses to allow nested block element types.
+
 #### Customized rendering
 
-The block editor data type configuration will allow the developer to define a custom view to render the block editor. This means a developer can completely customize how an editor visualizes and works with the content blocks. By default blocks will be listed in rows with a default implementation to visualize what each row represents - like a name and icon. However if a custom view is specified the developer can customize how the editor visualizes and works with the content and in most cases it will look like and represent what will be rendered on the front-end. As an example, the image above is using a custom view to render out each block.
+The block editor data type configuration will allow the developer to define a custom view for each block type. This will be based on the developer choosing a base folder location that will contain `.html` files for each block type. The name of the files are by convention and must correspond to the Element type alias. Umbraco's default rendering will render each block and if a custom view is found for the block type it will render that view for a given block. 
 
-The aim is to make implementing a custom view easy where the developer can re-use as many components as possible to get a customized view working quickly. On the other hand, by supplying a custom view a developer has enormous flexibility to entirely change how the rendering works.
+A more advanced functionality will also exists where a develoer can completely customize how an editor visualizes and works with the content blocks by specifying a custom `.html` view file for rendering the entire editor. If a custom view is specified the developer can customize how the editor visualizes and works with the content and in most cases it will look like and represent what will be rendered on the front-end. As an example, the image above is using a custom view to render out the full editor.
+
+The aim is to make implementing a custom view either per block or for the entire editor easy. The developer can re-use as many components as possible to get a customized view working quickly. This includes standardized components that allow for consistent validation practices along with consistent re-ordering (drag/drop) of blocks within the view. This will of course require documentation.
+
+#### Unsupported editors
+
+There will be some unsupported editors in the Block Editor, just like there is today with Nested Content. Typically these are file based editors: Upload, Image Cropper. These will not be supported in the block editor and warnings will be shown if attempted to be used (just like Nested Content).
 
 ### Setting up the block editor
 
@@ -59,6 +69,12 @@ The way to set a new block editor is quick similar on how nested content work:
 1. Create new Element Types, one for each type of "Content" block and one for each type of "Config"
 1. Create a new data type using the "block editor" property editor and configure it to use the previously created Elements Types for your "Content" blocks and then choose their associated "Config" types
 1. Use this new data type as property type for your document types
+
+#### Naming blocks
+
+Nested Content allows naming it's rows by using an AngularJs expression within the Data Type Configuration. The Block Editor will also support this since it provides the most flexibility however another simpler optino will be available. Block names can be generated based on the developer selecting which property type to use as the block name OR enter an AngularJs expression. Since a block stores both "content" and "configuration", it will be possible to name a block based on property data in either of these collections.   
+
+By default the block name will be it's Index.
 
 ### Complex layouts?
 
@@ -73,6 +89,8 @@ The block editor simply stores an array (linear list) of data. This will work fo
 The data model underpinning all of this is based on another RFC: https://github.com/umbraco/rfcs/blob/master/cms/0011-block-data-structure.md
 
 This editor will store a simple array of elements within it's `layout` property.
+
+Each block has it's own UDI (see [previous RFC for more info](https://github.com/umbraco/rfcs/blob/master/cms/0011-block-data-structure.md))
 
 ## Drawbacks
 
@@ -89,12 +107,14 @@ This editor may be competing with community built editors such as Stacked Conten
 * Dealing with culture variance and multi-lingual implementations. The initial build of the block editor with be an MVP (Minimum viable product). In the future we will look into how this block editor can support content variance at the block level.
 * Sharing a block's content between different content items or editors. In the future this may be possible but is not part of the initial implementation.
 * Inline editing of content blocks, either on the front-end when previewing content or in the back office. Content blocks will only be edited by the slide out panel.
+* Block "security" per user group - this can be done with an event by modifying the data type configuration
 
 ## Unresolved Issues
 
 * Validation: We will need to prototype validation for block editing. We have the capability to do this in the CMS now but we will need to enhance/simplify the implementation and make sure that it's consistent. This goes for both client side and server side validation. There will be some challenges with this too since editing of blocks can be done a couple of different ways: inline vs contextual
 * The upload control is notorious for not working with these types of editors, it will probably remain that way but we'll need to deal with that somehow
 * Need to determine how a block is named, with Nested Content this is done with an angular template which is not very intuitive but it could also be an option
+* Need to determine the nicest way to add block data to the Examine indexes and how fields should be named.
 
 
 ## Related RFCs 
