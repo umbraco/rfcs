@@ -86,7 +86,7 @@ Make sure the examples are marked appropriately in order to have correct syntax 
 To ensure easy to follow tutorials the following styles will be required in any written text of the tutorial:
 
 - Use _**Bold Italic**_ for specific terms. Examples: Content Node; Property Editor; Document Type
-- Use [Exact Text] to indicate UI items for when they need to click on it or when you are referencing them
+- Use "Exact Text" to indicate UI items for when they need to click on it or when you are referencing them
 - Use "Input value" for things you want readers to type into inputs
 - Use `Inline code` for names of properties, methods, namespaces, etc.
 
