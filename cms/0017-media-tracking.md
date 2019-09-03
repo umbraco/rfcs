@@ -79,7 +79,9 @@ Let users choose community packages to achieve this functionality such as Nexu. 
 * Although the design of this implementation will support tracking other Umbraco items other than just media, the implementation of this RFC will focus solely on Media which means any reporting and functionality relating to other Umbraco items: Macros, Content, Templates, Members, Forms will not be part of the MVP.
 * Users, Languages, Views, Partial Views, Stylesheets, Scripts will not be part of the relationship tracking APIs developed.
 * For this MVP, reporting of media relations will be limited to the Info app on Media items only. Any additional reporting is outside of the scope of this RFC and may be included in future RFCs.
-* For this MVP we do not plan on warning the user upon deletion of a media item if it is actively being used, in the future this may be a feature.
+* For this MVP we do not plan on warning the user upon deletion of a media item if it is actively being used, in the future this will be a feature.
+* For this MVP we do not plan on making it possible to create connectors/resolvers for getting references from a property editor. We plan to add this functionality in the future.
+* It will no be possible register a property editor for tracking via package.manifest. We hope to add this functionality in the future. 
 
 ## Unresolved Issues
 
