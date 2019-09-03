@@ -53,7 +53,7 @@ The property editors that will need to be updated to use this method are:
 
 ### Relations
 
-When an Umbraco content item (Content, Media, Member) is saved and all of the UDI references have been resolved from the Property Editors, we will store these relations in the Umbraco Relations database table using the Umbraco Relations Service APIs. For content, we will  be tracking relations for "Published" and "Pending" content.
+When an Umbraco content item (Content, Media, Member) is saved and all of the UDI references have been resolved from the Property Editors, we will store these relations in the Umbraco Relations database table using the Umbraco Relations Service APIs. For content, we will be tracking relations for "Published" and "Pending" content.
 
 The relations Service APIs may need to be enhanced to properly support Umbraco media item tracking and reporting detailed in this RFC.
 
@@ -80,8 +80,8 @@ Let users choose community packages to achieve this functionality such as Nexu. 
 * Users, Languages, Views, Partial Views, Stylesheets, Scripts will not be part of the relationship tracking APIs developed.
 * For this MVP, reporting of media relations will be limited to the Info app on Media items only. Any additional reporting is outside of the scope of this RFC and may be included in future RFCs.
 * For this MVP we do not plan on warning the user upon deletion of a media item if it is actively being used, in the future this will be a feature.
-* For this MVP we do not plan on making it possible to create connectors/resolvers for getting references from a property editor. We plan to add this functionality in the future.
-* It will no be possible register a property editor for tracking via package.manifest. We hope to add this functionality in the future. 
+* For this MVP we do not plan on making it possible to create connectors/resolvers (similar to [Property Value Converters](https://our.umbraco.com/documentation/Extending/Property-Editors/value-converters)) for getting references from a property editor. We plan to add this functionality in the future.
+* It will not be possible register a property editor for tracking via package.manifest in the MVP. We hope to add this functionality in the future. 
 
 ## Unresolved Issues
 
