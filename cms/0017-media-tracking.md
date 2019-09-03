@@ -53,7 +53,7 @@ The property editors that will need to be updated to use this method are:
 
 ### Relations
 
-When an Umbraco content item (Content, Media, Member) is saved and all of the UDI references have been resolved from the Property Editors, we will store these relations in the Umbraco Relations database table using the Umbraco Relations Service APIs. For content, we will __only__ be tracking relations for "Published" content _(see unresolved issues below for more info)_.
+When an Umbraco content item (Content, Media, Member) is saved and all of the UDI references have been resolved from the Property Editors, we will store these relations in the Umbraco Relations database table using the Umbraco Relations Service APIs. For content, we will  be tracking relations for "Published" and "Pending" content.
 
 The relations Service APIs may need to be enhanced to properly support Umbraco media item tracking and reporting detailed in this RFC.
 
@@ -84,8 +84,6 @@ Let users choose community packages to achieve this functionality such as Nexu. 
 ## Unresolved Issues
 
 * How do we handle variants? The plan is to use the relations APIs and tables to do the tracking but they don't support "Culture" which would be required to link (for example) and media item to an English content variant. Currently, we can only link a media item to an entire Content item. To support this we would either need to: Change the relation table to have an additional language column - but this will mean that this table becomes less generic - and also change the relations APIs to support language, or we create a brand new tracking data set and services APIs. Still needs investigating.
-* Should we handle both published and pending content tracking with media? For example, a published content item might reference a media item but the same pending (unpublished) content item might not reference a media item or vice versa. So should we track relations for both, or just one? For the MVP we plan on only tracking the published content item because that is the one that will affect what is live. If we do want to track both, this again would require changes to the relations database table and APIs. 
-
 
 ## Related RFCs 
 
