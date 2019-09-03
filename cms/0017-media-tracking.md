@@ -97,3 +97,14 @@ This RFC was compiled by:
 
 * Shannon Deminick (https://twitter.com/shazwazza)
 * Rune Strand (https://twitter.com/hemraker)
+
+Feedback, suggestions and comments contributed by:
+
+* Nathan Woulfe
+* Carole Rennie Logan
+* Bjarne Fyrstenborg 
+* Kenn Jacobsen
+* Claus Jensen
+* Dave Woestenborghs
+
+Thanks for participating 🙌
