@@ -14,22 +14,27 @@ The intended audience for this RFC is technical users and developers.
 
 ## Summary
 
-This RFC is a child of [Project UniCore - Introduction & Strategy]()
+This RFC is a child of [Project UniCore - Introduction & Strategy](https://github.com/umbraco/rfcs/blob/master/cms/0001-project-unicore-intro.md)
 
-We would like to re-organize the .Net solution/project structure and the resulting Nuget packages for the Umbraco CMS. 
+We plan to re-organize the .Net solution/project structure and the resulting Nuget packages for the Umbraco CMS. This is a __Phase 1__ requirement of moving to .NET Core. The task of changing the project structure is only a stepping stone to migrating to .NET Core. We do not plan on releasing an Umbraco version purely based on this restructure. Ensure to see the RFC for [Project UniCore - Introduction & Strategy](https://github.com/umbraco/rfcs/blob/master/cms/0001-project-unicore-intro.md), this RFC is referring to the first phase of that strategy (Project Structure) in the [Critical path diagram](https://github.com/umbraco/rfcs/blob/master/cms/0001-project-unicore-intro.md#critical-path-diagram).
 
 ## Motivation
 
 The main reasons for this are:
 
-* Allows for easier transitioning from .Net Framework to .Net Core
-* Allows for a better developer experience by being able to import only the Nuget packages required for your project
-* Allows for a cleaner architecture for the Umbraco codebase 
-* Better naming conventions for projects, packages and namespaces
-* Easier to contribute.... TODO:
+* Allows for easier transitioning from .Net Framework to .Net Core - without splitting the projects out into their logical parts, it will be near impossible to abstract out the implementation logic that requires full .NET Framework vs .NET Standard packages. 
+* Allows for a better developer experience by being able to import only the Nuget packages required for your project.
+* Allows for a cleaner architecture for the Umbraco codebase.
+* Better naming conventions for projects, packages and namespaces.
+* Easier to develop against and contribute to - it was necessary to move from a lot of smaller projects from v7 into 2 large projects (Umbraco.Core and Umbraco.Web) in v8 because it was much easier/faster to consolidate everything that wasn't legacy into fewer projects and then to trim off the legacy parts. Now that we have a project and code structure that makes sense and we no longer have a lot of smaller legacy projects, we can take the next step of re-splitting out the logical parts into separate projects. Developing against smaller separate projects means it is much easier to find and test aspects of the code.
 
 ## Detailed Design
 
+We plan to do this Phase 1 project split but making the least amount of changes possible with the actual Umbraco code. Of course some changes will be required since we will need to create new abstractions and implementations for those as we split out the projects but we don't plan on making any larger architectural changes during this split. 
+
+We also are going to ensure that all changes along the way mean the solution always builds and that the application always works and tests are passing. We don't want to get into a state where we've moved a ton of code around and the solution doesn't compile while we spend significant amounts of time working towards getting it built and working again. This means each change will be small iterations.
+
+### Legend
 
 *   ![#CC0000](https://placehold.it/15/CC0000/000000?text=+) Red: It is a .Net Framework project
 *   ![#C9d7f1](https://placehold.it/15/C9d7f1/000000?text=+) Blue: It is a project containing static files only
@@ -38,9 +43,9 @@ The main reasons for this are:
 *   ![#DAF7A6](https://placehold.it/15/DAF7A6/000000?text=+) Green: External dependencies that are primary features of the CMS
 *   --Dashed--: Candidate projects that produce an interchangable and/or environment specific implementation of a dependency (OS, .Net platform)
 
-![current project structure](assets/project-structure-Current.png)
+### Current structure
 
-### Remarks
+![current project structure](assets/project-structure-Current.png)
 
 #### Umbraco.Core
 
@@ -66,7 +71,7 @@ Produces Nuget package `UmbracoCms`
 
 We would like to remove the remaining webforms, and resulting DLL thus resulting in a non-building project (i.e. folder project)
 
----
+### Proposed structure
 
 ![proposed project structure](assets/project-structure-Proposed.png)
 
@@ -86,6 +91,8 @@ Produces Nuget package `UmbracoCms.Core`
 * Logging implementations
 * Dependency Injection implementation
 * The namespaces in this project will be rooted to "Umbraco" (i.e. will not be prefixed with the project name)
+
+_NOTE: The name of this project, assembly and Nuget package is not absolute - meaning we may determine a better name in the future but for now this naming convention follows the [Clean Architecture](https://dotnet.microsoft.com/download/thank-you/aspnet-ebook) conventions_
 
 Produces Nuget package `UmbracoCms.Infrastructure`
 
@@ -168,18 +175,16 @@ Produces Nuget package `UmbracoCms.Imaging.ImageProcessor`
 
 ## Drawbacks
 
-* Breaking changes due to different Nuget packages made available 
-* Namespace changes in the Umbraco solution will be made. Although this is a breaking change we feel 
-that this is easily overcome by a textual find + replace. 
+* Breaking changes due to different Nuget packages made available, but as this is Phase 1 to migrating to .NET Core and we don't plan on releasing a version purely based on a project restructure we shouldn't be concerned about breaking changes since there will be plenty with the release of Umbraco running on .NET Core anyways. 
+* Namespace changes in the Umbraco solution will be made. Although this is a breaking change we feel that this is easily overcome by a textual find + replace. 
 
 ## Alternatives
 
 It may be possible to move from .Net Framework to .Net Core with the current solution/project structure, however this would result in:
 
 * Since some dependencies are only .Net Framework (such as SQLCE) it would require multiple pre-processor directives throughout the codebase and cross compilation which makes the codebase more difficult to support, manage and contribute to.
-* Lengthier time frames to reach .Net Core due to the complexity involved in migrating very large projects at one time instead of multiple smaller projects over time.
+* Much lengthier time frames to reach .Net Core due to the complexity involved in migrating very large projects at one time instead of multiple smaller projects over time.
 * Lessens community involvement because without proper project separation the community would need to wait until large parts of the codebase are fully ported over instead of only waiting for smaller portions to be ported over. 
-
 
 ## Out of Scope
 
@@ -188,14 +193,9 @@ that RFC is found in the parent RFC [Project UniCore - Introduction & Strategy](
 
 Any codebase design changes is out of the scope of this discussion. This RFC is only about solution, project, namespace and output Nuget package restructure.
 
-## Unresolved Issues
-
-1. We would like to rename the root namespace of all items in the CMS to be prefixed with `Umbraco.Cms`, for example, we would then have `Umbraco.Cms.Persistence` instead of `Umbraco.Core.Persistence`. This is so that all namespaces in the Cms are consistent with the product since other Umbraco products like Umbraco Forms have the prefix `Umbraco.Forms`. We would love to hear if the community agrees with this proposal.
-2. We are not 100% sure about the project name Umbraco.Infrastructure (see the notes above for what this project is). What might be a better name for this project? Could this be split into smaller projects? (i.e. Umbraco.Persistence, Umbraco.PropertyEditors)
-
 ## Related RFCs (where are we in roadmap?)
 
-*   RFC - Introduction & Strategy
+*   [RFC - Introduction & Strategy](https://github.com/umbraco/rfcs/blob/master/cms/0001-project-unicore-intro.md)
     *   __RFC - Project/solution restructure__
     *   RFC - Database abstraction
     *   RFC - Imaging abstraction
