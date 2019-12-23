@@ -1,6 +1,6 @@
 # RFC Name
 
-Request for Contribution (RFC) 0018 : Block-based data structure interoperability (Project Proteus, version 2)
+Request for Contribution (RFC) 0019 : Block-based data structure interoperability (Project Proteus, version 2)
 
 ## Code of conduct
 
