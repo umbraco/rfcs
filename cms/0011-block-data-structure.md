@@ -144,8 +144,6 @@ An upgrade or migration path between specific editors could be defined at a late
 ## Contributors
 
 This RFC was based on previous RFC on the same topic: [RFC — 0011 — block-data-structure](https://github.com/umbraco/rfcs/pull/11/files?short_path=d8a15c1#diff-d8a15c17ff96b16ae9d652b0cbc3b6ca) compiled by:
-
-Based previous RFC compiled by:
 - [Callum Whyte](https://twitter.com/callumbwhyte) (community)
 - [Nathan Woulfe](https://twitter.com/nathanwoulfe) (community)
 - [Kenn Jacobsen](https://twitter.com/KennJacobsen_DK) (community)
@@ -155,7 +153,6 @@ Based previous RFC compiled by:
 - [Shannon Deminick](https://twitter.com/shazwazza) (HQ)
 
 This updated RFC is compiled by:
-
 - [Niels Lyngsø](https://twitter.com/nielslyngsoe) (HQ)
 - [Claus Jensen](https://twitter.com/clausjnsn) (HQ)
 - [Shannon Deminick](https://twitter.com/shazwazza) (HQ)
