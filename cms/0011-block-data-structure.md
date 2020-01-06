@@ -91,10 +91,10 @@ This is required because some editors will not store a simple one-dimensional ar
 
 The structure of a given layout object is defined by the Property Editor and can therefore vary depending on the Property Editor.
 
-Common for all is that the object refferencing content items would implement the `IBlockElement` interface. This interface has two properties:
+Common for all is that the object referencing content items would implement the `IBlockElement` interface. This interface has two properties:
 
 * UDI — Used to link to the content item.
-* settings — An Element Type (`IPublishedElement`) containing properties needed for a specific layout. The setting could contain the number of columns for ie. Grid Layouts. Settings are not required and can therefore be empty. It would be posible for developers to change or extend the settings. Potentially a Property Editor could provide the option to pick a specific ElemenType for settings for each Block.
+* settings — An object containing properties needed for a specific layout. The setting could contain the number of columns for ie. Grid Layouts. Settings are not required and can therefore be empty. It would be posible for developers to change or extend the settings. Potentially a Property Editor could provide the option to pick a specific Element Type (`IPublishedElement`) for settings for each Block.
 
 ### Data
 A list of Element Type based content items (`IPublishedElement`)
@@ -112,7 +112,6 @@ We do have a specific interface for the object representing a Block item, notice
 ```cs
 
 public interface IBlockElement<TSettings>
-  where TSettings: IPublishedElement
 {
     Udi Udi { get; }
     TSettings Settings { get; }
