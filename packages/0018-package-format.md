@@ -47,7 +47,47 @@ We also want to simplify the package creation approach when including Umbraco sc
 
 #### Umbraco schema
 
-Similar to the Umbraco content and media above, we want to keep the option of installing schema (document types, data types, templates, languages, etc.)
+Similar to the Umbraco content and media above, we want to keep the option of installing schema (document types, data types, templates, languages, etc.). 
+
+We also want to simplify the package creation approach when including Umbraco schema and content to only allow you to pick all items. Most packages made this was are made on a specific site to develop packages, we believe it will make it faster and simpler to create and manage packages. For packages based on files that option will stay as is.
+
+### Installing / uninstalling a package
+
+#### Supporting NuGet dependency handling
+
+
+Nuget restoring dependencies and disallowing installing if dependencies conflict
+
+
+#### Uniform install experience
+
+Install experience is identical no matter where you install. 
+
+
+#### Package migrations
+
+Run when you want, not start up
+
+
+#### Opt-in to changes
+
+Package migrations will be opt-in from the backoffice if you have the right permissions
+If you already ran package migrations it won’t run again in other environments if your database is in sync
+
+
+#### Warn about what will be removed on uninstall
+
+Warn what will be uninstalled
+(More ideas, check Out of Scope)
+
+### Other
+
+#### New default package migrations
+
+For adding content and schema based on serialized files
+
+
+#### NuGet feed on Our
 
 ### Mockups
 
