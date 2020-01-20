@@ -53,11 +53,14 @@ We also want to simplify the package creation approach when including Umbraco sc
 
 #### Package migrations
 
-Run when you want, not start up
+Package actions are to be replaced with Package Migrations. The intent for package migrations is to **not** run on startup or install as we are used to with Package Actions and CMS migrations. Instead when you install a package the migrations will be something you opt into running, along with an overview of what it will change.
+
+The details of these are still not set in stone, would appreciate any POC of either functionality of UI!
 
 #### New default package migrations
 
-For adding content and schema based on serialized files
+Umbraco 8 currently has two default package actions, [allow Document Type](https://our.umbraco.com/documentation/Extending/Packages/Package-Actions/#allow-document-type) & [Publish root Document](https://our.umbraco.com/documentation/Extending/Packages/Package-Actions/#publish-root-document). In line with the above changes to when package migrations are run, a new default package migration would be added that takes a serialized file of content and schema and adds it to the database when run.
+
 
 ### Installing / uninstalling a package
 
