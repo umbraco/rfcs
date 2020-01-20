@@ -113,14 +113,14 @@ Produces Nuget package `UmbracoCms.Members`
 
 #### Umbraco.BackOffice
 
-* Will contain all of the web based implementation for running the Umbraco back office such as MVC Controllers, ASP.Net Identity implementation for Users and Authentication/Authorization policies for the back office
-* Contains the models to support the back office and controllers
+* Will contain all of the web based implementation for running the Umbraco backoffice such as MVC Controllers, ASP.Net Identity implementation for Users and Authentication/Authorization policies for the backoffice
+* Contains the models to support the backoffice and controllers
 
 Produces Nuget package `UmbracoCms.BackOffice`
 
 #### Umbraco.BackOffice.UI
 
-* Contains the client files used to build/run the back office
+* Contains the client files used to build/run the backoffice
 
 Produces Nuget package `UmbracoCms.BackOffice.UI`
 
@@ -176,7 +176,7 @@ Produces Nuget package `UmbracoCms.Imaging.ImageProcessor`
 ## Drawbacks
 
 * Breaking changes due to different Nuget packages made available, but as this is Phase 1 to migrating to .NET Core and we don't plan on releasing a version purely based on a project restructure we shouldn't be concerned about breaking changes since there will be plenty with the release of Umbraco running on .NET Core anyways. 
-* Namespace changes in the Umbraco solution will be made. Although this is a breaking change we feel that this is easily overcome by a textual find + replace. 
+* Namespace changes in the Umbraco solution will be made. Although this is a breaking change we feel that this is overcome by a textual find + replace. 
 
 ## Alternatives
 
