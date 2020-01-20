@@ -47,11 +47,11 @@ Each block would be comprised of...
   - In the short term the element data will be stored as JSON and each element will have it's own UDI assigned
 
 **Settings:** Configuration options to store use-case specific settings alongside the content (`IPublishedElement`)
-  - Settings for each block is based on an Element type just like the `Content` above which provides a consistent experience for both developers and editors to manage editing either `Content` or `Settings`
+  - Settings for each block is based on an Element type like the `Content` above which provides a consistent experience for both developers and editors to manage editing either `Content` or `Settings`
 
 
 
-### Example of a list of blocks:
+### Example of a list of blocks
 
 ```json
 [
@@ -80,7 +80,7 @@ Each block would be comprised of...
 
 ### Layout
 
-Alongside the list of blocks stored, the editor will also store a Layout. The Layout will reference each content item in the list of blocks by it's UDI. The Layout object in the json will be key/value pairs where the `key` is the Property Editor alias. This is required because some editors will not store a simple one dimensional array layout structure such as Nested Content, other more complicated editors like the grid will store references to the blocks with it's own layout structure. By defining each layout with the alias of the Property Editor it means developers can in theory swap the underlying property editor without losing data and while keeping the layout preserved by the previous editor.
+Alongside the list of blocks stored, the editor will also store a Layout. The Layout will reference each content item in the list of blocks by it's UDI. The Layout object in the json will be key/value pairs where the `key` is the Property Editor alias. This is required because some editors will not store a one dimensional array layout structure such as Nested Content, other more complicated editors like the grid will store references to the blocks with it's own layout structure. By defining each layout with the alias of the Property Editor it means developers can in theory swap the underlying property editor without losing data and while keeping the layout preserved by the previous editor.
 
 #### Example of full JSON
 
@@ -140,7 +140,7 @@ In the future blocks could be stored in the database as a document rather than e
 
 Compatibility between existing complex editors (Grid, Nested / Stacked / Inner Content, DTGE, etc) and the proposed model will unfortunately not be possible.
 
-Due to this, block based implementations of existing complex editors might need to be maintained alongside the existing editors for a while. This could cause confusion for developers about which editors to be using, however the old ones can be marked as deprecated so they no longer show up in the back office for new projects.
+Due to this, block based implementations of existing complex editors might need to be maintained alongside the existing editors for a while. This could cause confusion for developers about which editors to be using, however the old ones can be marked as deprecated so they no longer show up in the backoffice for new projects.
 
 An upgrade or migration path between specific editors could be defined at a later stage.
 

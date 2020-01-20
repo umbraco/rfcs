@@ -15,9 +15,9 @@ The intended audience:
 
 ## Summary
 
-A new back-office editor that handles common page structure editing in a simple and intuitive way. The main concept of the editor is to manage list of blocks that represents a web page's structure, where each block is both a collection of content and a way to configure that collection to be rendered. Each content block and configuration is defined by an Element Type to make administrating and editing with the new Block editor consistent.
+A new backoffice editor that handles common page structure editing in a simpler and intuitive way. The main concept of the editor is to manage list of blocks that represents a web page's structure, where each block is both a collection of content and a way to configure that collection to be rendered. Each content block and configuration is defined by an Element Type to make administrating and editing with the new Block editor consistent.
 
-This editor aims to be an alternative to the popular editors in Umbraco version 7 such as Stacked Content and Nested Content. This editor also aims to be a foundation for other complex editors in the future and it's components will be able to be re-used to develop alternatives to other popular version 7 editors such as The Grid, LeBlender, and Doc Type Grid Editor.
+This editor aims to be an alternative to the popular editors in Umbraco version 7 such as Stacked Content and Nested Content. This editor also aims to be a foundation for other complex editors in the future. It's components will be able to be re-used to develop alternatives to other popular Umbraco 7 editors such as The Grid, LeBlender, and Doc Type Grid Editor.
 
 ![\[IMG\]](assets/GridStyleexamples1.jpg)
 
@@ -42,13 +42,13 @@ This editor is about managing list of blocks to build entire pages. In this exam
 
 Working with content for each row/cell will be done by clicking on an edit button to launch the content editor panel (using infinite editing, similar to the way LeBlender and Doc Type Grid Editor used to do in v7). Each row/cell can have it's own configuration applied to it and editing the configuration is achieved in the same way as editing content but instead by clicking on a configuration button. 
 
-By editing each row/cell in the side panel it means we can render all property types for an Element Type and all Property Groups, unlike the editing experience with Nested Content where we can only render properties on a single group.
+By editing each row/cell in the side panel it means we can render all property types for an Element Type and all Property Groups. This is unlike the editing experience with Nested Content where we can only render properties on a single group.
 
 ![\[IMG\]](assets/GridStyleexamples4.jpg)
 
 #### Default rendering
 
-There wil be a default rendering of blocks in the back office which will be relatively simple. Each block will be represented by a row showing the name of the block, it's icon along with the edit/config/delete buttons. The default rendering will also allow for nested blocks if the developer chooses to allow nested block element types.
+There wil be a default rendering of blocks in the backoffice. Each block will be represented by a row showing the name of the block, it's icon along with the edit/config/delete buttons. The default rendering will also allow for nested blocks if the developer chooses to allow nested block element types.
 
 #### Customized rendering
 
@@ -60,7 +60,7 @@ The aim is to make implementing a custom view either per block or for the entire
 
 #### Unsupported editors
 
-There will be some unsupported editors in the Block Editor, just like there is today with Nested Content. Typically these are file based editors: Upload, Image Cropper. These will not be supported in the block editor and warnings will be shown if attempted to be used (just like Nested Content).
+There will be some unsupported editors in the Block Editor, like there is today with Nested Content. Typically these are file based editors: Upload, Image Cropper. These will not be supported in the block editor and warnings will be shown if attempted to be used (like Nested Content).
 
 ### Setting up the block editor
 
@@ -78,7 +78,7 @@ By default the block name will be it's Index.
 
 ### Complex layouts?
 
-The block editor simply stores an array (linear list) of data. This will work for most pages structures since developers can apply any custom styling they want to render this data. However in some cases a page's structure may be more complicated and in those cases it is certainly possible to put another block editor inside of a block (nested block editors). Since each row/cell contains it's own config, this config can be used to define any number of layout options.
+The block editor stores an array (linear list) of data. This will work for most pages structures since developers can apply any custom styling they want to render this data. However in some cases a page's structure may be more complicated and in those cases it is certainly possible to put another block editor inside of a block (nested block editors). Since each row/cell contains it's own config, this config can be used to define any number of layout options.
 
 **Example:** if a separation of blocks into columns is needed, a first level of blocks can be created as "splitters" and then "Content" block can be placed into them. 
 
@@ -88,7 +88,7 @@ The block editor simply stores an array (linear list) of data. This will work fo
 
 The data model underpinning all of this is based on another RFC: https://github.com/umbraco/rfcs/blob/master/cms/0011-block-data-structure.md
 
-This editor will store a simple array of elements within it's `layout` property.
+This editor will store an array of elements within it's `layout` property.
 
 Each block has it's own UDI (see [previous RFC for more info](https://github.com/umbraco/rfcs/blob/master/cms/0011-block-data-structure.md))
 
@@ -99,14 +99,14 @@ This editor may be competing with community built editors such as Stacked Conten
 ## Alternatives
 
 - Create a new Grid version V2, simpler, more usable and with structured data. However, we think the block editor would be a good start to getting everything in the core prepared for a new v2 of the grid since that will require everything (and more) than what this editor requires and we think that the block editor and a v2 grid could complement each other. 
-- Just keep the Grid as it is, but adding Doctype grid editor into the core (v8)with a visual editor into the back office to configure it (like Leblender). We don't feel like this is a great solution since we want to make the editor experience and this feature really shine, whereas trying to move DTGE into the core now isn't going to get us closer to this goal.
+- Keep the Grid as it is, but adding Doctype grid editor into the core (v8)with a visual editor into the backoffice to configure it (like Leblender). We don't feel like this is a great solution since we want to make the editor experience and this feature really shine, whereas trying to move DTGE into the core now isn't going to get us closer to this goal.
 
 ## Out of Scope
 
 * The new implementation of the grid. This RFC is not about creating a new grid v2. 
 * Dealing with culture variance and multi-lingual implementations. The initial build of the block editor with be an MVP (Minimum viable product). In the future we will look into how this block editor can support content variance at the block level.
 * Sharing a block's content between different content items or editors. In the future this may be possible but is not part of the initial implementation.
-* Inline editing of content blocks, either on the front-end when previewing content or in the back office. Content blocks will only be edited by the slide out panel.
+* Inline editing of content blocks, either on the front-end when previewing content or in the backoffice. Content blocks will only be edited by the slide out panel.
 * Block "security" per user group - this can be done with an event by modifying the data type configuration
 
 ## Unresolved Issues
