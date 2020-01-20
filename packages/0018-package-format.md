@@ -111,6 +111,14 @@ We would change the current package repository on Our to a NuGet feed to host pa
 
 ### Mockups
 
+TODO: File structure overview of the Umbraco NuGet package
+
+TODO: Explain what technically happens on Package creation
+
+TODO: Explain what technically happens when installing from the backoffice
+
+TODO: Explain what happens when uninstalling
+
 ## Drawbacks
 
 Discuss any disadvantages or sideeffects of this RFC.
