@@ -55,6 +55,8 @@ We also want to simplify the package creation approach when including Umbraco sc
 
 Package actions are to be replaced with Package Migrations. The intent for package migrations is to **not** run on startup or install as we are used to with Package Actions and CMS migrations. Instead when you install a package the migrations will be something you opt into running, along with an overview of what it will change.
 
+Another huge benefit of these package migrations is when you deploy between different environments you can ensure that they run on each environment!
+
 The details of these are still not set in stone, would appreciate any POC of either functionality of UI!
 
 #### New default package migrations
@@ -66,29 +68,46 @@ Umbraco 8 currently has two default package actions, [allow Document Type](https
 
 #### Supporting NuGet dependency handling
 
+One of the biggest benefits and most demanded feature of NuGet packages that Umbraco ZIP packages doesn't have is dependency handling. When you install a NuGet package in Visual Studio it will automatically install the highest version of the package that is compatible with your current installed packages. If you then later want to update your package to a newer version it will know what the dependencies for that package is and make sure to update them at the same time.
 
-Nuget restoring dependencies and disallowing installing if dependencies conflict
+If you try to install a package and it is dependent on a package with a version that conflicts with your current packages it fails.
+
+We want to bring a similar experience into the Umbraco backoffice when you install a package from the package dashboard. When you attempt to install a package Umbraco should restore the dependencies for you, or fail if there are version conflicts.
+
+The specifics for how it would work are not set in stone, Arkadiusz Biel has made a [nice POC](https://github.com/umbraco/Umbraco.Packages/issues/19#issuecomment-554763674) we can start from.
 
 
 #### Uniform install experience
 
-Install experience is identical no matter where you install. 
+This ties into the above, but we want to ensure that the install experience is the same no matter where you install your package, whether you drag and drop a .nupkg file into the backoffice, do it through Visual Studio or select a package in the backoffice it should feel and do the same.
 
+We want to make sure that things like the dependency management works in each case as it could otherwise open up for confusion amongst package consumers.
 
 #### Opt-in to changes
 
-Package migrations will be opt-in from the backoffice if you have the right permissions
-If you already ran package migrations it won’t run again in other environments if your database is in sync
+This was mentioned briefly in the package migrations section above, but one thing we want to accomplish with this new package format is also to make it more user friendly. Currently when you install a package you don't really have any control over what happens, it can add files, schema, content and potentially bad things - delete things, not handle personal data properly, etc.
 
+In an ideal world you would install a package and get full control and insight into what it does, but that would also cause a lot of extra bloat. One thing we want to accomplish right now is to atleast allow admin users to opt into when package migrations run.
+
+If the package you install or update has one or more package migrations that haven't been run you will need to authorize them with an admin account. This accomplishes two things - first is that you would have more control over things being run on the database (file changes are a bit easier to manage using a versioning tool).
+
+We want to show some sort of summary of what the migrations will do and present them to the user before they sign off on it.
+
+Opting into migrations will also allow the user to plan when these things run. Can help with slow startup times due to migrations automatically running on startup.
 
 #### Warn about what will be removed on uninstall
 
-Warn what will be uninstalled
-(More ideas, check Out of Scope)
+One thing that we really want to improve is the uninstall process of a package. Currently it can mess up your site if you uninstall a package you have used for content. Right now when you install a package it saves a list of all files and schema and content that it installed initially, and when you then uninstall it removes it all.
+
+So if you start with a starter kit and then build upon document types to make a site, and then remove the package all content built on the starter kit document types would disappear.
+
+We want to make it safer and more transparent what happens when you uninstall a package, we have several ideas but it became a huge project on its own. So for now the main idea is to show the user a list of things that will be removed when they try to uninstall. See more ideas under the Out of Scope section below.
 
 ### Other
 
 #### NuGet feed on Our
+
+We would change the current package repository on Our to a NuGet feed to host packages. Ideas and feedback on the best way of doing this is appreciated.
 
 ### Mockups
 
@@ -107,15 +126,15 @@ We have a few ideas that would be awesome to have but will be out of scope for t
 - Automatically check for upgrades and notify users with the right permissions
 - Check for references in other content / schema when trying to uninstall something and warn the user
 - Add option on uninstall to choose whether to uninstall the Umbraco content & schema
-- Ideas to further improve and add to the suggested package actions
+- Ideas to further improve and add to the suggested package migrations
 
 ## Unresolved Issues
 
-The answers that we are hoping to get from the community & Umbraco HQ is:
+This RFC is mostly a feature plan for what we want to do. Some of the features we are unsure of how they should be done. 
 
 ## Related RFCs 
 
-List any other related RFCs. Provide links where you can.
+* There are no related RFCs
 
 ## Contributors
 
