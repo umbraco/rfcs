@@ -16,7 +16,7 @@ Umbraco currently has two very used package formats:
 - The out of the box Umbraco ZIP package that can be generated from the backoffice
 - The NuGet package that is the standard in .NET
 
-This RFC's purpose is to suggest a way to bridge the gap and unify the two package formats while also looking closer at what a modern package format *should* solve.
+This RFC's purpose is to suggest a way to bridge the gap and unify the two package formats while also looking closer at what a modern package format *should* offer.
 
 ## Motivation
 
@@ -51,6 +51,14 @@ Similar to the Umbraco content and media above, we want to keep the option of in
 
 We also want to simplify the package creation approach when including Umbraco schema and content to only allow you to pick all items. Most packages made this was are made on a specific site to develop packages, we believe it will make it faster and simpler to create and manage packages. For packages based on files that option will stay as is.
 
+#### Package migrations
+
+Run when you want, not start up
+
+#### New default package migrations
+
+For adding content and schema based on serialized files
+
 ### Installing / uninstalling a package
 
 #### Supporting NuGet dependency handling
@@ -62,11 +70,6 @@ Nuget restoring dependencies and disallowing installing if dependencies conflict
 #### Uniform install experience
 
 Install experience is identical no matter where you install. 
-
-
-#### Package migrations
-
-Run when you want, not start up
 
 
 #### Opt-in to changes
@@ -81,11 +84,6 @@ Warn what will be uninstalled
 (More ideas, check Out of Scope)
 
 ### Other
-
-#### New default package migrations
-
-For adding content and schema based on serialized files
-
 
 #### NuGet feed on Our
 
