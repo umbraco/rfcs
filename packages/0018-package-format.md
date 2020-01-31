@@ -136,7 +136,7 @@ We have a few ideas that would be awesome to have but will be out of scope for t
 
 ## Unresolved Issues
 
-This RFC is mostly a feature plan for what we want to achieve with the first iteration of a new package format. Some of the features we are on the idea level and will need to be defined clearer before implementation can start. 
+This RFC is mostly a feature plan for what we want to achieve with the first iteration of a new package format. Some of the features are on an early idea level and will need to be defined clearer before implementation can start. 
 
 ## Related RFCs 
 
