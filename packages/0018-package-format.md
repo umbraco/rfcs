@@ -43,8 +43,6 @@ We want to ensure that we don't take a step back with functionality compared to 
 
 We want to ensure that when you create a package in the backoffice you can include content and media (see schema below), to do that we will need to support serializing and deserializing content and media in the CMS.
 
-We also want to simplify the package creation approach when including Umbraco schema and content to only allow you to pick all items. Most packages made are made on a specific site to develop packages, we believe it will make it faster and simpler to create and manage packages. For packages based on files the option to pick files will stay as-is.
-
 #### Umbraco schema
 
 Similar to the Umbraco content and media above, we want to keep the option of installing schema (document types, data types, templates, languages, etc.). 
