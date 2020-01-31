@@ -123,7 +123,7 @@ Discuss any disadvantages or sideeffects of this RFC.
 
 ## Alternatives
 
-Are there any alternatives in approach that could be taken? 
+- Use proprietary format for backoffice creation, installation and uninstallation, similar to what exists.
 
 ## Out of Scope
 
