@@ -132,7 +132,6 @@ We have a few ideas that would be awesome to have but will be out of scope for t
 - Automatically check for upgrades and notify users with the right permissions
 - Check for references in other content / schema when trying to uninstall something and warn the user
 - Add option on uninstall to choose whether to uninstall the Umbraco content & schema
-- Ideas to further improve and add to the suggested package migrations
 
 ## Unresolved Issues
 
