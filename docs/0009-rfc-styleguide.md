@@ -27,7 +27,11 @@ What kind of voice, language and punctuation rules should 'guide' contribution t
 
 ### Usage of language
 
+<!-- vale valeStyle.Hyperbolic = NO -->
+
 The audience for Umbraco documentation includes many where English is not their native language. Therefore documentation should be  written with an international audience in mind. The used language should be simple and easy to understand. 
+
+<!-- vale valeStyle.Hyperbolic = YES -->
 
 If in doubt, the document [How to write plain English](http://www.plainenglish.co.uk/files/howto.pdf) from plainenglish.co.uk, gives a good idea on what we expect. 
 
@@ -51,19 +55,23 @@ Not all humor/humour translates, not all cultures have the same sense of humor o
 
 There are different types of documentation, reference, tutorial etc - leading by 'code examples' is an international approach.
 
-Unless writing a tutorial, we should try to avoid... "you then have to do this, then set this, and then you just do this". Try to avoid addressing the reader as 'you' - focus the writing on the words which describe the steps or details of the documentation.
+Unless writing a tutorial, we should try to avoid... "you then have to do this, then set this, and then you do this". Try to avoid addressing the reader as 'you' - focus the writing on the words which describe the steps or details of the documentation.
 Tutorials are slightly different, here the language needs to take the reader on a journey through the tutorial.
 
 #### Words to avoid
 
 Categories of words we like to avoid are: 
 
+<!-- vale valeStyle.Hyperbolic = NO -->
+
 * Negative words (like swearing) or words which are known to have a negative context.
 * Words can make the user feel stupid, therefore try avoiding the following connecting words: simply, just, of course and obviously.
 
+<!-- vale valeStyle.Hyperbolic = YES -->
+
 ### Layout rules
 
-* Making pages follow a consistent simple layout will mean regular visitors to the documentation will learn the conventions, and improve the experience of interacting with the documentation.
+* Making pages follow a consistent layout will mean regular visitors to the documentation will learn the conventions, and improve the experience of interacting with the documentation.
 * Consider different 'journeys' to access documentation - introduction, deep dive or quick reference lookup.
 * Embedding of screenshots - consistent annotation approach.
 * Informative Tips and Warnings - styled and delivered consistently.
@@ -102,12 +110,18 @@ In addition to automated tooling, the documentation curator team will use the st
 
 We have set up some suggested rules based on best practises and limiting the impact they will have for contributors:
 
+<!-- vale valeStyle.Hyperbolic = NO -->
+<!-- vale valeStyle.Terms = NO -->
+
 - **HeadingsPunctuation**: Warns you when using punctuation at the end of a heading
 - **Hyperbolic**: Warns you when using words such as _simple, just, easily and actually_
 - **ListStart**: Warns you when starting a list option with lower case
 - **SentenceLength**: Warns you when writing sentences with more than 40 words in them
 - **Spacing**: Warns you when having more than 1 space in succession in an article
 - **Terms**: Warns you when using a blacklisted term and suggests a replacement - could be from _back-office_ to _backoffice_
+
+<!-- vale valeStyle.Terms = YES -->
+<!-- vale valeStyle.Hyperbolic = YES -->
 
 ## Drawbacks
 
