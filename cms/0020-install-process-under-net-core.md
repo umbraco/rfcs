@@ -1,6 +1,6 @@
 # RFC Name
 
-Request for Contribution (RFC) 0002 : _Install Process under .NET Core_
+Request for Contribution (RFC) 0020 : _Install Process under .NET Core_
 
 ## Code of conduct
 
