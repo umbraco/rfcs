@@ -12,7 +12,7 @@ The intended audience for this RFC is: Package developers and consumers
 
 ## Summary
 
-Umbraco currently has two very used package formats: 
+Umbraco currently has two used package formats: 
 - The out of the box Umbraco ZIP package that can be generated from the backoffice
 - The NuGet package that is the standard in .NET
 
@@ -20,20 +20,20 @@ This RFC's purpose is to suggest a way to bridge the gap and unify the two packa
 
 ## Motivation
 
-A lot of package developers end up publishing their package as both a Zip and a NuGet package as there are benefits to either that the other doesn't have. However, as a developer working with NuGet packages are highly preferred, as it has some very essential features - the main one being automatic dependency handling.
+A lot of package developers end up publishing their package as both a Zip and a NuGet package as both formats have unique advantages. However, as a developer, working with NuGet packages are highly preferred, as it has some very essential features - the main one being automatic dependency handling.
 
-We want to make it easier and simpler to create packages by only maintaining one format, while getting the best features of both.
+We want to make it easier and simpler to create packages by only maintaining one format while getting the best features of both.
 
 ## Detailed Design
 
-The high level overview is that we want to remove the zip package format, and move to a NuGet zip (.nupkg), and then make sure that we can ensure that the benefits of the zip format are implemented:
+The high-level overview is that we want to remove the zip package format and move to a NuGet zip (.nupkg), and then make sure that that the benefits of the zip format is maintained:
 
 - Listing in the backoffice
 - Installing from the backoffice
 - Ability to install Umbraco content and schema
 - Ability to run code within the Umbraco context on install and uninstall
 
-We have a more detailed list of features we want the new package format to support below. If you feel something is missing please check the **Out of scope** section before commenting, we may have the same idea but want to leave it out for this first phase!
+We have a more detailed list of features we want the new package format to support below. If you feel something is missing please check the **Out of scope** section before commenting, we may have the same idea but want to leave it out for this first iteration!
 
 ### Creating a package
 
@@ -43,17 +43,15 @@ We want to ensure that we don't take a step back with functionality compared to 
 
 We want to ensure that when you create a package in the backoffice you can include content and media (see schema below), to do that we will need to support serializing and deserializing content and media in the CMS.
 
-We also want to simplify the package creation approach when including Umbraco schema and content to only allow you to pick all items. Most packages made this was are made on a specific site to develop packages, we believe it will make it faster and simpler to create and manage packages. For packages based on files that option will stay as is.
-
 #### Umbraco schema
 
 Similar to the Umbraco content and media above, we want to keep the option of installing schema (document types, data types, templates, languages, etc.). 
 
-We also want to simplify the package creation approach when including Umbraco schema and content to only allow you to pick all items. Most packages made this was are made on a specific site to develop packages, we believe it will make it faster and simpler to create and manage packages. For packages based on files that option will stay as is.
+We also want to simplify the package creation approach when including Umbraco schema and content to only allow you to pick all items. Most packages made are made on a specific site to develop packages, we believe it will make it faster and simpler to create and manage packages. For packages based on files the option to pick files will stay as-is.
 
-#### Package migrations
+#### Package migrations 
 
-Package actions are to be replaced with Package Migrations. The intent for package migrations is to **not** run on startup or install as we are used to with Package Actions and CMS migrations. Instead when you install a package the migrations will be something you opt into running, along with an overview of what it will change.
+Package actions are to be replaced with Package Migrations. The intent for package migrations is to **not** run on startup or install as we are used to with Package Actions and CMS migrations. Instead, when you install a package the migrations will be something you opt into running, along with an overview of what it will change.
 
 Another huge benefit of these package migrations is when you deploy between different environments you can ensure that they run on each environment!
 
@@ -68,7 +66,7 @@ Umbraco 8 currently has two default package actions, [allow Document Type](https
 
 #### Supporting NuGet dependency handling
 
-One of the biggest benefits and most demanded feature of NuGet packages that Umbraco ZIP packages doesn't have is dependency handling. When you install a NuGet package in Visual Studio it will automatically install the highest version of the package that is compatible with your current installed packages. If you then later want to update your package to a newer version it will know what the dependencies for that package is and make sure to update them at the same time.
+One of the biggest benefits and most demanded feature of NuGet packages that Umbraco ZIP packages don't have is dependency handling. When you install a NuGet package in Visual Studio it will automatically install the highest version of the package that is compatible with your current installed packages. If you then later want to update your package to a newer version it will know what the dependencies for that package is and make sure to update them at the same time.
 
 If you try to install a package and it is dependent on a package with a version that conflicts with your current packages it fails.
 
@@ -85,29 +83,29 @@ We want to make sure that things like the dependency management works in each ca
 
 #### Opt-in to changes
 
-This was mentioned briefly in the package migrations section above, but one thing we want to accomplish with this new package format is also to make it more user friendly. Currently when you install a package you don't really have any control over what happens, it can add files, schema, content and potentially bad things - delete things, not handle personal data properly, etc.
+This was mentioned briefly in the package migrations section above, but one thing we want to accomplish with this new package format is to make it more user-friendly. Currently, when you install a package there is no transparency and you have no control over what happens. Installing a package can add files, schema, content, potentially unwanted or malicious things, deletions, not handle personal data properly, etc.
 
-In an ideal world you would install a package and get full control and insight into what it does, but that would also cause a lot of extra bloat. One thing we want to accomplish right now is to atleast allow admin users to opt into when package migrations run.
+In an ideal world, you would install a package and get full control and insight into what it does, but that would also cause a lot of extra bloat. One thing we want to accomplish right now is to at least allow admin users to opt into when package migrations run.
 
 If the package you install or update has one or more package migrations that haven't been run you will need to authorize them with an admin account. This accomplishes two things - first is that you would have more control over things being run on the database (file changes are a bit easier to manage using a versioning tool).
 
 We want to show some sort of summary of what the migrations will do and present them to the user before they sign off on it.
 
-Opting into migrations will also allow the user to plan when these things run. Can help with slow startup times due to migrations automatically running on startup.
+Opting for migrations will also allow the user to plan when these things run. Can help with slow startup times due to migrations automatically running on startup.
 
 #### Warn about what will be removed on uninstall
 
-One thing that we really want to improve is the uninstall process of a package. Currently it can mess up your site if you uninstall a package you have used for content. Right now when you install a package it saves a list of all files and schema and content that it installed initially, and when you then uninstall it removes it all.
+One thing that we want to see improved is the process of uninstalling a package. Currently, it can mess up your site if you uninstall a package you have used for content. Right now when you install a package it saves a list of all files and schema and content that it installed initially, and when you then uninstall it removes it all.
 
 So if you start with a starter kit and then build upon document types to make a site, and then remove the package all content built on the starter kit document types would disappear.
 
-We want to make it safer and more transparent what happens when you uninstall a package, we have several ideas but it became a huge project on its own. So for now the main idea is to show the user a list of things that will be removed when they try to uninstall. See more ideas under the Out of Scope section below.
+We want to make it safer and more transparent what happens when you uninstall a package, we have several ideas but it became a huge project on its own. So, for now, the main idea is to show the user a list of things that will be removed when they try to uninstall. See more ideas under the Out of Scope section below.
 
 ### Other
 
 #### NuGet feed on Our
 
-We would change the current package repository on Our to a NuGet feed to host packages. Ideas and feedback on the best way of doing this is appreciated.
+We would change the current package repository on Our to a NuGet feed to host packages. Ideas on the best way of handling this are greatly appreciated.
 
 ### Mockups
 
@@ -125,7 +123,7 @@ Discuss any disadvantages or sideeffects of this RFC.
 
 ## Alternatives
 
-Are there any alternatives in approach that could be taken? 
+- Use proprietary format for backoffice creation, installation and uninstallation, similar to what exists.
 
 ## Out of Scope
 
@@ -134,11 +132,10 @@ We have a few ideas that would be awesome to have but will be out of scope for t
 - Automatically check for upgrades and notify users with the right permissions
 - Check for references in other content / schema when trying to uninstall something and warn the user
 - Add option on uninstall to choose whether to uninstall the Umbraco content & schema
-- Ideas to further improve and add to the suggested package migrations
 
 ## Unresolved Issues
 
-This RFC is mostly a feature plan for what we want to do. Some of the features we are unsure of how they should be done. 
+This RFC is mostly a feature plan for what we want to achieve with the first iteration of a new package format. Some of the features are on an early idea level and will need to be defined clearer before implementation can start. 
 
 ## Related RFCs 
 
