@@ -78,7 +78,7 @@ The specifics for how it would work are not set in stone, Arkadiusz Biel has mad
 
 #### Uniform install experience
 
-This ties into the above, but we want to ensure that the install experience is the same no matter where you install your package, whether you drag and drop a .nupkg file into the backoffice, do it through Visual Studio or select a package in the backoffice it should feel and do the same.
+This ties into the above, but we want to ensure that the install experience is the same no matter where you install your package. Whether you drag and drop a .nupkg file into the backoffice, do it through Visual Studio or select a package in the backoffice it should feel and do the same.
 
 We want to make sure that things like the dependency management works in each case as it could otherwise open up for confusion amongst package consumers.
 
