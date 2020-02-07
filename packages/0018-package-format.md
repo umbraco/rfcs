@@ -32,6 +32,7 @@ The high-level overview is that we want to remove the zip package format and mov
 - Installing from the backoffice
 - Ability to install Umbraco content and schema
 - Ability to run code within the Umbraco context on install and uninstall
+- Creating a package from the backoffice
 
 We have a more detailed list of features we want the new package format to support below. If you feel something is missing please check the **Out of scope** section before commenting, we may have the same idea but want to leave it out for this first iteration!
 
