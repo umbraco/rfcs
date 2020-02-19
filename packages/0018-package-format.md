@@ -12,15 +12,15 @@ The intended audience for this RFC is: Package developers and consumers
 
 ## Summary
 
-Umbraco currently has two used package formats: 
-- The out of the box Umbraco ZIP package that can be generated from the backoffice
-- The NuGet package that is the standard in .NET
+Umbraco currently has two package formats: 
+- The default Umbraco ZIP package format that can be generated from the backoffice
+- The standard .NET NuGet package format
 
-This RFC's purpose is to suggest a way to bridge the gap and unify the two package formats while also looking closer at what a modern package format *should* offer.
+The purpose of this RFC is to suggest a way to bridge the gap and unify the two package formats while also looking closer at what a modern package format *should* offer.
 
 ## Motivation
 
-A lot of package developers end up publishing their package as both a Zip and a NuGet package as both formats have unique advantages. However, as a developer, working with NuGet packages are highly preferred, as it has some very essential features - the main one being automatic dependency handling.
+Many package developers end up publishing their packages as both a Zip and NuGet packages since both formats have unique advantages. However as a developer, working with NuGet packages are highly preferred as it has some essential features such as having automatic dependency handling and being fully integrated with application development pipelines such as Visual Studio and CI/CD platforms.
 
 We want to make it easier and simpler to create packages by only maintaining one format while getting the best features of both.
 
@@ -50,20 +50,32 @@ Similar to the Umbraco content and media above, we want to keep the option of in
 
 We also want to simplify the package creation approach when including Umbraco schema and content to only allow you to pick all items. Most packages made are made on a specific site to develop packages, we believe it will make it faster and simpler to create and manage packages. For packages based on files the option to pick files will stay as-is.
 
-#### Package migrations 
+#### Package Migrations 
 
-Package actions are to be replaced with Package Migrations. The intent for package migrations is to **not** run on startup or install as we are used to with Package Actions and CMS migrations. Instead, when you install a package the migrations will be something you opt into running, along with an overview of what it will change.
+What is "Package Migrations"? In Umbraco we have the concept of "Migrations" which are commands or instructions that are executed when Umbraco upgrades. We plan to re-use this same concept and code to allow developers to embed commands/instructions into their package which can be executed during installation and upgrades. Using Umbraco Migrations is not new and some packages already choose to use them but it requires a lot of manual coding/plumbing and is generally inconsistent with how they are detected and execute since there is no common or officially documented way to use them. Package Migrations will be an official, documented and supported way for package developers to use Migrations and we plan on making this as simple as possible to use so package developers don't have to worry about writing any of the plumbing/detection code that they would need to do today.
 
-Another huge benefit of these package migrations is when you deploy between different environments you can ensure that they run on each environment!
+Just like Umbraco's normal Migrations, Package Migrations will ensure that these commands/instructions are only executed once per package version which means they are not accidentally re-executed and ensures they are executed in each environment where the package exists. A great benefit of this is that you can be sure that a package's Migrations are executed on each environment when you deploy your changes. We plan on updating Umbraco Cloud to ensure that Package Migrations are executed behind the scenes when deploying between environments just like what happens when you perform minor upgrades on Umbraco Cloud.
 
-The details of these are still not set in stone, would appreciate any POC of either functionality of UI!
+The old "Package Actions" format will be retired, however we plan on ensuring that Package Migrations share the same simplicity. Currently a Umbraco Migrations are targeted mostly for database changes and if you wanted to do any content/schema manipulation in Umbraco Migrations, it would take quite a lot of code. We plan on making working with Package Migrations as easy as possible and will include many common operations like working with content and schema into easy to use method calls that won't require writing much code, or even being able to list these operations as part of the package's metadata. The specific implementation details are yet to be determined and will be made more clear once some proof of concepts are created.
 
-#### New default package migrations
+The intent for package migrations is to **not** run on startup or install as we are used to with Package Actions and custom Migrations. Instead, when you install a package the migrations will be something you opt into running, along with an overview of what it will change. The UX of this is not designed but the idea is that:
 
-Umbraco 8 currently has two default package actions, [allow Document Type](https://our.umbraco.com/documentation/Extending/Packages/Package-Actions/#allow-document-type) & [Publish root Document](https://our.umbraco.com/documentation/Extending/Packages/Package-Actions/#publish-root-document). In line with the above changes to when package migrations are run, a new default package migration would be added that takes a serialized file of content and schema and adds it to the database when run.
+* If you install a .nupgk package via the back office, once the packages files are installed you will be presented with some UI listing what the Package Migration will execute and the admin can press a button to accept the changes and the migration will execute. If the migrations are not executed then the admin can re-visit the package's migration page which can be navigated to via the packages section in the back office.
+* If you install an Umbraco Nuget package via Nuget in Visual Studio (or another IDE), the files will install as per normal Nuget. When the site is started and the admin logs into the back office they will need to navigate to the installed package's migration page to execute the migrations.
+* In both cases, there may be some new UX that alerts an admin user that there are pending migrations that need executing when they log in
+
+
+
+#### Default package migrations
+
+When a package is created or updated in the back office and the package contains content or schema items then a default package migration will be added to the package which will ensure that the serialized content and/or schema items are installed into the Umbraco database when it's run.
 
 
 ### Installing / uninstalling a package
+
+Installing a Nuget package via the back office will require validating the Nuget package as being an Umbraco Nuget package. We will not be allowing installing non-Umbraco .nupgk packages via the back office directly (though those will be installed as part of the dependency handling chain). 
+
+The back office will only list packages found on Our just like the current back office package listing. If a developer manually uploads a .nupgk package it will be validated to ensure that it is an Umbraco based Nuget package based on it's file structure and metadata. 
 
 #### Supporting NuGet dependency handling
 
@@ -73,14 +85,16 @@ If you try to install a package and it is dependent on a package with a version 
 
 We want to bring a similar experience into the Umbraco backoffice when you install a package from the package dashboard. When you attempt to install a package Umbraco should restore the dependencies for you, or fail if there are version conflicts.
 
-The specifics for how it would work are not set in stone, Arkadiusz Biel has made a [nice POC](https://github.com/umbraco/Umbraco.Packages/issues/19#issuecomment-554763674) we can start from.
+The specifics for how it would work are not set in stone but ideally Nuget APIs are used since they already deal with dependency resolution, etc.... Arkadiusz Biel has made a [nice POC](https://github.com/umbraco/Umbraco.Packages/issues/19#issuecomment-554763674) we can start from. Due to the complexity and potential edge cases of this there will probably be a few iterations and proof of concepts created. For example, there will be a requirement that a Nuget package has a dependency on one of the Umbraco packages like `UmbracoCms` or `UmbracoCms.Web` or `UmbracoCms.Core` even if the package is just JavaScript because this dependency will be the flag that determines which version of Umbraco is compatible with the package. But unlike installing this package via Nuget in Visual Studio, installing a Nuget package in the back office is never going to update the Umbraco package files, the dependency for back office installation would only serve as the flag for package compatibility. 
+
+Other challenges of this is about package uninstallation and how to deal with dependencies. If a Nuget package is installed in the back office and is dependent on 10x other Nuget packages, when we uninstall the main package we cannot also uninstall the other 10x dependencies because there may be other packages that have dependent on these packages. To keep this simple, when working with packages in the back office we won't uninstall package dependencies when a package is uninstalled just like the way Visual Studio works with Nuget packages with the packages.config approach. A developer would then have the option to manually uninstall dependencies if there are no other packages dependent on it.
 
 
 #### Uniform install experience
 
 This ties into the above, but we want to ensure that the install experience is the same no matter where you install your package. Whether you drag and drop a .nupkg file into the backoffice, do it through Visual Studio or select a package in the backoffice it should feel and do the same.
 
-We want to make sure that things like the dependency management works in each case as it could otherwise open up for confusion amongst package consumers.
+We want to make sure that things like the dependency management works in each case as it could otherwise open up for confusion among package consumers.
 
 #### Opt-in to changes
 
@@ -88,11 +102,11 @@ This was mentioned briefly in the package migrations section above, but one thin
 
 In an ideal world, you would install a package and get full control and insight into what it does, but that would also cause a lot of extra bloat. One thing we want to accomplish right now is to at least allow admin users to opt into when package migrations run.
 
-If the package you install or update has one or more package migrations that haven't been run you will need to authorize them with an admin account. This accomplishes two things - first is that you would have more control over things being run on the database (file changes are a bit easier to manage using a versioning tool).
+If the package you install or update has one or more package migrations that haven't been run you will need to authorize them with an admin account. This accomplishes two things - first is that you would have more control over things being run on the database (file changes are a bit easier to manage using version/source control such as Git).
 
 We want to show some sort of summary of what the migrations will do and present them to the user before they sign off on it.
 
-Opting for migrations will also allow the user to plan when these things run. Can help with slow startup times due to migrations automatically running on startup.
+Opting in for migrations will also allow the user to plan when these things run. Can help with slow startup times due to migrations automatically running on startup.
 
 #### Warn about what will be removed on uninstall
 
@@ -106,7 +120,9 @@ We want to make it safer and more transparent what happens when you uninstall a 
 
 #### NuGet feed on Our
 
-We would change the current package repository on Our to a NuGet feed to host packages. Ideas on the best way of handling this are greatly appreciated.
+We will create a Nuget feed on the Our website for packages uploaded to Our. This means any package in the new .nupkg package format that is uploaded to our will be able to be consumed by a new custom Nuget feed. This custom Nuget feed can be consumed within Visual Studio or any development IDE by adding the Our Nuget feed URL to your Nuget.config file. The feed URL is yet to be determined.
+
+If developers wish to upload their packages to Nuget as well that is totally ok. Perhaps in the future there will be a way to automatically publish a package from Our to your Nuget account. There's no problem with having the same package/version in 2 different feeds.
 
 ### Mockups
 
@@ -133,10 +149,13 @@ We have a few ideas that would be awesome to have but will be out of scope for t
 - Automatically check for upgrades and notify users with the right permissions
 - Check for references in other content / schema when trying to uninstall something and warn the user
 - Add option on uninstall to choose whether to uninstall the Umbraco content & schema
+- Use Umbraco Deploy as the serialization/deserialization engine
 
 ## Unresolved Issues
 
 This RFC is mostly a feature plan for what we want to achieve with the first iteration of a new package format. Some of the features are on an early idea level and will need to be defined clearer before implementation can start. 
+
+- What packages do we list as installed in the backoffice? If a package is installed in the back office and it requires 10x Nuget packages that are not Umbraco Nuget packages but just normal .NET libraries, do we list all of these? This would essentially mean we'd be listing everything that would exist in a `packages.config` file. If we don't list all of these then the back office user will have no way to uninstall these dependencies since we aren't going to uninstall a package's dependencies when it is uninstalled from the back office.
 
 ## Related RFCs 
 
