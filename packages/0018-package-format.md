@@ -4,11 +4,11 @@ Request for Contribution (RFC) 18 : _Package Format_
 
 ## Code of conduct
 
-Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md)
+Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md).
 
 ## Intended Audience
 
-The intended audience for this RFC is: Package developers and consumers
+The intended audience for this RFC is: Package developers and consumers.
 
 ## Summary
 
@@ -20,7 +20,7 @@ The purpose of this RFC is to suggest a way to bridge the gap and unify the two 
 
 ## Motivation
 
-Many package developers end up publishing their packages as both a Zip and NuGet packages since both formats have unique advantages. However as a developer, working with NuGet packages are highly preferred as it has some essential features such as having automatic dependency handling and being fully integrated with application development pipelines such as Visual Studio and CI/CD platforms.
+Many package developers end up publishing their packages as both a Zip and NuGet packages since both formats have unique advantages. However, as a developer, working with NuGet packages are highly preferred as it has some essential features such as having automatic dependency handling and being fully integrated with application development pipelines such as Visual Studio and CI/CD platforms.
 
 We want to make it easier and simpler to create packages by only maintaining one format while getting the best features of both.
 
@@ -48,19 +48,22 @@ We want to ensure that when you create a package in the backoffice you can inclu
 
 Similar to the Umbraco content and media above, we want to keep the option of installing schema (document types, data types, templates, languages, etc.). 
 
-We also want to simplify the package creation approach when including Umbraco schema and content to only allow you to pick all items. Most packages made are made on a specific site to develop packages, we believe it will make it faster and simpler to create and manage packages. For packages based on files the option to pick files will stay as-is.
+We also want to simplify the package creation approach when including Umbraco schema and content to **only allow you to pick all items**. Most packages are made on a specific site to develop that one package, we believe it will make it faster and simpler to create and manage packages. For packages based on files the option to pick files will stay as-is.
 
 #### Package Migrations 
 
-What is "Package Migrations"? In Umbraco we have the concept of "Migrations" which are commands or instructions that are executed when Umbraco upgrades. We plan to re-use this same concept and code to allow developers to embed commands/instructions into their package which can be executed during installation and upgrades. Using Umbraco Migrations is not new and some packages already choose to use them but it requires a lot of manual coding/plumbing and is generally inconsistent with how they are detected and executed. Primarily because there is no common or officially documented way to use them. Package Migrations will be an official, documented and supported way for package developers to use Migrations. We plan on making this as simple as possible to use so package developers don't have to worry about writing any of the plumbing/detection code that they would need to do today.
+What are "Package Migrations"? In Umbraco we have the concept of "Migrations" which are commands or instructions that are executed when Umbraco upgrades. We plan to re-use this same concept and code to allow developers to embed commands/instructions into their package which can be executed during installation and upgrades. 
+Using Umbraco Migrations is not new and some packages already choose to use them, but it requires a lot of manual coding/plumbing and is generally inconsistent with how they are detected and executed. Primarily, because there is no common or officially documented way to use them. Package Migrations will be an official, documented and supported way for package developers to use Migrations. We plan on making this as easy as possible to use so package developers don't have to worry about writing any of the plumbing/detection code that they would need to do today.
 
-Like Umbraco's normal Migrations, Package Migrations will ensure that these commands/instructions are only executed once per package version. This ensures they are not accidentally re-executed and are executed in each environment where the package exists. A great benefit of this is that you can be sure that a package's Migrations are executed on each environment when you deploy your changes. We plan on updating Umbraco Cloud to ensure that Package Migrations are executed behind the scenes when deploying between environments, like what happens when you perform minor upgrades on Umbraco Cloud.
+Like Umbraco's normal Migrations, Package Migrations will ensure that these commands/instructions are only executed once per package version. This ensures they are not accidentally re-executed and are executed in each environment where the package exists. A great benefit of this is that you can be sure that a package's Migrations are executed on each environment when you deploy your changes. 
 
-The old "Package Actions" format will be retired, however we plan on ensuring that Package Migrations share the same simplicity. Currently, Umbraco Migrations are targeted mostly for database changes and if you wanted to do any content/schema manipulation in Umbraco Migrations, it would take quite a lot of code. We plan on making working with Package Migrations as easy as possible and will include many common operations. For example, working with content and schema in easy to use method calls that won't require writing much code, or even being able to list these operations as part of the package's metadata. The specific implementation details are yet to be determined and will be made more clear once some proof of concepts are created.
+Note: We plan on updating Umbraco Cloud to ensure that Package Migrations are executed behind the scenes when deploying between environments, like what happens when you perform minor upgrades on Umbraco Cloud.
+
+The old "Package Actions" format will be retired, however, we plan on ensuring that Package Migrations share the same simplicity. Currently, Umbraco Migrations are targeted mostly for database changes and if you wanted to do any content/schema manipulation in Umbraco Migrations, it would take quite a lot of code. We plan on making working with Package Migrations as easy as possible and will include many common operations. For example, working with content and schema in easy to use method calls that won't require writing much code, or even being able to list these operations as part of the package's metadata. The specific implementation details are yet to be determined and will be made more clear once some proof of concepts are created.
 
 The intent for package migrations is to **not** run on startup or install as we are used to with Package Actions and custom Migrations. Instead, when you install a package the migrations will be something you opt into running, along with an overview of what it will change. The UX of this is not designed but the idea is that:
 
-* If you install a .nupgk package via the backoffice, once the packages files are installed you will be presented with some UI listing what the Package Migration will execute and the admin can press a button to accept the changes and the migration will execute. If the migrations are not executed then the admin can re-visit the package's migration page which can be navigated to via the packages section in the backoffice.
+* If you install a .nupgk package via the backoffice, once the package files are installed you will be presented with some UI listing what the Package Migration will execute. An admin can then press a button to accept the changes and the migration will execute. If the migrations are not executed then the admin can re-visit the package's migration page which can be navigated to via the packages section in the backoffice.
 * If you install an Umbraco NuGet package via NuGet in Visual Studio (or another IDE), the files will install as per normal NuGet. When the site is started and the admin logs into the backoffice they will need to navigate to the installed package's migration page to execute the migrations.
 * In both cases, there may be some new UI that alerts an admin user that there are pending migrations that need executing when they log in.
 
@@ -120,7 +123,7 @@ We want to make it safer and more transparent what happens when you uninstall a 
 
 #### NuGet feed on Our
 
-We will create a NuGet feed on the Our website for packages uploaded to Our. This means any package in the new .nupkg package format that is uploaded to our will be able to be consumed by a new custom NuGet feed. This custom NuGet feed can be consumed within Visual Studio or any development IDE by adding the Our NuGet feed URL to your NuGet.config file. The feed URL is yet to be determined.
+We will create a NuGet feed on the Our website for packages uploaded to Our. This means any package in the new .nupkg package format that is uploaded to Our will be able to be consumed by a new custom NuGet feed. This custom NuGet feed can be consumed within Visual Studio or any development IDE by adding the Our NuGet feed URL to your NuGet.config file. The feed URL is yet to be determined.
 
 If developers wish to upload their packages to NuGet as well that is totally ok. Perhaps in the future there will be a way to automatically publish a package from Our to your NuGet account. There's no problem with having the same package/version in 2 different feeds.
 
