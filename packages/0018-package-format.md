@@ -1,6 +1,6 @@
 # Project UmbGet Package format 📦
 
-Request for Contribution (RFC) 18 : _Package Format_
+Request for Contribution (RFC) 22 : _Package Format_
 
 ## Code of conduct
 
@@ -90,7 +90,7 @@ We want to bring a similar experience into the Umbraco backoffice when you insta
 
 The specifics for how it would work are not set in stone but ideally NuGet APIs are used since they already deal with dependency resolution, etc.... Arkadiusz Biel has made a [nice POC](https://github.com/umbraco/Umbraco.Packages/issues/19#issuecomment-554763674) we can start from. Due to the complexity and potential edge cases of this there will probably be a few iterations and proof of concepts created. For example, there will be a requirement that a NuGet package has a dependency on one of the Umbraco packages like `UmbracoCms` or `UmbracoCms.Web` or `UmbracoCms.Core` even if the package is only JavaScript. This is because this dependency will be the flag that determines which version of Umbraco is compatible with the package. But unlike installing this package via NuGet in Visual Studio, installing a NuGet package in the backoffice is never going to update the Umbraco package files, the dependency for backoffice installation would only serve as the flag for package compatibility. 
 
-Other challenges of this is about package uninstallation and how to deal with dependencies. If a NuGet package is installed in the backoffice and is dependent on 10x other NuGet packages, when we uninstall the main package we cannot also uninstall the other 10x dependencies. There may be other packages that are dependent on these packages. To keep this simple, when working with packages in the backoffice we won't uninstall package dependencies when a package is uninstalled, like the way Visual Studio works with NuGet packages with the packages.config approach. A developer would then have the option to manually uninstall dependencies if there are no other packages dependent on it.
+Other challenges of this is about package uninstallation and how to deal with dependencies. If a NuGet package is installed in the backoffice and is dependent on 10x other NuGet packages, when we uninstall the main package we cannot also uninstall the other 10x dependencies. There may be other packages that are dependent on these packages. To keep this manageable, when working with packages in the backoffice we won't uninstall package dependencies when a package is uninstalled, like the way Visual Studio works with NuGet packages with the packages.config approach. A developer would then have the option to manually uninstall dependencies if there are no other packages dependent on it.
 
 
 #### Uniform install experience
@@ -126,16 +126,6 @@ We want to make it safer and more transparent what happens when you uninstall a 
 We will create a NuGet feed on the Our website for packages uploaded to Our. This means any package in the new .nupkg package format that is uploaded to Our will be able to be consumed by a new custom NuGet feed. This custom NuGet feed can be consumed within Visual Studio or any development IDE by adding the Our NuGet feed URL to your NuGet.config file. The feed URL is yet to be determined.
 
 If developers wish to upload their packages to NuGet as well that is totally ok. Perhaps in the future there will be a way to automatically publish a package from Our to your NuGet account. There's no problem with having the same package/version in 2 different feeds.
-
-### Mockups
-
-TODO: File structure overview of the Umbraco NuGet package
-
-TODO: Explain what technically happens on Package creation
-
-TODO: Explain what technically happens when installing from the backoffice
-
-TODO: Explain what happens when uninstalling
 
 ## Drawbacks
 
