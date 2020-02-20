@@ -63,7 +63,7 @@ _NOTE:_ We need to investigate how Umbraco Deploy is handling relations since we
 
 We intend on adding a report to the "Info" tab of a media item to show it's relations. The "Info" tab on a media item currently has quite a lot of available real estate so we plan on using that instead of creating another content app for this. 
 
-This report will be a simple list showing which content, media and member items the media item is being used in. We will also indicate if these references are in the recycle bin. Each item will have a link to navigate to the related item and ideally, this will be in infinite editing but as an MVP this may mean linking to the item directly.
+This report will be a list showing which content, media and member items the media item is being used in. We will also indicate if these references are in the recycle bin. Each item will have a link to navigate to the related item and ideally, this will be in infinite editing but as an MVP this may mean linking to the item directly.
 
 ## Drawbacks
 
@@ -72,11 +72,11 @@ This report will be a simple list showing which content, media and member items 
 
 ## Alternatives
 
-Let users choose community packages to achieve this functionality such as Nexu. However, we want to be able to enable more than just media tracking and we want to ensure that the functionality for reporting dependencies is baked into the Umbraco core editors instead of relying on external logic trying to manage these relations. We hope to borrow some inspiration from community packages and their users to achieve the best results.
+Let users choose community packages to achieve this functionality such as Nexu. However, we want to be able to enable more than media tracking. We want to ensure that the functionality for reporting dependencies is baked into the Umbraco core editors instead of relying on external logic trying to manage these relations. We hope to borrow some inspiration from community packages and their users to achieve the best results.
 
 ## Out of Scope
 
-* Although the design of this implementation will support tracking other Umbraco items other than just media, the implementation of this RFC will focus solely on Media which means any reporting and functionality relating to other Umbraco items: Macros, Content, Templates, Members, Forms will not be part of the MVP.
+* Although the design of this implementation will support tracking other Umbraco items other than media, the implementation of this RFC will focus solely on Media which means any reporting and functionality relating to other Umbraco items: Macros, Content, Templates, Members, Forms will not be part of the MVP.
 * Users, Languages, Views, Partial Views, Stylesheets, Scripts will not be part of the relationship tracking APIs developed.
 * For this MVP, reporting of media relations will be limited to the Info app on Media items only. Any additional reporting is outside of the scope of this RFC and may be included in future RFCs.
 * For this MVP we do not plan on warning the user upon deletion of a media item if it is actively being used, in the future this will be a feature.

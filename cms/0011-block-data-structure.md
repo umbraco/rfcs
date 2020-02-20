@@ -128,7 +128,7 @@ In the future `data` could be stored in the database as a document rather than e
 
 Compatibility between existing complex editors (Grid, Nested / Stacked / Inner Content, DTGE, etc) and the proposed model will unfortunately not be possible.
 
-Due to this, block based implementations of existing complex editors might need to be maintained alongside the existing editors for a while. This could cause confusion for developers about which editors to be using, however the old ones can be marked as deprecated so they no longer show up in the back office for new projects.
+Due to this, block based implementations of existing complex editors might need to be maintained alongside the existing editors for a while. This could cause confusion for developers about which editors to be using, however the old ones can be marked as deprecated so they no longer show up in the backoffice for new projects.
 
 An upgrade or migration path between specific editors could be defined at a later stage.
 

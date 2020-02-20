@@ -16,8 +16,12 @@ Title: <span style="text-decoration:underline;">Project UniCore</span>
 
 We would like to proceed with moving the current Umbraco codebase from .Net Framework to be based on .Net Core. 
 
+<!-- vale valeStyle.Hyperbolic = NO -->
+
 We would like to make the porting of this code as simple as possible, both from the point of view of the engineers 
 but more importantly the point of view of Umbraco end-users/developers. 
+
+<!-- vale valeStyle.Hyperbolic = YES -->
 
 Where possible, we hope to create a .Net Core build of Umbraco while keeping as many of the same 
 existing APIs and paradigms that developers are currently used to.
@@ -32,11 +36,15 @@ will continue to evolve into the future, therefore, it is the obvious platform f
 
 The motivation for the “Minimal disruption” approach is:
 
+<!-- vale valeStyle.Hyperbolic = NO -->
+
 For the benefit of Umbraco end-users, developers, contributors and Umbraco HQ, we want to make 
 the development process for this transition as simple and short as possible. This means we would 
 like to keep any changes to the current concepts in Umbraco to a minimum. We want to make the 
 transition from the current .Net Framework version of Umbraco to a .Net Core version of Umbraco 
 as frictionless as possible.
+
+<!-- vale valeStyle.Hyperbolic = YES -->
 
 ## Detailed Design
 
@@ -77,7 +85,7 @@ will need to be updated to support any breaking changes. Breaking changes will e
 change from .Net Framework to .Net Core and also for any necessary changes needed by the 
 Umbraco .Net Core transition.
 *   Namespace changes in the Umbraco solution will be made. Although this is a breaking change we feel 
-that this is easily overcome by a textual find + replace. 
+that this is overcome by a textual find + replace. 
 *   Documentation will be provided on how to transition to the Umbraco .Net Core version including 
 what breaking changes exist and how to overcome the common changes.
 
