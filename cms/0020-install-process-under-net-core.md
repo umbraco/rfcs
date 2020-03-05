@@ -32,6 +32,9 @@ The template would include the `UmbracoCMS` NuGet package and configure the proj
 
 The templates allow for parameters to be provided to customize the installation process. For the initial implementation, we will support a project name as the only available parameter. Other parameters can be added in the future to further customize the Umbraco project.
 
+### Installing Umbraco from the .NET Core CLI would then be:
+One time install of the template: `dotnet new -i UmbracoCms` and then `dotnet new UmbracoCms -n MyProjectName` when you want to create a new project.
+
 This is the main part of the RFC. How do you see this being implemented in Umbraco?
 
 ## Drawbacks
