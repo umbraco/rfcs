@@ -37,7 +37,7 @@ This is the main part of the RFC. How do you see this being implemented in Umbra
 ## Drawbacks
 The primary drawback is that the template needs to be installed before it can be used for the first time. This is an additional step before users can get started.
 
-Another drawback is that configuration changes needed during upgrades would have to be handled in a different manner, since the `PackageReference` syntax no longer allows for install scripts, and .the `dotnet new` templates would only apply to new projects
+Another drawback is that configuration changes needed during upgrades would have to be handled in a different manner, since the `PackageReference` syntax no longer allows for install scripts, and .the `dotnet new` templates would only apply to new projects. 
 
 Discuss any disadvantages or side-effects of this RFC.
 
@@ -54,7 +54,7 @@ The only alternative we can come up with is to include a script that will do the
 The answers that we are hoping to get from the community are:
 
 1. Are you aware of any better alternatives?
-1. Are you aware of any possible why to archive the existing workflow?
+1. Are you aware of any possible way to achieve the existing workflow?
 
 ## Related RFCs 
 
