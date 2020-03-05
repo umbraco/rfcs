@@ -35,14 +35,10 @@ The templates allow for parameters to be provided to customize the installation 
 ### Installing Umbraco from the .NET Core CLI would then be:
 One time install of the template: `dotnet new -i UmbracoCms` and then `dotnet new UmbracoCms -n MyProjectName` when you want to create a new project.
 
-This is the main part of the RFC. How do you see this being implemented in Umbraco?
-
 ## Drawbacks
 The primary drawback is that the template needs to be installed before it can be used for the first time. This is an additional step before users can get started.
 
 Another drawback is that configuration changes needed during upgrades would have to be handled in a different manner, since the `PackageReference` syntax no longer allows for install scripts, and .the `dotnet new` templates would only apply to new projects. 
-
-Discuss any disadvantages or side-effects of this RFC.
 
 ## Alternatives
 
