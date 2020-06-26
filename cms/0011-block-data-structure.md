@@ -49,9 +49,11 @@ We would be using Element Types to define the structure of each "content block".
 
 We propose creating a uniform way to store the data of a complex editor. The data will consist of two main parts:
 
-**Layout:** The Layout will define Blocks that each will reference a content item located in the list of `data` by it's UDI. The Layout object will be key/value pairs where the `key` is the Property Editor alias.
+**Layout:** The Layout will define Blocks that each will reference a content item located in the list of `contentData` by it's Content UDI. The Layout object will be key/value pairs where the `key` is the Property Editor alias.
 
-**Data:** A list of content items based on ElementTypes(`IPublishedElement`).
+**ContentData:** A list of content items based on ElementTypes(`IPublishedElement`).
+
+**SettingsData:** A list of settings items based on ElementTypes(`IPublishedElement`).
 
 
 #### Simple example of JSON
@@ -61,31 +63,36 @@ We propose creating a uniform way to store the data of a complex editor. The dat
   "layout": {
     "Umbraco.NestedContent": [
       {
-        "udi": "umb://element/fffba547615b4e9ab4ab2a7674845bc9",
-        "settings": {}
+        "contentUdi": "umb://element/fffba547615b4e9ab4ab2a7674845bc9",
+        "settingsUdi": "umb://element/ab4ab2a76ba54761574845bc9e7db4e4"
       }, 
       {
-        "udi": "umb://element/e7dba547615b4e9ab4ab2a7674845bc9",
-        "settings": {}
+        "contentUdi": "umb://element/e7dba547615b4e9ab4ab2a7674845bc1"
       }
     ]
   },
-  "data": [
+  "contentData": [
     {
       "udi": "umb://element/fffba547615b4e9ab4ab2a7674845bc9",
       "title": "Hello"
     },
     {
-      "udi": "umb://element/e7dba547615b4e9ab4ab2a7674845bc9",
+      "udi": "umb://element/e7dba547615b4e9ab4ab2a7674845bc1",
       "title": "World",
       "text": "The content of a textarea"
+    }
+  ],
+  "settingsData": [
+    {
+      "udi": "umb://element/ab4ab2a76ba54761574845bc9e7db4e4",
+      "color": "#c0ffe3"
     }
   ]
 }
 
 ```
 
-### Layout
+### The Layout
 The Layout will contain an object with a structure specific to the Property Editor, named by the Property Editor Alias.
 This is required because some editors will not store a simple one-dimensional array such as Nested Content, but rather multi-dimensional structures like Grid Layouts. By defining each layout with the alias of the Property Editor it means developers can in theory swap the underlying Property Editor without losing data and while keeping the layout preserved by the previous editor.
 
@@ -93,18 +100,20 @@ The structure of a given layout object is defined by the Property Editor and can
 
 Common for all is that the object referencing content items would implement the `IBlockElement` interface. This interface has two properties:
 
-* UDI — Used to link to the content item.
-* settings — An object containing properties needed for a specific layout. The setting could contain the number of columns for ie. Grid Layouts. Settings are not required and can therefore be empty. It would be posible for developers to change or extend the settings. Potentially a Property Editor could provide the option to pick a specific Element Type (`IPublishedElement`) for settings for each Block.
+* `contentUdi` — Used to link to the content item.
+* `settingsUdi` — Used to link to the content item. `settingsUdi` is not required and can therefore be left undefined.
 
-### Data
-A list of Element Type based content items (`IPublishedElement`)
+This object can be extended to contain more properties. This could be usefull for a Grid Property Editor, where each object might want to define its width in columns.
+
+### The Data Buckets
+Both `contentData` and `settingsData` is a list of Element Type based content items (`IPublishedElement`)
   - Element Types are Document Types without any routable settings (e.g. templates, URL).
   - In the short term the element data will be stored as JSON and each element will have it's own UDI assigned.
 
 
 ### Strongly typed
 
-* The content items of `data` are strongly typed as `IPublishedElement`.
+* The content items of `contentData` and `settingsData` are strongly typed as `IPublishedElement`.
 * The layout can be strongly typed too but will be up to the Property Editor to define.
 
 We do have a specific interface for the object representing a Block item, notice this can be extended by the specific Property Editor. The `IBlockElement` C# interface would look like this:
@@ -113,8 +122,8 @@ We do have a specific interface for the object representing a Block item, notice
 
 public interface IBlockElement<TSettings>
 {
-    Udi Udi { get; }
-    TSettings Settings { get; }
+    Udi ContentUdi { get; }
+    Udi SettingsUdi { get; }
 }
 ```
 
@@ -122,7 +131,10 @@ This also means these can be strongly typed and used by Models Builder to genera
 
 ### Future
 
-In the future `data` could be stored in the database as a document rather than embedded JSON objects. This unlocks the possibility for variant content, segmentation and scheduled publishing blocks by leveraging similar behaviour already in the Core CMS. (This part is out of the scope of this RFC).
+In the future `contentData` and potentially `settingsData` could be stored in the database as a document rather than embedded JSON objects. This unlocks the possibility for variant content, segmentation and scheduled publishing blocks by leveraging similar behaviour already in the Core CMS. (This part is out of the scope of this RFC).
+
+The `IBlockElement` does not have an identifier as of this proposal, but this proposal leaves room for appending a UDI to the `IBlockElement` making it posible to make future references for Blocks.
+Currently we do not support this and therefor its out of scope and blocks are left with no identifier.
 
 ## Drawbacks
 
@@ -151,9 +163,14 @@ This RFC was based on previous RFC on the same topic: [RFC — 0011 — block-da
 - [Niels Hartvig](https://twitter.com/thechiefunicorn) (HQ)
 - [Shannon Deminick](https://twitter.com/shazwazza) (HQ)
 
-This updated RFC is compiled by:
+This updated RFC v2 is compiled by:
 - [Niels Lyngsø](https://twitter.com/nielslyngsoe) (HQ)
 - [Claus Jensen](https://twitter.com/clausjnsn) (HQ)
 - [Shannon Deminick](https://twitter.com/shazwazza) (HQ)
 - [Rune Strand](Strand) (HQ)
+
+This updated RFC v3 is compiled by:
+- [Niels Lyngsø](https://twitter.com/nielslyngsoe) (HQ)
+- [Claus Jensen](https://twitter.com/clausjnsn) (HQ)
+- [Shannon Deminick](https://twitter.com/shazwazza) (HQ)
 
