@@ -12,7 +12,7 @@ The intended audience for this RFC is technical users, developers and package cr
 
 ## Summary
 
-The purpose of this RFC is to introduce a way to store data based on _Element Types_ as separate data in the database, instead of storing them as a single blog of JSON on an existing node.
+The purpose of this RFC is to introduce a way to store data based on _Element Types_ as separate data in the database, instead of storing them as a single blob of JSON on an existing node.
 
 The storage of data created from _Element Types_ will be defined as _Element Data_ in this RFC. For the sake of focus, the name of _Element Data_ is _Out of Scope_ for this RFC.
 
@@ -22,7 +22,8 @@ The goal is for this work is to _enable_, but _not include_
 
 1. Element Data reuse
 2. Pickers (UI) for selecting elements
-3. Tooling for updating/sync'ing variants using element data
+3. Tooling for updating/sync'ing variants using Element Data
+4. Simplify deployment and data integrity of Element Data
 
 ## Motivation
 
@@ -32,11 +33,11 @@ The current design of how Element Data is stored has a number of less than optim
 * This means that it's hard to ensure data integrity
 * The consequence of this is that it's not possible to treat Element Data as semantic data
 * Thus there's a great deal of workarounds in anything from UI to storage to views to "understand" the Element Data
-* This makes it hard to enable things like comparing Element Data in variants of a node, re-using Element Data, ensuring relations between element data and much more
+* This makes it hard to enable things like comparing Element Data in variants of a node, re-using Element Data, ensuring relations between Element Data and much more
 
 ## Detailed Design
 
-Currently Element Data is stored as a JSON blob in a property on a node, instead of being stored as individual nodes with no URL. 
+Currently Element Data is stored as a JSON blob in a Property on a Node, instead of being stored as individual nodes with no URL. 
 
 Say I have a Document Type "Article" with a Property "Content" of Property Type "Nested Content". The "Content" property will use a number of Element Types to allow data to be created by the "Nested Content" Property Type. 
 
@@ -47,7 +48,7 @@ In this simplified example, Nested Content will be used as a simple block editor
 3. Text + Quote
 4. Full Image
 
-When the editor then create a new _Node_ of type _Article_ and edit the _Content_ with a "Headline", a "Full Image", a "Text + Quote" and an "Image + Text", all that data is then serialized as one blob of JSON and stored on the _Article_ node in the _Content_ property. This means that to ensure any type of data integrity (understanding what that data is), the data needs to be de-serialized every single time:
+When the editor then create a new _Node_ of type _Article_ and edit the _Content_ by adding a "Headline", a "Full Image", a "Text + Quote" and an "Image + Text" row, all that data is then serialized as one blob of JSON and stored on the _Article_ node in the _Content_ property. This means that to ensure any type of data integrity (understanding what that data is), the data needs to be de-serialized every single time:
 
 * Every time the Article is loaded in the back office
 
@@ -59,19 +60,21 @@ When the editor then create a new _Node_ of type _Article_ and edit the _Content
 
 #### An example of why missing data integrity is bad
 
-Let's say the editor wants to create a variant of the Article and update the text to German, but leave the images used in "Full Image" and "Image + Text" unchanged. This works fine as creating new variant simply copies all the data from the English version to the German version.
+Let's say the editor wants to create a variant of the Article and update the text to German, but leave the images used in "Full Image" and "Image + Text" unchanged. This works fine as creating a new variant simply copies all the data from the English version to the German version.
 
 Later, the images needs to be updated. So the editor simply updates them on the English version and publish both the English and German version. Because there's no relationship between the two versions, the images are only updated on the English version.
 
-In other words, the variant features available on properties on a node is not available on Element Data.
+In other words, the variant features available on properties on a node - such as making some properties invariant - is not currently available when working with Element Data.
 
 
 
 ### Possible solution   
 
-All _Element Data_ should be stored as real nodes with no URL. This means that they should be _referenced_ by their UDI in a Property on a Node, instead of being _stored_ in a Property on a Node.
+All _Element Data_ should be stored as real nodes with no URL as descendants of the node edited. This means that they should be _referenced_ by their UDI in a Property on a Node, instead of being _stored_ in a Property on a Node. 
 
-For the Editor and for the Developer, this change won't be noticed compared to what we have today as Element Data won't be visible in the tree in the back office and in the Razor views, the Element Data will appear as a collection of IPublishedElement on a property of an IPublishedElement as it does today.
+For the Editor, this change will appear transparent compared to what we have today, as Element Data won't be visible in the tree in the back office and in the Razor views. 
+
+For the Developer the Element Data will appear as a collection of IPublishedElement on a property of an IPublishedElement as it does today.
 
 
 
