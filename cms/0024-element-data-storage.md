@@ -1,6 +1,6 @@
 # Element Data storage
 
-Request for Contribution (RFC) 0023 : Storing _Element Data_ as separate nodes.
+Request for Contribution (RFC) 0024 : Storing _Element Data_ as separate nodes.
 
 ## Code of conduct
 
