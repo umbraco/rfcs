@@ -1,23 +1,19 @@
 # Future-proofing the Umbraco backoffice
-
 Request for Contribution (RFC) 0025 : Future-proofing the Umbraco backoffice
 
 ## Code of conduct
-
 Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md)
 
 ## Intended Audience
-
 The intended audience for this RFC is: technical users, developers and package authors
 
 ## Summary
-
 To future-proof Umbraco’s backoffice, we intend to run a three-part process - each with their own RFC.
 1. Standalone UI library (RFC soon - January 2021)
 2. Defining backoffice API (RFC spring 2021)
 3. Implement backoffice (RFC summer 2021)
-## Motivation
 
+## Motivation
 Umbraco’s backoffice is a big reason editors AND developers choose Umbraco. It is easy to use and flexible to customize to specific needs for a project/client
 
 The current (second) generation back-office is built using AngularJS. It was a great choice in 2013, and has served us well, but has long been considered outdated. From December 2021 it will no longer receive updates/patches (RIP).
@@ -41,7 +37,6 @@ With the next generation of Umbraco’s backoffice, we want to bring a number of
 - Improve the upgrade experience
 
 ## Detailed Design
-
 To tackle the issues and achieve the benefits described above, we intend to split the project into 3 parts/major milestones.
 
 We do this in order to get real user feedback through an exploratory and agile process, and to make a difference for developers and editors in increments.
@@ -54,11 +49,16 @@ The three milestones will have individual RFCs and are as follows:
 The parts are not entirely sequential and can run in parallel to a certain extent.
 
 ### Timing
-RFC for part 1 will be published in January and we expect work to start shortly thereafter. We feel this is important and that we risk halting further development if we don't act now and with sufficient team-size.
+RFC for part 1 will be published in January and we expect work to start shortly thereafter. 
+
+We feel this is important and that we risk halting further development if we don't act now and with sufficient team-size.
+
 We expect part 2 to start in the spring. Part 1 does not need to be done before this can start
+
 Part 3 will start when part 2 is ready.
 
 Read on to learn more about the different parts, and, as mentioned, there will be separate RFCs for each part (we will make sure to update this with links as they are published). We also intend to create a new community team around these efforts. 
+
 ### 1. Build a UI library
 We want to create a library of new UI components that are thoughtfully built with reuse and accessibility in mind.
 The UI library will be its own separate Open Source project with source code on GitHub and distributed via NPM.
@@ -72,6 +72,7 @@ We want the components to work with any framework so it is not tied to Umbraco�
 We intend to start releasing public builds when we have sufficient components to get an understanding of how the UI Library will work and in order to get feedback and collaboration as soon as possible.
 
 **A UI Library will make the Umbraco experience more beautiful, accessible and consistent, while also making it easier and less work for developers and maintainers.**
+
 ### 2. Define BackOffice API
 In the second part, the goal is to define a public API for the backoffice. The official/documented API for the current backoffice implementation is too limited, which has led developers to rely on undocumented hacks, that the backoffice now unofficially supports.
 
@@ -91,8 +92,8 @@ It should be easy and intuitive to extend and customize Umbraco’s backoffice -
 We want the API-implementation to have TypeScript definitions, enabling IDEs and tooling to help developers as much as possible, but TypeScript will not be forced on developers. 
 
 **A clearly defined API will make it easier to develop and  extend Umbraco’s backoffice, provide better tooling and make it safer to upgrade Umbraco.**
-### 3. Rebuild BackOffice 
 
+### 3. Rebuild BackOffice 
 We need to rebuild the existing Umbraco backoffice, with the new API defined in part 2. This will be a complete rewrite, not a migration, and can only be released after it is completely done!
 
 The goal of part 3 is to have a modern and maintainable platform, where the technology doesn't complicate or slow down further development. Umbraco’s backoffice should be flexible enough to allow for new ideas and should be testable. The rebuild will use TypeScript (mandatory for Core developers). 
@@ -103,15 +104,15 @@ In order to mitigate the impact of releasing part 3 for developers and package a
 This will be done in collaboration with the various community teams, such as the documentation curators and the package team. 
 
 **A new implementation of Umbraco’s backoffice will give us a better platform to build on and allow us to remove AngularJS. Furthermore, allowing us to evolve the backoffice without breaking the API.**
-## Drawbacks
 
+## Drawbacks
 Part 3 will be a big-bang release (everything released at once)  and will effectively break all existing packages. 
 
 We have considered alternative approaches  such as a more incremental approach using adapter/API-bridge/compatibilty layer. We chose to move on with the proposed solution, to allow the flexibility we want in a new architecture, to "cut the strings" and not have legacy-code to support.
 
 It will require a major version release of Umbraco CMS.
-## Alternatives
 
+## Alternatives
 **We could just pick a framework and build everything in that**
 While this might initially make it easier for everyone, it would likely put us in the same place in the future. Also, this would mean we have to do all the work up front, with no clear benefit for other products.
 
@@ -122,7 +123,6 @@ This would result in a larger project scope and we would eventually either be st
 It’s not really a solution. We get further and further away from the “hype-train” and new developers will have to learn something “only” for Umbraco. It is already an argument against Umbraco. This compares to staying on the ASP .NET framework. The longer we wait, the longer we have to maintain potential issues in angularJS ourselves (after December, 2021).
 
 ## Out of Scope
-
 This RFC describes the project structure/process and that’s what we would like to discuss. There will be detailed RFCs for each part of the process.
 
 Any discussion about specific technologies is out of scope for this RFC. That will be appropriate in the individual RFCs, as they are specific to each part. Use of TypeScript can be debated here, as it spans all three parts!
@@ -130,27 +130,20 @@ Any discussion about specific technologies is out of scope for this RFC. That wi
 No new features will be added when rebuilding backoffice, as we aim to keep the same feature set as latest v8. This can be discussed but not any specific new features.
 
 ## Unresolved Issues
-
 The answers that we are hoping to get from the community & Umbraco HQ is:
 
-Validating the overall approach for future-proofing Umbraco’s backoffice
-
-Any obstacles/issues that need to be taken into account either for the overall process or for RFCs for the individual parts.
-
-How to approach migration of packages. What can be done to ease the process while maintaining the ability to define a new API and rebuild the backoffice. 
+- Validating the overall approach for future-proofing Umbraco’s backoffice
+- Any obstacles/issues that need to be taken into account either for the overall process or for RFCs for the individual parts.
+- How to approach migration of packages. What can be done to ease the process while maintaining the ability to define a new API and rebuild the backoffice. 
 
 ## Related RFCs 
-
 - Previous RFC about “Future of the Back-Office Front-End”
 *Many ideas from this RFC surfaced in this previous RFC, especially the description of motivation and benefits/opportunities have been influential. 
 - The main differences are around the proposed process and approach.*
-## Contributors
 
+## Contributors
 This RFC was compiled by:
 
 * Filip Bech-Larsen (Umbraco HQ)
 * Niels Lyngsø (Umbraco HQ)
 * Rune Strand (Umbraco HQ)
-
-
-
