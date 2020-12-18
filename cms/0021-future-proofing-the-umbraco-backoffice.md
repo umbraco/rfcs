@@ -148,9 +148,9 @@ How to approach migration of packages. What can be done to ease the process whil
 
 This RFC was compiled by:
 
-* Filip Bech-Larsen, Program Manager for Umbraco CMS (Umbraco HQ)
-* Niels Lyngsø, UI/UX Engineer (Umbraco HQ)
-* Rune Strand, Product Communications Producer (Umbraco HQ)
+* Filip Bech-Larsen (Umbraco HQ)
+* Niels Lyngsø (Umbraco HQ)
+* Rune Strand (Umbraco HQ)
 
 
 
