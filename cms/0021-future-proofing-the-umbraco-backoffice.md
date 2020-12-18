@@ -137,7 +137,7 @@ The answers that we are hoping to get from the community & Umbraco HQ is:
 - How to approach migration of packages. What can be done to ease the process while maintaining the ability to define a new API and rebuild the backoffice. 
 
 ## Related RFCs 
-- Previous RFC about “Future of the Back-Office Front-End”
+- Previous RFC about (Future of the Back-Office Front-End)[https://github.com/umbraco/rfcs/pull/8]
 *Many ideas from this RFC surfaced in this previous RFC, especially the description of motivation and benefits/opportunities have been influential. 
 - The main differences are around the proposed process and approach.*
 
