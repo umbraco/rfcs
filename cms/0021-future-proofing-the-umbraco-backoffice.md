@@ -1,5 +1,5 @@
 # Future-proofing the Umbraco backoffice
-Request for Contribution (RFC) 0025 : Future-proofing the Umbraco backoffice
+Request for Contribution (RFC) 0021 : Future-proofing the Umbraco backoffice
 
 ## Code of conduct
 Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md)
@@ -12,6 +12,8 @@ To future-proof Umbraco’s backoffice, we intend to run a three-part process - 
 1. Standalone UI library (RFC soon - January 2021)
 2. Defining backoffice API (RFC spring 2021)
 3. Implement backoffice (RFC summer 2021)
+
+It can be helpful to watch (this umbracoCoffee)[https://youtu.be/i0QfgRYj0zQ?t=1681] episode where Filip Bech, CMS Program Manager for Umbraco, introduces  the RFC and the thoughts behind it.
 
 ## Motivation
 Umbraco’s backoffice is a big reason editors AND developers choose Umbraco. It is easy to use and flexible to customize to specific needs for a project/client
