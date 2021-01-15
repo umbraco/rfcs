@@ -63,7 +63,7 @@ Read on to learn more about the different parts, and, as mentioned, there will b
 
 ### 1. Build a UI library
 We want to create a library of new UI components that are thoughtfully built with reuse and accessibility in mind.
-The UI library will be its own separate Open Source project with source code on GitHub and distributed via NPM.
+The UI library will be its own separate Open Source project with source code on GitHub and distributed for use oustside the Umbraco backoffice via NPM (packages that are not exclusive to Umbraco, other Umbraco HQ products etc.).
 
 The goal of part 1 is to create a consistent set of components covering our needs for the CMS. Additionally these should make it easy for developers and package-authors to make something that "feels like Umbraco".
 
