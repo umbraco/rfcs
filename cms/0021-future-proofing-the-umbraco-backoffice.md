@@ -103,7 +103,11 @@ The goal of part 3 is to have a modern and maintainable platform, where the tech
 When rebuilding backoffice a choice of a framework can become relevant. No matter the choice of framework, this won’t make any difference for third party extensions/packages as backoffice APIs have no framework coupling. 
 
 In order to mitigate the impact of releasing part 3 for developers and package authors, we will ensure that documentation and training are updated in due time, and that a Release Candidate will be available for an extended period of time before the final release.
+
 This will be done in collaboration with the various community teams, such as the documentation curators and the package team. 
+
+Furthermore we will aim to have the changes running on the existing backend codebase allowing for "the old" and new backoffice to run simultaneously during development. This means that alpha/beta/release candidates will include both "the old" and new backoffice, whereas final release will be the new backoffice codebase. 
+
 
 **A new implementation of Umbraco’s backoffice will give us a better platform to build on and allow us to remove AngularJS. Furthermore, allowing us to evolve the backoffice without breaking the API.**
 
