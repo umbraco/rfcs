@@ -91,7 +91,7 @@ We want to support all the current documented/official use cases, and a subset o
 
 It should be easy and intuitive to extend and customize Umbraco’s backoffice - familiar for experienced Umbraco developers and recognizable for frontend developers.
 
-We want the API-implementation to have TypeScript definitions, enabling IDEs and tooling to help developers as much as possible, but TypeScript will not be forced on developers. 
+The API-implementation will have TypeScript definitions, enabling IDEs and tooling to help developers as much as possible, but TypeScript will not be forced on developers. 
 
 **A clearly defined API will make it easier to develop and  extend Umbraco’s backoffice, provide better tooling and make it safer to upgrade Umbraco.**
 
