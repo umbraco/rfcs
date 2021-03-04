@@ -187,7 +187,7 @@ To get some context to this concept we have already implemented a prototype, whi
 
 Read `readme.md` for a guide on how to get the project up and running.
 
-If you like to just view the solution without building it by yourself, [we hosted the demo here.](https://umbraco.github.io/Umbraco.UI.RFCDemoStatic)
+If you like to view the solution without building it by yourself, [we hosted the demo here.](https://umbraco.github.io/Umbraco.UI.RFCDemoStatic)
 
 If you like a brief introduction, please watch this video where Niels Lyngsø shows the solution and presents some of the thoughts behind the code. [Available on YouTube here](https://www.youtube.com/watch?v=yb41HCdvjFE)
 
