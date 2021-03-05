@@ -189,7 +189,8 @@ Read `readme.md` for a guide on how to get the project up and running.
 
 If you like to view the solution without building it by yourself, [we hosted the demo here.](https://umbraco.github.io/Umbraco.UI.RFCDemoStatic)
 
-If you like a brief introduction, please watch this video where Niels Lyngsø shows the solution and presents some of the thoughts behind the code. [Available on YouTube here](https://www.youtube.com/watch?v=yb41HCdvjFE)
+[![Screenshot 2021-03-05 114326](https://user-images.githubusercontent.com/3663619/110105188-5f31a980-7da8-11eb-9063-c358d4a381ac.jpg)](https://www.youtube.com/watch?v=yb41HCdvjFE)
+*If you like a brief introduction, please watch this video where Niels Lyngsø shows the solution and presents some of the thoughts behind the code. [Available on YouTube here](https://www.youtube.com/watch?v=yb41HCdvjFE)*
 
 ### Contributions
 
