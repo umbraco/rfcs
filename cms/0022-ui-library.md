@@ -26,7 +26,7 @@ The UI Library is a standalone project, which can be used in multiple projects, 
 
 The library provides a workspace for developing UI components, enabling us to work on UI without being bound to a specific technology. Initially, we will use this to create components for the future backoffice without relying on any framework decisions. 
 
-We want to ensure that our core UI Components serve a general purpose. Having them developed separately from any specific project, will help ensure the scope of the components keep the right level of abstraction for reusability across projects, extensions, and packages.
+We want to ensure that our core UI Components serve a general-purpose. Having them developed separately from any specific project will help ensure the scope of the components keep the right level of abstraction for reusability across projects, extensions, and packages.
 
 The workspace will also enable us to ensure a set of requirements of each component, for example making accessibility a first-class citizen.
 
@@ -69,7 +69,7 @@ html`
 `
 ```
 
-Notice how properties are bound by inserting a dot in front of the property name. In a similar manner, we are able to listen for events by using the @ symbol in front of any event name.
+Notice how properties are bound by inserting a dot in front of the property name. Similarly, we can listen for events by using the @ symbol in front of any event name.
 
 #### Property-Decorators
 Property-Decorators simplifies the initialization of web-component properties.
@@ -100,7 +100,7 @@ For a delete button we would apply the danger-style through the `look` attribute
 
 #### Theming
 
-We will enable a limited set of color and sizing customization options, based on CSS Custom Properties. This is mainly in order to enable a high-contrast mode for accessibility purposes.
+We will enable a limited set of color and sizing customization options, based on CSS Custom Properties. This is mainly to enable a high-contrast mode for accessibility purposes.
 
 
 #### Parts
@@ -109,7 +109,7 @@ CSS-parts is also one of the features of Web Components that can be used to over
 
 #### Design System
 
-The UI Library will provide ways for implementors to use various properties from the Umbraco Design System, this includes sizes, colors & typography. The scope of such a system is not defined but our intention is to enable anyone to build custom UI with the Umbraco look and theming capabilities.
+The UI Library will provide ways for implementors to use various properties from the Umbraco Design System, this includes sizes, colors & typography. The scope of such a system is not defined but we intend to enable anyone to build custom UI with the Umbraco look and theming capabilities.
 
 ### A few notes on architecture
 
@@ -165,7 +165,7 @@ Events should only hold data if there is specific data for the event. If develop
 #### Contribution process
 
 When contributing to the library it should be submitted as a PR to the library. 
-PR specific for adding a new Element  will first be accepted(merged) when it lives up to a these criterias:
+PR specific for adding a new Element  will first be accepted(merged) when it lives up to these criteria:
 
 - Element name must be prefixed with “UUI-”
 - Elements must have tests and pass those.
@@ -193,7 +193,7 @@ If you like a brief introduction, please watch this video where Niels Lyngsø sh
 
 ### Contributions
 
-After the RFC is accepted we would love code contributions to the repository. For now we would love to focus on the RFC.
+After the RFC is accepted we would love code contributions to the repository. For now, we would love to focus on the RFC.
 
 
 ## Drawbacks
