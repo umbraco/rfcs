@@ -56,7 +56,9 @@ We intend to have the parts specific for Storybook as automated as possible to k
 
 ### Lit-element
 We want to use Lit-Element to provide helpers for managing the basics of Web Components.
-To suit you with the base knowledge of what Web Components and Lit-Element does, we had Filip make an [introduction video](https://www.youtube.com/watch?v=ADgo_JVK02A). We recommend you to watch this if you are interested in the code behind the components. 
+
+[![Screenshot 2021-03-05 115426](https://user-images.githubusercontent.com/3663619/110106176-a3717980-7da9-11eb-8ead-f0ef36ac33b0.jpg)](https://www.youtube.com/watch?v=ADgo_JVK02A)
+*To suit you with the base knowledge of what Web Components and Lit-Element does, we had Filip make an [introduction video](https://www.youtube.com/watch?v=ADgo_JVK02A). We recommend you to watch this if you are interested in the code behind the components.*
 
 We have highlighted the two most impactful parts of Lit-Element here:
 
