@@ -10,11 +10,13 @@ The intended audience for this RFC is: technical users, developers and package a
 ## Summary
 We want to ensure a coherent experience for both Content Editors and Developers across products and extensions of these. By separating the essential user interface components from any specific project we ensure usage and maintenance of these will stay as straightforward as possible, making the life of maintainers, contributors, and package developers easier.
 
+The UI Library is a central source of visual building blocks for Umbraco applications and extensions of such.
+
 Sharing improvements and ensuring the functionality for a component fits in the bigger perspective and not just solving an immediate need.
 
-The UI Component library will be a separate Open Source Project with source code on Github and distributed via NPM.
+The UI Library will serve as a component guide and come with a browser application (Storybook) in which developers can view, try out and learn about the available components.
 
-The UI Library will serve as a component design guide and come with a browser application (Storybook) in which developers can view, try out and learn about the available components.
+The UI Component library will be a separate Open Source Project with source code on Github and distributed via NPM.
 
 
 ## Motivation
@@ -23,28 +25,30 @@ We want to ease the development process of the Umbraco backoffice and packages f
 This overview will also help to design a consistent product experience. By easing the process of identifying components, their role, and their relationships.
 
 The UI Library is a standalone project, which can be used in multiple projects, including third-party.
+The components of the UI Library will be based on web standards and will work in any project.
 
 The library provides a workspace for developing UI components, enabling us to work on UI without being bound to a specific technology. Initially, we will use this to create components for the future backoffice without relying on any framework decisions. 
 
 We want to ensure that our core UI Components serve a general-purpose. Having them developed separately from any specific project will help ensure the scope of the components keep the right level of abstraction for reusability across projects, extensions, and packages.
 
-The workspace will also enable us to ensure a set of requirements of each component, for example making accessibility a first-class citizen.
+The workspace will enable us to ensure a set of requirements of each component, for example making accessibility a first-class citizen.
 
 ## Out of Scope
-- Technology/framework for Umbraco’s backoffice
-- How components are used in the backoffice: The usage examples in this RFC are examples of how this could be done but not settled.
-- We want to ensure any product can use this Library, therefore we do not want this to be specific towards the backoffice or any other usages.
+- **Technology/framework** for Umbraco’s backoffice
+- **How components are used in the backoffice**: The usage examples in this RFC are examples of how this could be done but not settled.
+- **Umbraco Design System** Its our intention to provide the parts nesecary for package developers to follow the Umbraco style, but this will not be part of this project.
+- **No specific purpose** We want to ensure any product can use this Library, therefore we do not want this to be specific towards the backoffice or any other usages.
 
 
 ## Detailed Design
 
-For the choice of technology for our UI components, we want to stay as close to native browser technologies as possible. Therefore Web Components is our choice. The components should work in any other tech stack and not contain any logic specific to the project using these.
-
-We do not want to reinvent the wheel and therefore we have settled for using  Google’s LitElement to handle the common needs for building Web Components. It is extremely lightweight and broadly used in design-systems at companies like IBM, Adobe, and others.
-
-To ensure high-quality code we use TypeScript. This will help ensure consistent and solid code for developers of components. It's optional to use TypeScript as an implementer (i.e. when using components in a project). For those that do use TypeScript, there will be definitions to enable intellisense in IDEs,  making it easier to discover and implement the components correctly.
+For the choice of technology for our UI components, we want to stay as close to native browser technologies as possible. Therefore Web Components is our choice. The components should work in any other tech stack to achieve this it must not have any external technology requirements.
 
 The components should only contain presentational logic, not any application logic, this architectural choice ensures that the components will never mess up the logic of a project. They only purpose they serve is as visual building blocks. This ensures a clear boundary between the responsibilities of the UI Library and the project using this. Making project code much simpler as the interface code is sealed within the UI Library components.
+
+We do not want to reinvent the wheel and therefore we have settled for using Google’s LitElement to handle the common needs for building Web Components. It is extremely lightweight and broadly used in design-systems at companies like IBM, Adobe, and others.
+
+To ensure high-quality code we use TypeScript. This will help ensure consistent and solid code for developers of components. It's optional to use TypeScript as an implementer (i.e. when using components in a project). For those that do use TypeScript, there will be definitions to enable intellisense in IDEs,  making it easier to discover and implement the components correctly.
 
 The project will be published on NPM, to enable ease of use and developers without .Net knowledge. The library will ship with the backoffice, meaning that backoffice packages will not require the use of NPM.
 
@@ -109,10 +113,6 @@ We will enable a limited set of color and sizing customization options, based on
 
 CSS-parts is also one of the features of Web Components that can be used to overwrite certain styling of a Web Component. Currently, we do not have any case where this provides any reasonable value. But we will consider enabling this when it makes sense.
 
-#### Design System
-
-The UI Library will provide ways for implementors to use various properties from the Umbraco Design System, this includes sizes, colors & typography. The scope of such a system is not defined but we intend to enable anyone to build custom UI with the Umbraco look and theming capabilities.
-
 ### A few notes on architecture
 
 #### Tag-Names
@@ -170,9 +170,10 @@ When contributing to the library it should be submitted as a PR to the library.
 PR specific for adding a new Element  will first be accepted(merged) when it lives up to these criteria:
 
 - Element name must be prefixed with “UUI-”
-- Elements must have tests and pass those.
+- Elements must have tests and pass those
 - Elements must pass the basic accessibility test
-- Elements must be represented through a story in Storybook.
+- Elements must be represented through a story in Storybook
+- Elements must follow the Umbraco look and feel
 - Source-code must follow the ES-lint rules
 
 #### Publishing and versioning
@@ -180,6 +181,9 @@ We intend for the UI Library to have independent semantic versioning and rapid r
 
 ### Documentation
 We intend to make documentation auto-generated from component source code. Via TypeScript and JS-docs.
+
+### Usage
+Any project can implement and use components of the UI Library. A project can combine this with their own components. 
 
 ###Demo
 
@@ -207,18 +211,22 @@ There is an added complexity as a result of separating the UI Components from th
 
 Developing the UI components without a framework enables us to incorporate them in any other project, and it enables projects to evolve without changing the UI Library, as the UI Library does not rely on any specifics regarding project implementations.
 
-**VueJS**
+***VueJS***
 
 We know VueJS is popular among many of our community members, but we do not see any benefits in using a specific framework for the scope of the Component Library. Staying with native technology will enable the library to be used in multiple contexts.
 
-**Use Tailwind for styling of UI Components in the UI Library**
+***Use Tailwind for styling of UI Components in the UI Library***
 
-We do not see any gains by enforcing developers to learn Tailwind, The benefits of Tailwind are strongest when styles are applied for one DOM with no style encapsulations, in this project we do not have any shared classes across components. If so they will be purposely imported for the given cases.
+We do not see any gains by enforcing contributers to learn Tailwind, the benefits of Tailwind are strongest when styles are applied for one DOM with no style encapsulations, in this project we do not have any shared classes across components. If so they will be purposely imported for the given cases.
 
-**Use an existing UI Library**
+***Use an existing UI Library***
 
-There are many libraries out there that can solve our needs for basic UI components. There are none that deal with Umbraco-specific data. In order for us to have, as simple as possible, native Umbraco UI that deals with Nodes, Media, Trees, etc. We need to own the code ourselves. This does not mean that we don’t borrow great concepts from other libraries.
+There are many libraries out there that can solve our needs for basic UI components. There are none that deal with Umbraco-specific use cases. In order for us to have, as simple as possible, native Umbraco UI that deals with Nodes, Media, Trees, etc. We need to own the code ourselves. We expect to use parts from existing libraries in cases where it makes sense. (i.e. incorporating a third party DatePicker)
 
+***Element name prefix***
+
+In regards to choosing the prefix for element names ("<uui-...>")
+We have considered other and shorter prefixes (u-, ui-, umb-) but have not chosen so to avoid eventual collision. We see many other UI Libraries using a single letter or a very short prefix and we don't want to collide with such, enabling usage of such libraries. The use of "umb-" would collide with existing backOffice elements.
 
 
 ## Unresolved Issues
