@@ -36,7 +36,7 @@ The workspace will enable us to ensure a set of requirements of each component, 
 ## Out of Scope
 - **Technology/framework** for Umbraco’s backoffice
 - **How components are used in the backoffice**: The usage examples in this RFC are examples of how this could be done but not settled.
-- **Umbraco Design System** Its our intention to provide the parts nesecary for package developers to follow the Umbraco style, but this will not be part of this project.
+- **Umbraco Design System** It's our intention to provide the parts necessary for package developers to follow the Umbraco style, but this will not be part of this project.
 - **No specific purpose** We want to ensure any product can use this Library, therefore we do not want this to be specific towards the backoffice or any other usages.
 
 
@@ -44,7 +44,7 @@ The workspace will enable us to ensure a set of requirements of each component, 
 
 For the choice of technology for our UI components, we want to stay as close to native browser technologies as possible. Therefore Web Components is our choice. The components should work in any other tech stack to achieve this it must not have any external technology requirements.
 
-The components should only contain presentational logic, not any application logic, this architectural choice ensures that the components will never mess up the logic of a project. They only purpose they serve is as visual building blocks. This ensures a clear boundary between the responsibilities of the UI Library and the project using this. Making project code much simpler as the interface code is sealed within the UI Library components.
+The components should only contain presentational logic, not any application logic, this architectural choice ensures that the components will never mess up the logic of a project. The only purpose they serve is as visual building blocks. This ensures a clear boundary between the responsibilities of the UI Library and the project using this. Making project code much simpler as the interface code is sealed within the UI Library components.
 
 We do not want to reinvent the wheel and therefore we have settled for using Google’s LitElement to handle the common needs for building Web Components. It is extremely lightweight and broadly used in design-systems at companies like IBM, Adobe, and others.
 
@@ -215,9 +215,9 @@ Developing the UI components without a framework enables us to incorporate them 
 
 We know VueJS is popular among many of our community members, but we do not see any benefits in using a specific framework for the scope of the Component Library. Staying with native technology will enable the library to be used in multiple contexts.
 
-***Use Tailwind for styling of UI Components in the UI Library***
+***Use Tailwind for styling UI Components in the UI Library***
 
-We do not see any gains by enforcing contributers to learn Tailwind, the benefits of Tailwind are strongest when styles are applied for one DOM with no style encapsulations, in this project we do not have any shared classes across components. If so they will be purposely imported for the given cases.
+We do not see any gains by enforcing contributors to learn Tailwind, the benefits of Tailwind are strongest when styles are applied for one DOM with no style encapsulations, in this project we do not have any shared classes across components. If so they will be purposely imported for the given cases.
 
 ***Use an existing UI Library***
 
@@ -226,7 +226,7 @@ There are many libraries out there that can solve our needs for basic UI compone
 ***Element name prefix***
 
 In regards to choosing the prefix for element names ("<uui-...>")
-We have considered other and shorter prefixes (u-, ui-, umb-) but have not chosen so to avoid eventual collision. We see many other UI Libraries using a single letter or a very short prefix and we don't want to collide with such, enabling usage of such libraries. The use of "umb-" would collide with existing backOffice elements.
+We have considered other and shorter prefixes (u-, ui-, umb-) but uui- still looks like the best option in order to avoid potential collisions. We see many other UI Libraries using a single letter or a very short prefix and we want enable usage of such libraries. The use of "umb-" would collide with existing backOffice elements.
 
 
 ## Unresolved Issues
