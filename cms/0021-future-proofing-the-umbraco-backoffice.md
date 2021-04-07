@@ -9,8 +9,8 @@ The intended audience for this RFC is: technical users, developers and package a
 
 ## Summary
 To future-proof Umbraco’s backoffice, we intend to run a three-part process - each with their own RFC.
-1. Standalone UI library (RFC soon - January 2021)
-2. Defining backoffice API (RFC spring 2021)
+1. Standalone UI Component library (RFC soon - January 2021)
+2. Defining backoffice extension API (RFC spring 2021)
 3. Implement backoffice (RFC summer 2021)
 
 It can be helpful to watch [this umbracoCoffee](https://youtu.be/i0QfgRYj0zQ?t=1681) episode where Filip Bech, CMS Program Manager for Umbraco, introduces  the RFC and the thoughts behind it.
@@ -24,7 +24,7 @@ Since 2012 we have learnt a lot about building a complex Single Page Application
 
 There are 4 challenges of the current backoffice, that motivates us for this project:
 1. Product-specific UI makes the Umbraco journey (CMS, 1st- and 3rd party packages, Cloud, etc.) inconsistent and development inefficient.
-2. Unclear API surface makes developers reach for undocumented hacks, resulting in an unofficial API layer that we still try to maintain.
+2. Unclear extension API surface makes developers reach for undocumented hacks, resulting in an unofficial API layer that we still try to maintain.
 3. The current architecture and framework is holding back and/or slowing down development.
 4. AngularJS enters EOL in ~12 months.
 
@@ -45,7 +45,7 @@ We do this in order to get real user feedback through an exploratory and agile p
 
 The three milestones will have individual RFCs and are as follows:
 1. Build a UI Library
-2. Define backoffice API
+2. Define backoffice extension API
 3. Implement backoffice
 
 The parts are not entirely sequential and can run in parallel to a certain extent.
@@ -61,7 +61,7 @@ Part 3 will start when part 2 is ready.
 
 Read on to learn more about the different parts, and, as mentioned, there will be separate RFCs for each part (we will make sure to update this with links as they are published). We also intend to create a new community team around these efforts. 
 
-### 1. Build a UI library
+### 1. Build a UI Component Library
 We want to create a library of new UI components that are thoughtfully built with reuse and accessibility in mind.
 The UI library will be its own separate Open Source project with source code on GitHub and distributed for use oustside the Umbraco backoffice via NPM (packages that are not exclusive to Umbraco, other Umbraco HQ products etc.).
 
@@ -73,9 +73,9 @@ We want the components to work with any framework so it is not tied to Umbraco�
 
 We intend to start releasing public builds when we have sufficient components to get an understanding of how the UI Library will work and in order to get feedback and collaboration as soon as possible.
 
-**A UI Library will make the Umbraco experience more beautiful, accessible and consistent, while also making it easier and less work for developers and maintainers.**
+**A UI Component Library will make the Umbraco experience more beautiful, accessible and consistent, while also making it easier and less work for developers and maintainers.**
 
-### 2. Define BackOffice API
+### 2. Define BackOffice Extension API
 In the second part, the goal is to define a public API for the backoffice. The official/documented API for the current backoffice implementation is too limited, which has led developers to rely on undocumented hacks, that the backoffice now unofficially supports.
 
 The current API is not easy for newcomers to understand, and it makes it hard to know what can be safely used/changed.
@@ -93,7 +93,7 @@ It should be easy and intuitive to extend and customize Umbraco’s backoffice -
 
 The API-implementation will have TypeScript definitions, enabling IDEs and tooling to help developers as much as possible, but TypeScript will not be forced on developers. 
 
-**A clearly defined API will make it easier to develop and  extend Umbraco’s backoffice, provide better tooling and make it safer to upgrade Umbraco.**
+**A clearly defined API will make it easier to develop and extend Umbraco’s backoffice, provide better tooling and make it safer to upgrade Umbraco.**
 
 ### 3. Rebuild BackOffice 
 We need to rebuild the existing Umbraco backoffice, with the new API defined in part 2. This will be a complete rewrite, not a migration, and can only be released after it is completely done!
