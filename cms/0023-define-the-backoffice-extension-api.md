@@ -44,7 +44,7 @@ The new extension API is inspired by [Micro Frontends](https://micro-frontends.o
 
 All examples in the RFC are written in Vanilla Javascript. We have chosen to do it this way to make it clear that the API is technology agnostic and can be used with any framework or library. It will make them more verbose but we want to leave out the discussion of what framework the Backoffice will be built in until Part 3 of the project starts.
 
-Composition with Web Components
+### Composition with Web Components
 To prevent us from ending up with the same upgrade challenges as we face today, and to not force a specific framework choice on you, the Extension API can't rely on the component system of one specific framework. This would tie the extension API to a framework release cycle. A framework upgrade with breaking changes could result in a parallel rewrite of all extensions and packages.
 
 Web Components introduce a neutral and standardized component model that we will use as the contract, or public API, between the Backoffice and an extension. Web Components are a widely implemented Web Standard, and many libraries exist to make development easier. The lifecycle methods introduced by Custom Elements make it possible to wrap the code in a standard way instead of custom lifecycle implementations. The features the API relies on are already there for the browsers that the backoffice supports.
@@ -91,12 +91,12 @@ Manifests as files are a low entry barrier for extensions. When using the filesy
 
 When registering runtime through javascript, you get full control over when an extension will be registered or removed. Backoffice will provide lifecycle events you can use for registration.
 
-### Common properties
+#### Common properties
 Depending on the registration method used, all extensions are registered via either a JSON or JS object with a number of properties defining the relevant configuration for the extension.
 
 These are the most common properties you will find for an extension. Other properties can vary depending on the extension type. We don't cover all possible properties in this RFC.
 
-```JSON with comments
+```jsonc
 {
  "type": "", // type of extension
  "name": "", // unique name for the extension
@@ -109,13 +109,13 @@ These are the most common properties you will find for an extension. Other prope
 
 The biggest difference from today is that you normally define an AngularJS template and a .js-resource. Instead you will define an elementName and a .js-resource. This will give you the flexibility to decide on your implementation of choice. Javascript resources will be lazy loaded when they are needed for an extension.
 
-### Registration with manifest files
+#### Registration with manifest files
 The following example shows how to register a property editor.
 
 **Manifest file**
 
 /extensions/manifest.json
-```JSON with comments
+```jsonc
 {
  "type": "propertyEditor",
  "name": "My Property Editor",
@@ -128,12 +128,12 @@ The following example shows how to register a property editor.
 }
 ```
 
-### Registration through Javascript
+#### Registration through Javascript
 The following example shows how to register and unregister a Property Editor through Javascript. We still need to provide Umbraco with an initial manifest file with our startup resources. After that, we can run any logic before we register the Property Editor.
 
 
 /extensions/manifest.json
-```JSON
+```jsonc
 {
  "type": "startUp",
  "name": "My Start Up",
@@ -175,7 +175,7 @@ extensions.unregister("My.PropertyEditor");
 ### Communication
 Extensions and the Backoffice need to communicate with each other. When a value is updated in a Property Editor, when a dialog is opened, or when a tree node is expanded. In general, we see two types of communication. An extension communicating with the elements next to it (parent-child relationship) and cross UI communication.
 
-### Direct communication
+#### Direct communication
 For direct communication between an extension and the Backoffice, we want to follow the one-way data flow approach. Data flows downwards through props, and data should be updated by the parent itself by reacting to events of its children. Extensions will implement properties to get data and emit events to notify about any changes. Each extension will come with an interface they need to fulfill.
 
 The native browser input field is a good example of how direct communication with an extension will be like. Listen for change events on the element and get the value from event.target.value.
@@ -215,7 +215,7 @@ In the examples section, you will find examples of how this will be used as part
 
 #### Cross UI communication
 
-### Services
+##### Services
 The current Backoffice is built around a service architecture. We still believe this is the right design pattern for the new Extension API. Services give us the right amount of abstraction, they are well known to the current developer who extends the Backoffice, and we will follow the same pattern on both frontend and backend. That will make extending the Backoffice familiar to both frontend and backend developers who work with Umbraco.
 
 The following example shows how to use the dialogService to open a dialog.
@@ -239,7 +239,7 @@ this.notificationService.success(message);
 this.notificationService.error(message);
 ```
 
-#### Context and Dependency Injection
+##### Context and Dependency Injection
 Using props and events works well when we want to communicate directly with an extension. Components can specify properties and attributes to receive data imperatively or declaratively. Things start to get more complicated when, for example, a tree structure is heavily nested, and a child component needs data from its parent, grandparent or an even more distant ancestor.
 
 One approach is to pass data from one component to another down the DOM tree, also known as “prop drilling”. That is generally considered bad practice as it requires all child components to know of the data. For such cases, we want a mechanism where we can share context between extensions without having to explicitly pass a prop through every level of the tree. Parent components can serve as a dependency provider for all its children, regardless of how deep the component hierarchy is.
@@ -253,7 +253,7 @@ We have based our "Context API" / "Dependency injection" on a currently open [Co
 
 With this approach, we can provide dependencies on a global level and allow each dependency to be overwritten by any subtree. It makes it very useful in scenarios like Infinite Editing where every open editor lives in its own context.
 
-#### Provide context
+##### Provide context
 The following example shows how you can provide context for other components to consume. This is how you can provide a global service that will be available for the entire DOM. You can also restrict  a service so it can only be accessed by a specific subtree.
 
 ```javascript
@@ -278,7 +278,7 @@ class MySection extends HTMLElement {
   }
 }
 ```
-#### Request context
+##### Request context
 An element that wishes to receive some context can use the requestContext helper function. The function takes a callback that will be resolved synchronously. A callback will also make it possible for the provider to do multiple resolutions if the provided value is updated. The element can then do whatever it wishes with this value. You can find more details in the [Context API proposal](https://github.com/webcomponents-cg/community-protocols/blob/main/proposals/context.md#could-we-use-promises-instead-of-callbacks).
 The following example shows how you can request a dependency.
 
@@ -387,7 +387,7 @@ A dashboard is shown in the “main area” of every section of the Backoffice w
 The following example shows a dashboard registered for the “Content” section. It will be registered through a manifest file and served to the frontend only if the logged in user is part of the “admin” user group.
 
 extensions/manifest.json
-```JSON with comments
+```jsonc
 {
  "type": "dashboard",
  "name": "My Dashboard",
@@ -425,7 +425,7 @@ A Property Editor is the editor that a Data Type references. A Property Editor d
 The following example shows how to build a text input property editor.
 
 extensions/manifest.json
-```JSON
+```jsonc
 {
  "type": "propertyEditor",
  "alias": "My.PropertyEditor.Text",
@@ -437,7 +437,7 @@ extensions/manifest.json
 }
 ```
 
-#### Basic Scaffold
+##### Basic Scaffold
 The scaffold sets up a Property Editor that renders a native input field.
 
 extensions/my-text-property-editor.js
@@ -461,7 +461,7 @@ class MyTextPropertyEditor extends HTMLElement {
 customElements.define('my-text-property-editor', MyTextPropertyEditor);
 ```
 
-#### Value updates
+##### Value updates
 In the following example, we add a value getter and setter. We also listen for events emitted when the native input field is changed and use them to update the local value property. When the value is updated we emit a custom event to notify the Backoffice about the new value.
 
 extensions/my-text-property-editor.js
@@ -498,7 +498,7 @@ class MyTextPropertyEditor extends HTMLElement {
 }
 ```
 
-#### Validation
+##### Validation
 A Property Editor implements a validation method that will be called by the Backoffice to validate the property value before it is sent to the server. The following example shows how the method uses the property configuration to validate the value.
 
 extensions/my-text-property-editor.js
@@ -525,7 +525,7 @@ class MyTextPropertyEditor extends HTMLElement {
 }
 ```
 
-#### Full Example
+##### Full Example
 extensions/my-text-property-editor.js
 ```javascript
 class MyTextPropertyEditor extends HTMLElement {
@@ -579,14 +579,14 @@ class MyTextPropertyEditor extends HTMLElement {
 }
 ```
 
-### Property Actions
+#### Property Actions
 Property Actions are secondary functionalities of a property Editor. They appear as a small button next to the label of the property. The Backoffice comes with a couple of built-in Property Actions. The following examples show how similar actions could be made with the new extension API.
 
-#### Property Action: Clear the property value
+##### Property Action: Clear the property value
 The following example shows how to build a Property Action that clears the property value.
 
 extensions/manifest.json
-```JSON with comments
+```jsonc
 {
   "type": "propertyAction",
   "alias": "My.PropertyAction.Clear",
@@ -636,7 +636,7 @@ class MyPropertyActionClear extends HTMLElement {
 }
 ```
 
-#### Property Action: Copy to clipboard
+##### Property Action: Copy to clipboard
 The following example shows how to build a Property Action that stores a copy of the property value in the internal clipboard service. It uses the Context API to access the clipboard service, the current property name, and the current node name.
 
 ```javascript
@@ -697,13 +697,13 @@ class MyPropertyActionCopy extends HTMLElement {
 window.customElements.define('my-property-action-copy', MyPropertyActionCopy);
 ```
 
-### Trees
+#### Trees
 The main navigation in Umbraco consists of sections. Each section has a sub-navigation which can consist of one or more trees. Today it is possible to register new trees only through C#. With the new extension API, setting up trees for the Backoffice will be handled client-side. A tree can fetch data from anywhere, inside or outside of Umbraco.
 
 The following example shows how to register a Tree, and how to use a Custom Element to set up the tree.
 
 extensions/manifest.json
-```JSON
+```jsonc
 {
  "type": "tree",
  "alias": "My.Tree",
@@ -751,14 +751,14 @@ class MyTree extends UmbTreeBase {
 }
 ```
 
-### Future extensions points
+#### Future extensions points
 The current extension API is too limited and this RFC only covers a selected number of extensions. The final Backoffice implementation will cover all current official extension points and a subset of new ones. The API concept described in this RFC is the foundation of how future extension points added to the Backoffice will work.
 
 These are a few examples of extension points that are not currently available in the Backoffice, but could be added in the future.
 
 Extend the publish actions on a node with a custom action. Here we want to add a review process before publishing a node.
 
-```JSON with comments
+```jsonc
 {
  "type": "publishAction",
  "alias": "My.PublishAction.Review",
@@ -769,7 +769,7 @@ Extend the publish actions on a node with a custom action. Here we want to add a
 
 Add the same actions as a bulk action on the default content list view.
 
-```JSON with comments
+```jsonc
 {
  "type": "listViewAction",
  "alias": "My.ListViewAction.Review",
@@ -780,7 +780,7 @@ Add the same actions as a bulk action on the default content list view.
 
 Allow “Content”-apps to be extendable in all trees.
 
-```JSON with comments
+```jsonc
 {
  "type": "nodeApps",
  "alias": "My.UserNodeApp.ApiKeys",
