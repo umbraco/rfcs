@@ -32,7 +32,7 @@ The purpose of this RFC is to validate the concepts of the new Extension API and
 - Implementation details
 
 ## Detailed Design
-The Umbraco Backoffice is a complex application that is composed of features from independent packages, implementor code, and the core. Everything can be customized and extended: from Property Editors, to Content Apps and even full Sections with custom Trees and Node Editors. Each extension needs to be easily maintainable and independently upgradeable without the fear of breaking other parts of the Backoffice.
+The Umbraco Backoffice is a complex application that is composed of features from independent packages, implementor code, and the core. Everything can be customized and extended: from Property Editors, to Content Apps and even full Sections with custom Trees and Node Editors. Each extension needs to be maintainable and independently upgradeable without the fear of breaking other parts of the Backoffice.
 
 The new extension API is inspired by [Micro Frontends](https://micro-frontends.org/) - a design approach conceived to solve this problem. It is  rooted in the idea that a web application is a compilation of independent features that can be developed by different teams and then fused to create a homogenous interface. The general concept fits well with the functionality of Umbraco and has answers to some of the challenges we see today.
 
@@ -247,7 +247,7 @@ One approach is to pass data from one component to another down the DOM tree, al
 We have based our "Context API" / "Dependency injection" on a currently open [Context API proposal for Web Components](https://github.com/webcomponents-cg/community-protocols/blob/main/proposals/context.md). At a high level, the proposal is an event-based protocol that components can use to retrieve data from any location in the DOM:
 
 * A component requiring some data fires a context-request event.
-* vThe event carries a context value that denotes the data requested and a callback which will receive the data.
+* The event carries a context value that denotes the data requested and a callback which will receive the data.
 * Providers can attach event listeners for context-request events to handle them and provide the requested data.
 * Once a provider satisfies a request it calls stopPropagation() on the event.
 
@@ -718,7 +718,7 @@ extensions/manifest.json
 
 Trees have complex markup and logic to handle recursive nodes, context navigation, etc. We will provide a Tree base class that custom trees can extend. We don’t want every extension to implement that logic.
 
-In the example below the Tree implementation will override methods on the base class to replace the logic responsible of fetching the tree data. We will provide helper functions to easily create tree nodes.
+In the example below the Tree implementation will override methods on the base class to replace the logic responsible of fetching the tree data. We will provide helper functions to create tree nodes.
 
 extensions/my-tree.js
 ```javascript
