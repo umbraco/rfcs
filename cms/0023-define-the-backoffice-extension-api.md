@@ -799,15 +799,14 @@ A similar concept of swapping out a view is possible with the new extension API,
 ## Contributors
 This RFC was compiled by:
 
-Mads Rasmussen (Umbraco HQ)
-Niels Lyngsø (Umbraco HQ)
-Julia Gruszczynska (Umbraco HQ)
-Filip Bech-Larsen (Umbraco HQ)
-Rasmus John Pedersen (Umbraco HQ)
-Rune Strand (Umbraco HQ)
-
-Kenn Jacobsen (Backoffice Community Team)
-Matt Brailsford (Backoffice Community Team)
-Ryan Helmn (Backoffice Community Team)
-Sian Simms (Backoffice Community Team)
-Søren Kottal (Backoffice Community Team)
+- Mads Rasmussen (Umbraco HQ)
+- Niels Lyngsø (Umbraco HQ)
+- Julia Gruszczynska (Umbraco HQ)
+- Filip Bech-Larsen (Umbraco HQ)
+- Rasmus John Pedersen (Umbraco HQ)
+- Rune Strand (Umbraco HQ)
+- Kenn Jacobsen (Backoffice Community Team)
+- Matt Brailsford (Backoffice Community Team)
+- Ryan Helmn (Backoffice Community Team)
+- Sian Simms (Backoffice Community Team)
+- Søren Kottal (Backoffice Community Team)
