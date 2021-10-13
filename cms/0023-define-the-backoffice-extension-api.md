@@ -82,8 +82,8 @@ Manifests are already a part of the current way we register extensions for the B
 
 There will be two ways to register an extension for the Backoffice. Each method comes with its advantages.
 
-Manifest as JSON file as part of the filesystem.
-Registering runtime through Javascript.
+* Manifest as JSON file as part of the filesystem.
+* Registering runtime through Javascript.
 
 This means it will no longer be possible to register extensions via C#.
 
