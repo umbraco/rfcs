@@ -80,14 +80,18 @@ Every extension comes with a manifest that provides important information to Umb
 
 Manifests are already a part of the current way we register extensions for the Backoffice (package.manifest), and the new manifest will use a familiar format.
 
-There will be two ways to register an extension for the Backoffice. Each method comes with its advantages.
+With the new extension API, all registrations will be frontend first. It won’t be possible to have extensions that can only be created through C# - like the Trees today. The new Backoffice will be built as a single-page application (SPA), and the frontend will be the source of truth for all extensions.
 
-* Manifest as JSON file as part of the filesystem.
-* Registering runtime through Javascript.
+Any "business logic" needed before registration or as part of an extension can still be placed on the server. The client can fetch any settings or other information before the registration if needed.
 
-This means it will no longer be possible to register extensions via C#.
+With the client-side as the registration point, we can add abstractions on top of that. Manifest files are one option, and a C# abstraction can be added down the line to generate the registration files too. Other abstractions like a Backoffice UI could be another option.
 
-Manifests as files are a low entry barrier for extensions. When using the filesystem, all manifest files will be picked up by the server and served to the frontend, where all registration will happen automatically. When registering through manifest files, the server can do high-level permissions and filter extensions that shouldn't be served to the frontend.
+This RFC will cover how to:
+
+* Use Manifest as JSON file as part of the filesystem.
+* Register an extension directly through javascript.
+
+Manifests files are a low entry barrier for extensions. When using the filesystem, all manifest files will be picked up by the server and served to the frontend, where all registration will happen automatically. When registering through manifest files, the server can do high-level permissions and filter extensions that shouldn't be served to the frontend.
 
 When registering runtime through javascript, you get full control over when an extension will be registered or removed. Backoffice will provide lifecycle events you can use for registration.
 
@@ -171,6 +175,8 @@ const { extensions } = window.Umbraco;
 extensions.unregister("My.PropertyEditor");
 
 ```
+
+More registration examples can be found at the end of the RFC.
 
 ### Communication
 Extensions and the Backoffice need to communicate with each other. When a value is updated in a Property Editor, when a dialog is opened, or when a tree node is expanded. In general, we see two types of communication. An extension communicating with the elements next to it (parent-child relationship) and cross UI communication.
@@ -789,12 +795,105 @@ Allow “Content”-apps to be extendable in all trees.
 }
 ```
 
+#### Registration examples
+The following examples are based on comments added to the RFC. They are based on scenarios from packages:
+
+**How to conditionally register an extension based on available data:**
+[Link to comment](https://github.com/umbraco/rfcs/pull/27#issuecomment-948363543)
+
+The Nexu package only wants to register a Content App if any relations are found for a node. This could be one way to achieve this. We create a Nexu client-side data service that can fetch and hold relations for a given node from the server. We add a start-up script that will use a Backoffice contentService to subscribe to the current node. When a node is returned we fetch all relations for that node. If a node has relations we register the Content App. Inside the Content App, we can reuse the nexuService and subscribe to the same method and all data will be available because they are already fetched. Every time we go to a new node new relations will be fetched because we subscribe to the current node.
+
+```javascript
+const { extensions } = window.Umbraco;
+const { requestContext } = window.Umbraco.context;
+
+let _contentService = null;
+let _nexuService = null;
+
+requestContext('contentService', contentService => {
+  _contentService = contentService;
+});
+
+requestContext('nexuService', nexuService => {
+  _nexuService = nexuService;
+});
+
+const manifest = {
+  type: 'contentApp',
+  alias: 'nexuRelatedLinksApp',
+  elementName: 'nexu-content-app-related-links',
+  js: '/app_plugins/nexu/nexu-content-app-related-links.js',
+  name: 'Related links',
+  ...
+};
+
+_contentService.getCurrent().subscribe(node => {
+  if (!node) {
+    return;
+  }
+  
+  _nexuService.getRelationsForItem(node.id).subscribe(relations => {
+    if (relations) {
+      extensions.register(manifest);
+    } else {
+      extensions.unregister('nexuRelatedLinksApp');
+    }
+  });
+}):
+
+```
+
+We could also imagine another scenario where we allow an extension to implement a custom event to disable/enable that extension. It could look something like this:
+
+```javascript
+class NexuContentAppRelatedLinks extends HTMLElement {
+  _nodeId = null;
+  _nexuService = null;
+
+  get nodeId () {
+    return this._nodeId;
+  }
+
+  set nodeId (newVal) {
+    this._nodeId = newVal;
+  }
+
+  connectedCallback () {
+    requestContext('nexuService', (nexuService) => {
+      this._nexuService = nexuService;
+    });
+
+    this._nexuService.getRelationsForItem(this._nodeId).subscribe(relations => {
+      if (relations) {
+        this.dispatchEvent(new CustomEvent('enable', { "bubbles": true, "composed": true }));
+      } else {
+        this.dispatchEvent(new CustomEvent('disable', { "bubbles": true, "composed": true }));
+      }
+    });
+  }
+}
+```
+
+**How to include settings from the server in an extension:**
+[Link to comment](https://github.com/umbraco/rfcs/pull/27#issuecomment-948374701)
+
+The following example doesn't contain a code example but an explanation of how the problem could be solved.
+
+The Contentment package shows configuration based on features enabled in the CMS. It currently does that by checking the file system, and based on that update the configuration descriptions. For this, we could create a Contentment settings service that will fetch settings from the server. All the current server-side checks will be the same, but it has to return a settings object that will be used client-side.
+
+
 ## Unresolved Issues
 ### Extension points to be included
 The aforementioned examples show how the extension API will cover all current official extension points and any future extension points we will include in the Backoffice. The initial research for the new extension API showed that AngularJS interceptors and decorators are two very popular ways of modifying the current Backoffice. They are often used in lack of better options and are usually hard to maintain. With the new extension API, this won't be possible anymore. First and foremost we want to make sure we include a broad range of extension points in the Backoffice. [We would still love to hear](https://github.com/umbraco/DefineBackofficeExtensionAPI) what extension points are currently missing, so we can consider these.
 
 ### Extension point overrides
 A similar concept of swapping out a view is possible with the new extension API, where you change an element name and the resource in a currently registered extension manifest. This way you will be able to override the implementation of another part of the Backoffice. Since it is not settled how the extension API will be implemented, and this approach comes with some of the same downsides as today (extensions can override each other), we haven't included some of the “hacky” extension points in this RFC. If you have inputs to how we can do this in a "safe" way we are all ears. We will open up for discussion when we have a proposal for how to do this.
+
+### Registration abstractions
+The RFC covers how to register an extension with javascript or use a manifest file. What registration abstractions are needed (C#, UI, etc.), and how should they be implemented?
+
+### Scoped/shared dependencies
+How do we solve different extensions that include the same dependencies and how do we prevent functionality/version clashes?
 
 ## Contributors
 This RFC was compiled by:
