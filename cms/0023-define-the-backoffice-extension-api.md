@@ -899,6 +899,9 @@ The RFC covers how to register an extension with javascript or use a manifest fi
 ### Scoped/shared dependencies
 How do we solve different extensions that include the same dependencies and how do we prevent functionality/version clashes?
 
+### Internationalization
+How do we handle the localization of an extension?
+
 ## Contributors
 This RFC was compiled by:
 
