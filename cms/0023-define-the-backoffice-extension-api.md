@@ -330,6 +330,10 @@ class MyEditor extends HTMLElement {
 **Request context**
 ```javascript
 const { requestContext } = window.Umbraco.decorators;
+
+class MyEditor extends HTMLElement {
+ @requestContext('myService') myService;
+}
 ```
 
 #### Data management and reactivity
