@@ -92,6 +92,14 @@ export class SimpleGreeting extends LitElement {
 }
 ```
 
+Incidentally, Web Components and Lit take care of most of the stuff we know from AngularJS, such as the concept of "components" and data binding. Running through a data set is fairly easy with Lit's template interpolation with native JavaScript, we can accomplish this in a much cleaner way than AngularJS ever did, where you had two-way data binding. Two-way data binding is, however, something that only AngularJS supported and is not something you would use today. Instead, the flow would be: input = data, output = events.
+
+```mermaid
+flowchart
+ParentComponent -- data in through attributes --> ChildComponent
+ChildComponent -- events out through an emitter --> ParentComponent
+```
+
 Although we have chosen Lit and TypeScript to build the new backoffice, developers are free to use any framework and libraries of their choice to implement backoffice extensions. We will be building an extension API that is framework agnostic as stated in an [earlier RFC](https://github.com/umbraco/rfcs/blob/main/cms/0023-define-the-backoffice-extension-api.md#detailed-design).
 
 Please have a look at [Lit’s excellent playground](https://lit.dev/playground/) to learn more about it.
