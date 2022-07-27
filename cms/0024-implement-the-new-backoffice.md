@@ -60,8 +60,7 @@ In single-page applications routing is usually a non-trivial area. We are lookin
 
 We are going to use a standards-based way to build our custom UI as close to modern browser conventions and technology as possible. We have considered many options - libraries and frameworks alike - and have concluded that we would like to avoid falling into another technical grave in the years to come when what we choose now becomes obsolete.
 
-> _When you're working with the browser rather than against it, code, skills, and knowledge remain relevant for a longer time. Development becomes faster and debugging is easier because there are fewer layers of abstractions involved._
-> _— [modern-web.dev](https://modern-web.dev/discover/about/)_
+> _When you're working with the browser rather than against it, code, skills, and knowledge remain relevant for a longer time. Development becomes faster and debugging is easier because there are fewer layers of abstractions involved._ — [modern-web.dev](https://modern-web.dev/discover/about/)
 
 We have a firm belief that sticking with the browser standards will continue to evolve and benefit us in the years to come. Therefore we have chosen to build the new backoffice UI with [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
