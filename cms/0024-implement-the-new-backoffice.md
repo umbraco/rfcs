@@ -65,7 +65,11 @@ We are going to use a standards-based way to build our custom UI as close to mod
 
 We have a firm belief that sticking with the browser standards will continue to evolve and benefit us in the years to come. Therefore we have chosen to build the new backoffice UI with [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
-The concept of Web Components is created such that the browsers natively support all the things we love from libraries such as React and Vue including having custom elements, reactivity, and state. It allows us to create the most optimal setup and environment for the backoffice to ship modern, slim, chunked modules for the UI. It also allows us to choose whatever libraries we like for state management, routing, and observability.
+JavaScript frameworks are all doing essentially the same thing: Producing custom elements with syntactic sugar, and also added benefits of having built-in routers, state machines, and stores. The concept of Web Components is created such that the browsers natively support all the things we love from libraries such as React and Vue including having custom elements, reactivity, and state. It allows us to create the most optimal setup and environment for the backoffice to ship modern, slim, chunked modules for the UI. It also allows us to choose whatever libraries we like for state management, routing, and observability.
+
+Building our software with Web Components - a native web standard - ensures that our software works and will keep working for at least a longer period than any external library will. The APIs will keep getting updated along with the browser itself, patching any security vulnerability along the way.
+
+##### Boilerplating
 
 Web Components require a lot of boilerplate in their current state, so to speed up development, we are going to work with a very efficient, [tiny library called Lit](https://lit.dev/). This library has helped us tremendously in building the [Umbraco UI Library](https://github.com/umbraco/Umbraco.UI) and is also now serving parts of the [Umbraco Cloud portal](https://umbraco.com/products/umbraco-cloud/). Choosing Lit also has the added benefit of being able to share tech and collaborate throughout Umbraco HQ.
 
