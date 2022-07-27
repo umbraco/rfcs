@@ -359,6 +359,10 @@ We do not plan to migrate the Nested Content Property Editor to the new backoffi
 
 We do not plan to migrate the Grid Layout Property Editor. The future of Umbraco points towards using Element Types (just like the Block List Property Editor) and the Grid Layout editor does not support this natively. We are currently investigating what a new block-based grid editor will look like.
 
+#### Rich Text Editor
+
+We do not plan to keep on using the current version of [TinyMCE](https://github.com/tinymce/tinymce) in the new backoffice. Instead, we will see how the Rich Text Editor can be improved going forward using either the newest version of TinyMCE or something else entirely.
+
 #### Pre-Configured Data Types
 
 There are a lot of different Data Types in the old backoffice, and frankly, some of them have been unused for a long time. We are going to comb through the existing ones during this project to see what makes sense to have in the new backoffice.
