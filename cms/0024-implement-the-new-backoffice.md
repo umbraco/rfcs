@@ -60,8 +60,7 @@ In single-page applications routing is usually a non-trivial area. We are lookin
 
 We are going to use a standards-based way to build our custom UI as close to modern browser conventions and technology as possible. We have considered many options - libraries and frameworks alike - and have concluded that we would like to avoid falling into another technical grave in the years to come when what we choose now becomes obsolete.
 
-> _When you're working with the browser rather than against it, code, skills, and knowledge remain relevant for a longer time. Development becomes faster and debugging is easier because there are fewer layers of abstractions involved._
-> _— [modern-web.dev](https://modern-web.dev/discover/about/)_
+> _When you're working with the browser rather than against it, code, skills, and knowledge remain relevant for a longer time. Development becomes faster and debugging is easier because there are fewer layers of abstractions involved._ > _— [modern-web.dev](https://modern-web.dev/discover/about/)_
 
 We have a firm belief that sticking with the browser standards will continue to evolve and benefit us in the years to come. Therefore we have chosen to build the new backoffice UI with [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
@@ -327,6 +326,12 @@ It should be as simple as issuing the command `npm test` to run all tests, and t
 The old backoffice has a set of unit tests using Karma and a set of acceptance tests using Cypress for the UI. The acceptance tests for the old backoffice will be converted to [Playwright](https://playwright.dev/) in the future and we will try to transfer that work to the new backoffice project, and use it for both unit and end-to-end testing.
 
 Traditional tools are not designed for piercing the Shadow DOM of Web Components, but this is where Playwright becomes especially handy since it by default looks through an arbitrary number of open shadow roots when selecting elements.
+
+### Security & Updates
+
+Security is an ever present thing to consider: Any external library that we install must be maintained and updated regularly whenever a security patch is released following a CVE or otherwise. This is more easily done on an auto-updated product such as a SaaS product, but with Umbraco CMS being an installed product, we do not have that luxury. As an example, Umbraco 7 was released in 2013 using the new-at-the-time AngularJS framework. This framework is now considered end-of-life as of January 2022 and will no longer receive updates.
+
+We will strive to maintain the security of the backoffice and the UI Library by using tools such as GitHub's Dependabot to automatically keep the backoffice and UI Library up to date and [CodeQL](https://codeql.github.com/) to catch low-hanging fruit before any code is merged. We will also try to lock down the versions of the various third-party libraries to a specific version so that we may vet any updates before they are applied.
 
 ## Moving forward
 
