@@ -384,7 +384,13 @@ Other alternatives were discussed in [the original RFC for future-proofing the b
 
 ## Out of Scope
 
-New Web API controllers will be made available for the new backoffice, however, any technological change on how to build a Web API will be considered out of scope for this RFC and in general, any backend changes to facilitate the new backoffice is out of scope.
+### Web API
+
+New Web API controllers will be made available for the new backoffice, however, any technological change on how to build a Web API will be considered out of scope for this RFC and in general, any backend changes to facilitate the new backoffice are out of scope.
+
+### Caching
+
+To have good caching requires a good foundation. We will try to see how we can implement such a foundation that we might support even better caching in the future. We will also try to see how to make user actions such a Save & Publish asynchronous to allow a quicker workflow for editors. To do so, we will implement a series of stores or repositories to manage the data. However, a complete caching solution is considered out-of-scope for this RFC.
 
 ## Proof of Concept
 
