@@ -37,7 +37,7 @@ To facilitate a good experience all Block content, whether it is local or global
 
 We want to offer a section where Global Blocks can be maintained, however, doing this, opens up the question if other types of content are placed the right way today. Global Blocks are by nature something that is not related to a specific page. It's used on multiple pages but that's also the case for tags, and content templates. We, therefore, suggest that the new Library section also includes these types. An example of such a section could look like this:
 
-![Library Section](assets/global-blocks/Library%20-%20clean.jpg)
+![Library Section](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Library%20-%20clean.jpg?raw=true)
 
 As seen, we want to introduce a folder structure for the global blocks so that the editor has a way to control the structure.
 Also be aware, that while Blocks have both Content and Settings, we only consider the Content part to be Global as we believe the Settings part could benefit from being specific for each usage of a Global Block. We, therefore, don’t plan to show any Settings for blocks in the Library section.  
@@ -46,7 +46,7 @@ Also be aware, that while Blocks have both Content and Settings, we only conside
 
 As a block will always be shown and styled depending on the content wherein it exists, it will never make sense to try to preview a Block without also choosing a Content Node. The editor should therefore be asked to select the Content Node before an actual preview can be shown:
 
-![Library Preview](assets/global-blocks/Library%20-%20Preview.jpg)
+![Library Preview](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Library%20-%20Preview.jpg?raw=true)
 
 In case a Block has not yet been referenced from any Content Node, a message should be shown to the user, that a Global Block can't be previewed when it's not yet in use on any Content Items.
 
@@ -54,56 +54,56 @@ In case a Block has not yet been referenced from any Content Node, a message sho
 
 Like with Content Nodes, we want to show the general status and history, and we also want to show a list of the Content Items where the Block is referenced. That list should include information about the status of the Content Nodes concerning published, unpublished, scheduled, created and latest changes so that the editor can be guided in updating the right content.
 
-![Library Info tab](assets/global-blocks/Library%20-%20info.jpg)
+![Library Info tab](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Library%20-%20info.jpg?raw=true)
 
 #### Language
 
 In short, there should be the same opportunities for languages as with Content Nodes - e.g. with split-view and with publishing messages:
 
-![Library Info tab](assets/global-blocks/Library%20-%20language.jpg)
+![Library Info tab](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Library%20-%20language.jpg?raw=true)
 
 ### Content Section
 
 We believe that Local Blocks still have relevance on sites, where you want to limit complexity. We, therefore, want to offer a setting on the Block List and the Block Grid to indicate if it accepts Local and/or Global Blocks. However, as we also see use cases for Block Lists/Grids with both Local and Global Blocks, we want to present this in a friendly way in the UI. This could either be through labels, icons, or both - and should of course work with both the Block List and the Block Grid:
 
-![Content Section - block list](assets/global-blocks/Content%20-%20clean.jpg)
-![Content Section - block grid](assets/global-blocks/Content%20-%20block%20grid.jpg)
+![Content Section - block list](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Content%20-%20clean.jpg?raw=true)
+![Content Section - block grid](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Content%20-%20block%20grid.jpg?raw=true)
 
 ##### Make Global
 
 We want to ensure a smooth transition between Local and Global Blocks, so that if you have a Local Block that you want to use in more than one Block List or Block Grid, - it should simply be possible to make it global. In this process, you need to give the Block a name and also place it in the correct folder - and the block will afterward be available in the Library folder:
 
-![Content Section - make global](assets/global-blocks/Content%20-%20make%20global.jpg)
+![Content Section - make global](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Content%20-%20make%20global.jpg?raw=true)
 
 #### Make Local
 
 While using Global Blocks there might be cases, where the Global Block is almost as you want it - but somehow not 100% the right fit. In these cases, we want to offer an opportunity to make a Block local. By doing this we'll create a new local instance while still keeping the Global Block:
 
-![Content Section - make local](assets/global-blocks/Content%20-%20Make%20local.jpg)
+![Content Section - make local](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Content%20-%20Make%20local.jpg?raw=true)
 
 #### Publish content
 
 With Global Blocks that can have various states and e.g. be unpublished or scheduled for publishing, we want to make it visible for the editor during the publishing of a content node if there are Global Blocks that are either unpublished or scheduled for publishing. As the Global Blocks are published, unpublished, and scheduled individually they will not affect the publishing of a Content Node, but we see the information about these states as important for the editor:
 
-![Content Section - publish](assets/global-blocks/Content%20-%20publish.jpg)
+![Content Section - publish](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Content%20-%20publish.jpg?raw=true)
 
 #### Edit block
 
 The experience of editing a Block in the context of a Content Node should be the same as with Local Blocks today, however, instead of a submit button we want to provide the editor with the option to save, unpublish, schedule, and publish.
 
-![Content Section - edit block](assets/global-blocks/Content%20-%20Edit%20block.jpg)
+![Content Section - edit block](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Content%20-%20Edit%20block.jpg?raw=true)
 
 #### Add block
 
 We want the editor to be able to decide up-front if she would like to create a new Local/Global Block or add an existing Global Block to the currently selected Block List or Block Grid. If creating a new Global Block, we want that to be done within the Block tree:
 
-![Content Section - add block](assets/global-blocks/Content%20-%20Add%20block.jpg)
+![Content Section - add block](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Content%20-%20Add%20block.jpg?raw=true)
 
 #### Language
 
 As mentioned above, we want to provide the same language opportunities for Global Blocks as for Content Nodes. A Global Block should therefore always be visible in all languages, although its content might fall back to the default language. Contrary, a Local Block - just as it is today - is considered unique for a specific language.
 
-![Content Section - add block](assets/global-blocks/Content%20-%20splitview.jpg)
+![Content Section - add block](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Content%20-%20splitview.jpg?raw=true)
 
 
 ### Permissions
