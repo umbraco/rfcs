@@ -2,6 +2,8 @@
 
 ### Request for Contribution (RFC) 0025 : Reusable Content with Global Blocks
 
+**Please comment on this RFC in this [RFC Dicsussion](https://github.com/umbraco/rfcs/discussions/35)**
+
 ## Code of Conduct
 
 Please read and respect the [RFC Code of Conduct](https://github.com/umbraco/rfcs/blob/master/CODE_OF_CONDUCT.md).
