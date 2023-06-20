@@ -2,7 +2,7 @@
 
 ### Request for Contribution (RFC) 0025 : Reusable Content with Global Blocks
 
-**Please comment on this RFC in this [RFC Dicsussion](https://github.com/umbraco/rfcs/discussions/35)**
+**Please comment on this RFC in this [RFC Discussion](https://github.com/umbraco/rfcs/discussions/35)**
 
 ## Code of Conduct
 
@@ -73,7 +73,7 @@ We believe that Local Blocks still have relevance on sites, where you want to li
 
 ##### Make Global
 
-We want to ensure a smooth transition between Local and Global Blocks, so that if you have a Local Block that you want to use in more than one Block List or Block Grid, - it should simply be possible to make it global. In this process, you need to give the Block a name and also place it in the correct folder - and the block will afterward be available in the Library folder:
+We want to ensure a smooth transition between Local and Global Blocks, so that if you have a Local Block that you want to use in more than one Block List or Block Grid, - it should simply be possible to make it global. In this process, you need to give the Block a name and also place it in the correct folder - and the block will afterwards be available in the Library folder:
 
 ![Content Section - make global](https://github.com/umbraco/rfcs/blob/0025-reusable-content-with-global-blocks/cms/assets/global-blocks/Content%20-%20make%20global.jpg?raw=true)
 
@@ -121,13 +121,13 @@ As we think it makes sense to have the Block Settings as something that relates 
 
 Although we mention Tags as part of the new Library section, it's not in the scope of this RFC to discuss moving and updating Tags.
 
-### Unrosolved issues
+### Unresolved issues
 
 Some of the answers that we hope to get out of this are:
 - Related to the technical considerations, if we are right, that it makes most sense to have Block Settings stored within the Content Node or if there are more/better use cases for storing Block Settings globally too. 
 - In case you work with segments, if you can see any implications in this proposal. 
 - More perspectives on the proposed new section called “Library”. If it should be there at all and if so what it should include.
-- The naming. Should we call it Global Blocks, resusable content or something else.
+- The naming. Should we call it Global Blocks, reusable content or something else.
 
 ## Contributors
 
