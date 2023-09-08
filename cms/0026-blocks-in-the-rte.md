@@ -2,7 +2,7 @@
 
 ### Request for Contribution (RFC) 0026 : Blocks in the Rich Text Editor (RTE)
 
-**Please comment on this RFC in this [RFC Discussion](https://github.com/umbraco/rfcs/discussions/36)**
+**Please comment on this RFC in this [RFC Discussion](https://github.com/umbraco/rfcs/discussions/42)**
 
 ## Code of Conduct
 
