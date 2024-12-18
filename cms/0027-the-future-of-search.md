@@ -171,7 +171,7 @@ Protected documents are configured in Umbraco by specifying the concrete members
 When Umbraco hands off protected documents to be indexed by the search implementation, the configured member and member group IDs (GUIDs) will be passed to the search implementation. The search implementation must either:
 
 - Index the documents accordingly, so they can be made available for the relevant members at query time, or
-- Discard the documents, thus not indexing it at all (efficiently not supporting protected documents).
+- Discard the documents, thus not indexing it at all (effectively not supporting protected documents).
 
 #### Indexing variants of content
 
@@ -316,7 +316,7 @@ The individual search implementations may allow for search provider specific con
 
 ## Out of Scope
 
-We do only initially plan to ship a single implementation of the search abstraction, which will be based on Examine to be backward compatible.
+We only initially plan to ship a single implementation of the search abstraction, which will be based on Examine to be backward compatible.
 
 We will not support other search providers in the initial release.
 
