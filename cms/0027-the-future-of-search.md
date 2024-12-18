@@ -182,11 +182,11 @@ For variant content, Umbraco will append the relevant variance qualifiers (cultu
 
 #### Full re-indexing versus partial index updates
 
-Some search providers support zero downtime for full re-indexing, commonly known as index swapping.
+Some search providers support zero downtime for full re-indexing - for example by means of "index swapping".
 
-Umbraco will be handing off either individual content items or collections of content for indexing, but for large sites it will eventually not be possible to hand off _all_ content. However, we still want to support index swapping if at all possible when performing full re-indexing.
+Umbraco will be handing off either individual content items or collections of content for indexing, but for large sites it will eventually not be possible to hand off _all_ content in a single operation. However, we still want to support zero downtime re-indexing if at all possible.
 
-This requires us to introduce an instruction protocol for communicating re-indexing start and end. The specifics are yet to be defined, but it will require some queueing mechanism to ensure atomic operations ("transactions") across mutiple batches of content.
+This requires us to introduce an instruction protocol for communicating re-indexing start and end. The specifics are yet to be defined, but it will require some queueing mechanism to ensure atomic operations ("transactions") across multiple batches of content indexing.
 
 #### Extensibility
 
