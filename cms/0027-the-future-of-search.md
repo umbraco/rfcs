@@ -43,6 +43,7 @@ We suggest the following design, based on the these criteria:
 ### Terminology
 
 - **Content**: Common denominator for Documents, Media and Members.
+TODO: rename this to "search implementation" throughout 
 - **Search provider**: An implementation of the search and indexing abstraction for a specific search engine.
 - **Field**: A container of data in the search index.
 
@@ -76,12 +77,13 @@ We suggest creating four core indexes:
 - **Media** to power all media search.
 - **Members** to power all member search.
 
-Note that as of today, media are included in both the "external index" and the "internal index". We want to change this moving forward, as we percieve documents and media as two different things - particularly from a search perspective.
+Note that as of today, media are included in both the "external index" and the "internal index". We want to change this moving forward, as we perceive documents and media as two different things - particularly from a search perspective.
 
-TODO: Custom indexes - Umbraco Forms?
+TODO: Custom indexes - Umbraco Forms? Discourage the use of custom indexes, but it should be possible... WORDS!
 
 #### Index data per property value
 
+TODO: make it more explicit that this is a NEW thing, not the current thing. 
 Like today, we will use a property index value factory to generate the property level index data for property editors.
 
 There will be different property index value factory implementations for different property editors, and they will return a common data format for indexing property data.
@@ -105,7 +107,7 @@ In this index data format:
 - All `Texts` will be used for full text search. The granular division of text types are to be used for relevance boosting.
 - `Keywords`, `Decimals`, `Integers` and `DateTimeOffsets` are meant for filtering and/or faceting.
 
-We will _not_ provide specifics on how index data should be indexed (e.g. specific analyzers for full text search). Instead, we will consider this an implementation detail for the individual search providers.
+We will _not_ provide specifics on how the index data should be indexed (e.g. how to analyze for full text search). We consider this an implementation detail for the individual search providers, as it varies greatly between providers.
 
 #### Index data per content item
 
@@ -119,10 +121,10 @@ Additionally, the following content level data will be included, using the same 
 - Creation date (as `DateTimeOffsets`)
 - Update date (as `DateTimeOffsets`)
 - Content type alias (as `Keywords`)
-- ID (Guid) (as `Keywords`)
+- ID (GUID) (as `Keywords`)
 - Tags (as `Keywords`)
     - All tags accumulated across all property values.
-- Ancestor IDs (Guids) (as `Keywords`)
+- Ancestor IDs (GUIDs) (as `Keywords`)
     - Included to facilitate structural search queries.
 
 #### Persisting index data in the database
@@ -143,12 +145,13 @@ The persisted index data will be stored in a new table, similarly to how we stor
 
 The table will be named `umbracoIndexData` and contain the following columns:
 
-- `Key`: Guid (primary key)
+- `Key`: GUID (primary key)
 - `Published`: Bit
 - `DataRaw`: Binary (same binary serialization as the published content)
 
 The `DataRaw` column will contain the serialized index data for all variants of an entire content item.
 
+TODO: rewrite for documents
 #### Indexing protected content
 
 TODO: This can ONLY be for members - Users will use the indexed ancestor IDs for scoping (user start nodes)
@@ -217,7 +220,7 @@ Full text search will be defined as:
 
 The search should be performed across the `Texts` from the property level index data.
 
-Relevant boosting should be applied for the individual `Texts` data, e.g. ensuring higher search result relevance for data from `TextsH1` than `TextsH4` (where `Texts` is considered of least relevance value).
+Relevant boosting should be applied for the individual `Texts` data, e.g. ensuring higher search result relevance for data from `TextsH1` than `TextsH4` (where `Texts` is considered of the least relevance value).
 
 We do _not_ plan to include detailed boosting levels as part of the search abstraction. We consider this an implementation detail for the individual search providers. 
 
@@ -230,6 +233,8 @@ Filtering allows for narrowing down the search results by exact matching against
 - `Integers`: For exact matches on integer values.
 - `DateTimeOffsets`: For exact matches on date and time.
 
+TODO: describe range and exact filters
+
 The abstraction will support:
 - Filtering against specific fields, thus narrowing down by content property value.
   - For example: The "color" property should have the value "Red".
@@ -237,6 +242,8 @@ The abstraction will support:
   - For example: ("color" must be "Red") AND ("price" must be less than 100).
 - Providing multiple values per filter. Filter values will be combined with an OR.
     - For example: ("color" must be "Red" OR "Blue") AND ("size" must be "M" OR "L").
+
+TODO: Chaining filters
 
 TODO: Ranged filtering can be obtained by chaining filters? Introduce range filters?
 
@@ -249,6 +256,8 @@ Faceting yields the same content results as filtering, but adds facet values to 
 From a search provider perspective, faceting likely works very differently from filtering, and might incur a performance penalty over filtering.
 
 We propose splitting faceting into two parts:
+
+TODO: use naming - exact and range facets
 
 - **Facet filtering** for concrete facet values.
   - For example: "color" is "Red" OR "Blue".
@@ -273,29 +282,44 @@ Given the context of a "current principal" (by means of a concrete principal ide
 
 See the indexing section for more details.
 
+#### Search result
 
+The search provider should produce search results that contain:
 
+- The total number of results.
+- The IDs (GUIDs) of the content items within the current result page.
+- Matching facets, if any have been requested.
+- A collection of "suggested next queries", if any have been requested. (TODO: correct?)
+
+We do _not_ propose the support of "stored fields" within the search index. As such, there is no notion of stored fields in the search result.
+
+Instead, the search abstraction will resolve the actual content items for results generated by the search provider - for example, retrieve matching published documents from the cache.
 
 TODO skal vi have 4 searchers: Documents, DraftDocuments, Media, Members
-```cs
 
-PagedSearchResult Search(
+```csharp
+public PagedSearchResult Search(
     VariantFilter variantFilter,
     FullTextFilter? fullTextFilter = null,
-    IEnumerable<Filter>? filters = null, // this is necessary to perform filtering without facets - or facets within a filtered scope
-    IEnumerable<FacetFilter>? facetFilters = null, // e.g category:blogposts, color:black
-    IEnumerable<RangeFilter>? rangeFilters = null, // e.g price.numerics<200, __published.Dates>2022-01-01 // TODO explict model what about AND vs OR // TODO specific datatime vs int vs decimal..
-    PrincipalFilter? principalFilter = null, // expands the gross scope of the search to include all content allowed for this principal (explicitly by ID or implicitly by group membership)
-    SortDefinition sortDefinition = SortDirection.Descending,
-    int skip = 0, // Number of results to skip
-    int take = 10 // Number of results to return
+    IEnumerable<Filter>? filters = null,
+    IEnumerable<Facet>? facets = null,
+    PrincipalFilter? principalFilter = null,
+    Suggest? suggest = null,
+    Sort? sort = null,
+    int skip = 0,
+    int take = 10
 )
+{
+    // ...
+}
 
 public class VariantFilter
 {
+    // nulls means invariant
     public string? Culture { get; set; } // null = invariant
     
-    public string? Segment { get; set; } // null = default segment (language)
+    // null means default (no) segment
+    public string? Segment { get; set; }
 }
 
 public enum FullTextFilterQueryOperator
@@ -306,17 +330,11 @@ public enum FullTextFilterQueryOperator
 
 public class FullTextFilter 
 {
-    public string Query { get; set; } // query to be analyzed, using OR between words
+    // query to be analyzed
+    public required string Query { get; set; }
 
+    // operator to use between the words in the query
     public FullTextFilterQueryOperator Operator { get; set; } = FullTextFilterQueryOperator.Or;
-}
-    
-public class SortDefinition
-{
-    public SortDirection Direction { get; set; } = SortDirection.Descending;
-
-    // TODO: key? field? consistency!
-    public string? Key { get; set; } = null; // null means by relevance, otherwise use one of SystemFields or a relevant proprety alias 
 }
 
 public static class SystemFields
@@ -330,60 +348,41 @@ public static class SystemFields
 public enum FilterOperator
 {
     Is,
-    IsNot,
-    LessThan,
-    LessThanOrEqual,
-    GreaterThan,
-    GreaterThanOrEqual,
+    IsNot
 }
 
-public abstract class Filter 
+public abstract class Filter
 {
-    public string Key { get; set; } // The property alias
-
-    public FilterOperator Operator { get; set; } = FilterOperator.IS;
+    // the index field name (system field or property alias)
+    public required string Field { get; set; }
 }
 
-public abstract class Filter<T> : Filter
+public abstract class ExactFilter<T> : Filter
 {
-    public IEnumerable<T> Values { get; set; } // OR
+    // operator to use against the filter values
+    public FilterOperator Operator { get; set; } = FilterOperator.Is;
+
+    // the filter values (OR filtering applies if multiple values are specified)
+    public required IEnumerable<T> Values { get; set; }
 }
 
-public class StringFilter : Filter<string> {}
+public class StringExactFilter : ExactFilter<string> {}
 
-public class IntegerFilter : Filter<int> {}
+public class IntegerExactFilter : ExactFilter<int> {}
 
-public class DecimalFilter : Filter<decimal> {}
+public class DecimalExactFilter : ExactFilter<decimal> {}
 
-public class DateTimeOffsetFilter : Filter<DateTimeOffset> {}
+public class DateTimeOffsetExactFilter : ExactFilter<DateTimeOffset> {}
 
-public abstract class FacetFilter 
+public class GuidExactFilter : ExactFilter<Guid> {}
+
+public abstract class RangeFilter<T> : Filter
 {
-    public string Key { get; set; } // The property alias
-}
+    // null means "no lower bounds"
+    public T? MinValue { get; set; }
 
-public abstract class FacetFilter<T> : FacetFilter
-{
-    public IEnumerable<T> Values { get; set; } // OR
-}
-
-public class StringFacetFilter : FacetFilter<string> {}
-
-public class IntegerFacetFilter : FacetFilter<int> {}
-
-public class DecimalFacetFilter : FacetFilter<decimal> {}
-
-public class DateTimeOffsetFacetFilter : FacetFilter<DateTimeOffset> {}
-
-public abstract class RangeFilter
-{
-    public string Key { get; set; } // The property alias
-}
-
-public abstract class RangeFilter<T> : RangeFilter
-{
-    public T MinValue { get; set; }
-    public T MaxValue { get; set; }
+    // null means "no upper bounds"
+    public T? MaxValue { get; set; }
 }
 
 public class IntegerRangeFilter : RangeFilter<int> {}
@@ -392,56 +391,33 @@ public class DecimalRangeFilter : RangeFilter<decimal> {}
 
 public class DateTimeOffsetRangeFilter : RangeFilter<DateTimeOffset> {}
 
-public class PrincipalFilter
+public abstract class Facet
 {
-    // TODO: Id? Key?
-    public Guid Id { get; set; }
-
-    public IEnumerable<string> Groups { get; set; }
+    // the index field name (system field or property alias)
+    public required string Field { get; set; }
 }
 
-// Filters:
-// Algolia has a dedicated model for filters, facetfilers and numericFilers: https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filters-and-facetfilters/
-// ElasticSearch has dedicated model for filters, facetfilers and numericFilers https://medium.com/hepsiburadatech/how-to-create-faceted-filtered-search-with-elasticsearch-75e2fc9a1ae3
-// Meilisearch, has a just string filters https://www.meilisearch.com/docs/reference/api/search
-
-// TODO abstraction kan godt håndtere at opløse en key til IPublishedContent
-public class PagedSearchResult
+public abstract class ExactFacet<T> : Facet
 {
-    public int TotalCount { get; set; }
-    public IEnumerable<SearchResult> Results { get; set; }
-    public IEnumerable<Facet> Facets { get; set; }
-    public IEnumerable<RangeFacet> RangeFacets { get; set; }
-    public IEnumerable<string> SuggestedNextQuery { get; set; }
+    // the facet values to filter by (OR filtering applies if multiple values are specified)
+    public required IEnumerable<T> Values { get; set; }
 }
 
-public SearchResult
-{
-    // TODO: Key? Id?
-    public Guid Id { get; set; }
-}
+public class StringExactFacet : ExactFacet<string> {}
 
-public class Facet
-{
-    public string Key { get; set; } // The property alias
-    public IEnumerable<FacetValue> Values { get; set; }
-}
+public class IntegerExactFacet : ExactFacet<int> {}
 
-public class FacetValue 
-{
-    public string Value { get; set; } // The value from keyword
-    public int Count { get; set; }
-}
+public class DecimalExactFacet : ExactFacet<decimal> {}
 
-public abstract class RangeFacet
-{
-    public string Key { get; set; } // The property alias
-}
+public class DateTimeOffsetExactFacet : ExactFacet<DateTimeOffset> {}
 
-public abstract class RangeFacet<T> : RangeFacet
+public abstract class RangeFacet<T> : Facet
 {
-    public T MinValue { get; set; }
-    public T MaxValue { get; set; }
+    // null means "no lower bounds"
+    public T? MinValue { get; set; }
+
+    // null means "no upper bounds"
+    public T? MaxValue { get; set; }
 }
 
 public class IntegerRangeFacet : RangeFacet<int> {}
@@ -450,58 +426,108 @@ public class DecimalRangeFacet : RangeFacet<decimal> {}
 
 public class DateTimeOffsetRangeFacet : RangeFacet<DateTimeOffset> {}
 
+public class PrincipalFilter
+{
+    // the principal identifier
+    public required Guid Id { get; set; }
+
+    // the group memberships of the principal
+    public required IEnumerable<string> Groups { get; set; }
+}
+
+public enum SortDirection
+{
+    Ascending = 0,
+    Descending = 1,
+}
+
+public class Suggest
+{
+    // whether to include "suggested next queries" in the search result
+    public bool SuggestNextQuery { get; set; } = false; 
+}
+
+public class Sort
+{
+    public SortDirection Direction { get; set; } = SortDirection.Descending;
+
+    // the index field name (system field or property alias) - null means default (relevance)
+    public string? Key { get; set; } = null; 
+}
+
+public class PagedSearchResult
+{
+    public int TotalCount { get; set; }
+
+    public required IEnumerable<SearchResult> Results { get; set; }
+
+    public IEnumerable<FacetResult>? FacetResults { get; set; }
+
+    public IEnumerable<string>? SuggestedNextQuery { get; set; }
+}
+
+public class SearchResult
+{
+    public required Guid Id { get; set; }
+}
+
+public abstract class FacetResult
+{
+    // the index field name (system field or property alias) - null means default (relevance)
+    public required string Field { get; set; }
+}
+
+public abstract class ExactFacetResult<T> : FacetResult
+{
+    // the available facet values for the query results
+    public required IEnumerable<ExactFacetResultValue<T>> Values { get; set; }
+}
+
+public abstract class ExactFacetResultValue<T> 
+{
+    // the value in the index
+    public required T Value { get; set; }
+
+    // number of hits for this facet value
+    public required int Count { get; set; }
+}
+
+public class StringExactFacetResult : ExactFacetResult<string> {}
+
+public class IntegerExactFacetResult : ExactFacetResultValue<int> {}
+
+public class DecimalExactFacetResult : ExactFacetResultValue<decimal> {}
+
+public class DateTimeOffsetExactFacetResult : ExactFacetResultValue<DateTimeOffset> {}
+
+public abstract class RangeFacetResult<T> : FacetResult 
+{
+    // the lower bounds in the index
+    public T? MinValue { get; set; }
+
+    // the upper bounds in the index
+    public T? MaxValue { get; set; }
+}
+
+public class IntegerRangeFacetResult : RangeFacetResult<int> {}
+
+public class DecimalRangeFacetResult : RangeFacetResult<decimal> {}
+
+public class DateTimeOffsetRangeFacetResult : RangeFacetResult<DateTimeOffset> {}
 ```
+
 ### Configuration
-The following configuration is planned to be in the abstraction. Any further configurations will most likely be search provider specific.
 
 TODO: Any?
 
-### Multiple indexes
-We plan to have a separate index for website search (published data) and backoffice search (draft data). This is to ensure that the website search is not affected by the backoffice search, and vice versa.
-
-
-TODO Hvad med media og members indexes, kun relevant for backoffice.
 ## Technical considerations
 
-### Protected documents
-
-### Analyzed data types
-- Strings
-### Specialized Data Types
-- GeoPoint
-- Numeric
-- DateTimes
-- Boolean
-- String keywords
-- Stored Fields // Data you wanna have returned in the search result. Not intented for rebuilding an IPublishedContent.
-### Auto complete / Suggestions
-
-### Facets
-Facets needs to be handled on the specific search provider implementations, as they are not supported by all search providers.
-We expect the abstraction to support facets, due to the data that is sent to each search provider for indexing has specified data types for analyzed vs non-analysed is data.
-- Only supported by some implementations, but can be handled by the keywords field.
-
-### Ranges
-- E.g. time range or numeric range
-### Analyzing
-Due to the fact that analyzing needs vary greatly between different search providers, we propose this to happen in the implementations. E.g. most structured search providers needs to have the data analyzed before it is indexed, while AI based search providers not need this.
-
-The abstraction will indicate what data is expected to be analysed and what is expected to be stored as is.
-
-
-
-
-##### Examples of published content and index data
-
-TODO..
-
-TODO - What about protected content
-
-[//]: # (We could extend the RTE in other ways than with blocks but believe that by building this on top of the block technology, we open up for benefiting from future block improvements while at the same time ensuring a more aligned developer- and editor experience. )
-
-[//]: # (For the Content Delivery API, we propose that blocks should be listed in an array in the Json output and then referenced from within the RTE HTML element. While not used in a headless context, a partial view is needed, just like with blocks for the block list and the block grid. )
+TODO: Any?
 
 ## Out of Scope
+
+TODO: Polish?
+
 We do only initially plan to ship a single implementation of the search abstraction, which will be based on Examine to be backward compatible.
 We will not support other search providers in the initial release.
 
@@ -514,7 +540,10 @@ TODO: out of scope - index values at property level
 
 ### Unresolved issues
 
+TODO: Any?
+
 ## Contributors
+
 This RFC was compiled by:
 
 - Bjarke Berg (Umbraco HQ)
