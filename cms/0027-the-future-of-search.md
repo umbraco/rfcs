@@ -17,41 +17,45 @@ The intended audience for this RFC is
 - Extension developers
 - Package authors
 
+## Terminology
+
+- **Content**: Common denominator for Documents, Media and Members.
+- **Search implementation**: An implementation of the search and indexing abstraction for a specific search provider.
+- **Search provider**: The underlying search technology for a search implementation (e.g. Elasticsearch).
+- **Field**: A container of data in the search index.
+
 ## Summary
 
-TODO...
+TODO: polish
+
+In this RFC we propose a replacement of the current search functionality in Umbraco.
+
+The RFC outlines details for both indexing and searching as we envision it moving forward, and provides concrete examples of both.
 
 ## Motivation
 
 For many years, search functionality in Umbraco has relied on Examine, utilizing a standard implementation of Lucene.NET. However, Lucene.NET is known for its issues with hosting on network drives, making deployments on platforms like Azure Web Services particularly challenging. This has required extensive configuration adjustments and has been a frequent source of support cases for Umbraco.
 
-Additionally, we recognize that many of our partners already use more advanced search engines. As a result, we aim to simplify integrations with these platforms, regardless of the specific technology used.
+Additionally, we recognize that many of our partners already use more advanced search providers. As a result, we aim to simplify integrations with these platforms, regardless of the specific technology used.
 
 Finally, we see an opportunity to optimize the index rebuilding process, enabling it to run more efficiently and faster.
 
 ## Detailed design
 
-We suggest to introduce a complete new search and indexing abstraction, which will allow for different search engines to be used for searching Umbraco content.
+We suggest to introduce a complete new search and indexing abstraction, which will allow for different search providers to be used for searching Umbraco content.
 
-During our investigation, we have looked into Elasticsearch, Algolia, Meilisearch and Examine (Lucene.NET) as potential search engines.
+During our investigation, we have looked into Elasticsearch, Algolia, Meilisearch and Examine (Lucene.NET) as potential search providers.
 
 We suggest the following design, based on the these criteria:
 
 1. The abstraction should be easy to use.
-2. It should be possible to implement with any search engine.
-
-### Terminology
-
-- **Content**: Common denominator for Documents, Media and Members.
-TODO: rename this to "search implementation" throughout 
-- **Search provider**: An implementation of the search and indexing abstraction for a specific search engine.
-- **Field**: A container of data in the search index.
+2. It should be possible to implement with any search provider.
 
 ### Indexing
 
 We suggest handling indexing for the search index via cache refreshers.
 
-This approach allows different search providers to determine which server roles should perform a task. For all out-of-process search providers, indexing would only be performed on servers with the `Publisher` role.
+This approach allows different search implementations to determine which server roles should perform a task. For all out-of-process search implementations, indexing would only be performed on servers with the `Publisher` role.
 
 The indexing will support both protected content (public access restrictions) and content variance (culture and segment).
 
@@ -62,7 +66,7 @@ Umbraco will be responsible for gathering index data when content changes. This 
 - Documents affected by the publishing of an ancestor Document.
 - Changes made to Document protection (public access).
 
-Subsequently, the index data will be handed off to the search provider, which is then responsible for updating the search index accordingly.
+Subsequently, the index data will be handed off to the search implementation, which is then responsible for updating the search index accordingly.
 
 #### Required indexes
 
@@ -79,12 +83,19 @@ We suggest creating four core indexes:
 
 Note that as of today, media are included in both the "external index" and the "internal index". We want to change this moving forward, as we perceive documents and media as two different things - particularly from a search perspective.
 
-TODO: Custom indexes - Umbraco Forms? Discourage the use of custom indexes, but it should be possible... WORDS!
+#### Custom indexes
+
+It should be possible to define and maintain custom indexes from any Umbraco extension (for example Umbraco Forms).
+
+#### Storing master data in indexes
+
+We do _not_ propose storing master data (commonly known as "stored fields" or "raw fields") within the indexes.
+
+An index is only meant to be an instrument for querying and resolving IDs for master data records. The actual master data records can subsequently be retrieved from their concrete storage.
 
 #### Index data per property value
 
-TODO: make it more explicit that this is a NEW thing, not the current thing. 
-Like today, we will use a property index value factory to generate the property level index data for property editors.
+We will create new property index value factories to generate the property level index data for property editors. This replaces the `IPropertyIndexValueFactory` implementations in the current codebase. 
 
 There will be different property index value factory implementations for different property editors, and they will return a common data format for indexing property data.
 
@@ -107,7 +118,7 @@ In this index data format:
 - All `Texts` will be used for full text search. The granular division of text types are to be used for relevance boosting.
 - `Keywords`, `Decimals`, `Integers` and `DateTimeOffsets` are meant for filtering and/or faceting.
 
-We will _not_ provide specifics on how the index data should be indexed (e.g. how to analyze for full text search). We consider this an implementation detail for the individual search providers, as it varies greatly between providers.
+We will _not_ provide specifics on how the index data should be indexed (e.g. how to analyze for full text search). We consider this an implementation detail for the individual search implementations, as it varies greatly between providers.
 
 #### Index data per content item
 
@@ -131,7 +142,7 @@ Additionally, the following content level data will be included, using the same 
 
 We propose storing index data in the database, as calculating it can be highly CPU-intensive — particularly for content with deeply nested types, such as block lists within block lists.
 
-By persisting these data, they only need to be calculated once per change, even for search providers that require a search index per machine, such as Examine (Lucene.NET).
+By persisting these data, they only need to be calculated once per change, even for search implementations that require a search index per machine, such as Examine (Lucene.NET).
 
 The primary benefit of persisting index data is significantly faster indexing during cold-boot scenarios where the entire index needs to be rebuilt.
 
@@ -151,28 +162,27 @@ The table will be named `umbracoIndexData` and contain the following columns:
 
 The `DataRaw` column will contain the serialized index data for all variants of an entire content item.
 
-TODO: rewrite for documents
-#### Indexing protected content
+#### Indexing protected documents
 
-TODO: This can ONLY be for members - Users will use the indexed ancestor IDs for scoping (user start nodes)
+_This section applies only to indexing of published documents._
 
-When configuring protected content in Umbraco, one specifies the concrete members and/or member groups that should have access to the content.
+Protected documents are configured in Umbraco by specifying the concrete members and/or member groups that should have access to the documents.
 
-When Umbraco hands off protected content to be indexed by the search provider, the configured member and member group IDs (GUIDs) will be passed to the search provider. The search provider must either:
+When Umbraco hands off protected documents to be indexed by the search implementation, the configured member and member group IDs (GUIDs) will be passed to the search implementation. The search implementation must either:
 
-- Index the content accordingly, so it can be made available for the relevant members at query time, or
-- Discard the content, thus not indexing it at all (efficiently not supporting protected content).
+- Index the documents accordingly, so they can be made available for the relevant members at query time, or
+- Discard the documents, thus not indexing it at all (efficiently not supporting protected documents).
 
 #### Indexing variants of content
 
-For variant content, Umbraco will append the relevant variance qualifiers (culture and/or segment) to the index data at property level. The search provider must either:
+For variant content, Umbraco will append the relevant variance qualifiers (culture and/or segment) to the index data at property level. The search implementation must either:
 
 - Index the variance qualifiers, so variant content can be found at query time (given a concrete variant context), or
 - Discard (parts of) the variance qualifiers and the corresponding property data (e.g. discard segmented property data if not supporting segmented querying).
 
 #### Full re-indexing versus partial index updates
 
-Some search engines support zero downtime for full re-indexing, commonly known as index swapping.
+Some search providers support zero downtime for full re-indexing, commonly known as index swapping.
 
 Umbraco will be handing off either individual content items or collections of content for indexing, but for large sites it will eventually not be possible to hand off _all_ content. However, we still want to support index swapping if at all possible when performing full re-indexing.
 
@@ -180,14 +190,14 @@ This requires us to introduce an instruction protocol for communicating re-index
 
 #### Extensibility
 
-We envision an extension model for indexing, which will allow for changing the default behavior (altering, adding and removing index data before it is sent to the search provider).
+We envision an extension model for indexing, which will allow for changing the default behavior (altering, adding and removing index data before it is sent to the search implementation).
 
 Part of this extension model will be the property index value factories themselves. They will be interchangeable, so custom indexing can be performed for _all_ properties of a given property editor.
 
 However, this will not cover all cases, so additional extension points will be called for. These are yet to be defined, but _could_ include:
 
 - An "also index these items" option to include additional content items for re-indexing when changes are made to specific content.
-- A "last minute" option to manipulate all index data for a single content item before it is passed to the search provider for indexing.
+- A "last minute" option to manipulate all index data for a single content item before it is passed to the search implementation for indexing.
 
 #### Examples of index data
 
@@ -207,9 +217,11 @@ We suggest defining a search abstraction that covers:
 
 Full text search, filtering and faceting can be used in conjunction with one another.
 
-The goal is to cover the most common use cases, not to define an exhaustive search abstraction for all search engines. For concrete search engine features outside the scope of the search abstraction, implementors are expected to utilize the search engine directly instead of going through this abstraction.
+The goal is to cover the most common use cases, not to define an exhaustive search abstraction for all search providers. For concrete search provider features outside the scope of the search abstraction, implementors are expected to utilize the search provider directly instead of going through this abstraction.
 
-TODO: appendix B
+#### Example of the search abstraction
+
+See Appendix B for a code example of what the search abstraction signature _could_ look like.
 
 #### Full text search
 
@@ -222,7 +234,7 @@ The search should be performed across the `Texts` from the property level index 
 
 Relevant boosting should be applied for the individual `Texts` data, e.g. ensuring higher search result relevance for data from `TextsH1` than `TextsH4` (where `Texts` is considered of the least relevance value).
 
-We do _not_ plan to include detailed boosting levels as part of the search abstraction. We consider this an implementation detail for the individual search providers. 
+We do _not_ plan to include detailed boosting levels as part of the search abstraction. We consider this an implementation detail for the individual search implementations. 
 
 #### Filtering
 
@@ -233,19 +245,20 @@ Filtering allows for narrowing down the search results by exact matching against
 - `Integers`: For exact matches on integer values.
 - `DateTimeOffsets`: For exact matches on date and time.
 
-TODO: describe range and exact filters
-
 The abstraction will support:
 - Filtering against specific fields, thus narrowing down by content property value.
   - For example: The "color" property should have the value "Red".
-- Providing multiple filters in a single query. Filters will be combined with an AND.
+- Chaining filters in a single query. Filters will be combined with an AND.
   - For example: ("color" must be "Red") AND ("price" must be less than 100).
 - Providing multiple values per filter. Filter values will be combined with an OR.
     - For example: ("color" must be "Red" OR "Blue") AND ("size" must be "M" OR "L").
 
-TODO: Chaining filters
+We propose splitting filtering into two parts:
 
-TODO: Ranged filtering can be obtained by chaining filters? Introduce range filters?
+- **Exact filtering** for concrete filter values.
+  - For example: "color" is "Red" OR "Blue".
+- **Range filtering** for range bound filter values.
+  - For example: "price" is between 100 AND 200.
 
 #### Faceting
 
@@ -253,272 +266,49 @@ From a search abstraction point of view, faceting works in much the same way as 
 
 Faceting yields the same content results as filtering, but adds facet values to the search result.
 
-From a search provider perspective, faceting likely works very differently from filtering, and might incur a performance penalty over filtering.
+From a search implementation perspective, faceting likely works very differently from filtering, and might incur a performance penalty over filtering.
 
 We propose splitting faceting into two parts:
 
-TODO: use naming - exact and range facets
-
-- **Facet filtering** for concrete facet values.
+- **Exact faceting** for concrete facet values.
   - For example: "color" is "Red" OR "Blue".
-- **Range filtering** for range bound facet values.
+- **Range faceting** for range bound facet values.
   - For example: "price" is between 100 AND 200.
 
 #### Autocomplete/suggestions
 
-We suggest including an optional "suggested next query" in the search results. This can be used by the search provider to supply options for autocompletion or query suggestions for a given query.
+We suggest including an optional "suggested next query" in the search results. This can be used by the search implementation to supply options for autocompletion or query suggestions for a given query.
 
 The "suggested next query" will be a collection of strings, meant to replace or complement the active full text search query (if any).
 
 #### Variance
 
-Given a concrete variation context (culture and/or segment), the search provider should be able to yield content results relevant to this context.
+Given a concrete variation context (culture and/or segment), the search implementation should be able to yield content results relevant to this context.
 
 See the indexing section for more details.
 
 #### Protected content
 
-Given the context of a "current principal" (by means of a concrete principal identifier and/or group memberships), the search provider should be able to include relevant protected content in search results.
+Given the context of a "current principal" (by means of a concrete principal identifier and/or group memberships), the search implementation should be able to include relevant protected content in search results.
 
 See the indexing section for more details.
 
 #### Search result
 
-The search provider should produce search results that contain:
+The search implementation should produce search results that contain:
 
 - The total number of results.
 - The IDs (GUIDs) of the content items within the current result page.
 - Matching facets, if any have been requested.
-- A collection of "suggested next queries", if any have been requested. (TODO: correct?)
+- A collection of "suggested next queries", if any have been requested.
 
-We do _not_ propose the support of "stored fields" within the search index. As such, there is no notion of stored fields in the search result.
-
-Instead, the search abstraction will resolve the actual content items for results generated by the search provider - for example, retrieve matching published documents from the cache.
-
-TODO skal vi have 4 searchers: Documents, DraftDocuments, Media, Members
-
-```csharp
-public PagedSearchResult Search(
-    VariantFilter variantFilter,
-    FullTextFilter? fullTextFilter = null,
-    IEnumerable<Filter>? filters = null,
-    IEnumerable<Facet>? facets = null,
-    PrincipalFilter? principalFilter = null,
-    Suggest? suggest = null,
-    Sort? sort = null,
-    int skip = 0,
-    int take = 10
-)
-{
-    // ...
-}
-
-public class VariantFilter
-{
-    // nulls means invariant
-    public string? Culture { get; set; } // null = invariant
-    
-    // null means default (no) segment
-    public string? Segment { get; set; }
-}
-
-public enum FullTextFilterQueryOperator
-{
-    Or,
-    And
-}
-
-public class FullTextFilter 
-{
-    // query to be analyzed
-    public required string Query { get; set; }
-
-    // operator to use between the words in the query
-    public FullTextFilterQueryOperator Operator { get; set; } = FullTextFilterQueryOperator.Or;
-}
-
-public static class SystemFields
-{
-    public const string Name = "_umb_name";
-    public const string CreateDate = "_umb_created";
-    public const string UpdateDate = "_umb_updated";
-    public const string ContentType = "_umb_type";
-}
-
-public enum FilterOperator
-{
-    Is,
-    IsNot
-}
-
-public abstract class Filter
-{
-    // the index field name (system field or property alias)
-    public required string Field { get; set; }
-}
-
-public abstract class ExactFilter<T> : Filter
-{
-    // operator to use against the filter values
-    public FilterOperator Operator { get; set; } = FilterOperator.Is;
-
-    // the filter values (OR filtering applies if multiple values are specified)
-    public required IEnumerable<T> Values { get; set; }
-}
-
-public class StringExactFilter : ExactFilter<string> {}
-
-public class IntegerExactFilter : ExactFilter<int> {}
-
-public class DecimalExactFilter : ExactFilter<decimal> {}
-
-public class DateTimeOffsetExactFilter : ExactFilter<DateTimeOffset> {}
-
-public class GuidExactFilter : ExactFilter<Guid> {}
-
-public abstract class RangeFilter<T> : Filter
-{
-    // null means "no lower bounds"
-    public T? MinValue { get; set; }
-
-    // null means "no upper bounds"
-    public T? MaxValue { get; set; }
-}
-
-public class IntegerRangeFilter : RangeFilter<int> {}
-
-public class DecimalRangeFilter : RangeFilter<decimal> {}
-
-public class DateTimeOffsetRangeFilter : RangeFilter<DateTimeOffset> {}
-
-public abstract class Facet
-{
-    // the index field name (system field or property alias)
-    public required string Field { get; set; }
-}
-
-public abstract class ExactFacet<T> : Facet
-{
-    // the facet values to filter by (OR filtering applies if multiple values are specified)
-    public required IEnumerable<T> Values { get; set; }
-}
-
-public class StringExactFacet : ExactFacet<string> {}
-
-public class IntegerExactFacet : ExactFacet<int> {}
-
-public class DecimalExactFacet : ExactFacet<decimal> {}
-
-public class DateTimeOffsetExactFacet : ExactFacet<DateTimeOffset> {}
-
-public abstract class RangeFacet<T> : Facet
-{
-    // null means "no lower bounds"
-    public T? MinValue { get; set; }
-
-    // null means "no upper bounds"
-    public T? MaxValue { get; set; }
-}
-
-public class IntegerRangeFacet : RangeFacet<int> {}
-
-public class DecimalRangeFacet : RangeFacet<decimal> {}
-
-public class DateTimeOffsetRangeFacet : RangeFacet<DateTimeOffset> {}
-
-public class PrincipalFilter
-{
-    // the principal identifier
-    public required Guid Id { get; set; }
-
-    // the group memberships of the principal
-    public required IEnumerable<string> Groups { get; set; }
-}
-
-public enum SortDirection
-{
-    Ascending = 0,
-    Descending = 1,
-}
-
-public class Suggest
-{
-    // whether to include "suggested next queries" in the search result
-    public bool SuggestNextQuery { get; set; } = false; 
-}
-
-public class Sort
-{
-    public SortDirection Direction { get; set; } = SortDirection.Descending;
-
-    // the index field name (system field or property alias) - null means default (relevance)
-    public string? Key { get; set; } = null; 
-}
-
-public class PagedSearchResult
-{
-    public int TotalCount { get; set; }
-
-    public required IEnumerable<SearchResult> Results { get; set; }
-
-    public IEnumerable<FacetResult>? FacetResults { get; set; }
-
-    public IEnumerable<string>? SuggestedNextQuery { get; set; }
-}
-
-public class SearchResult
-{
-    public required Guid Id { get; set; }
-}
-
-public abstract class FacetResult
-{
-    // the index field name (system field or property alias) - null means default (relevance)
-    public required string Field { get; set; }
-}
-
-public abstract class ExactFacetResult<T> : FacetResult
-{
-    // the available facet values for the query results
-    public required IEnumerable<ExactFacetResultValue<T>> Values { get; set; }
-}
-
-public abstract class ExactFacetResultValue<T> 
-{
-    // the value in the index
-    public required T Value { get; set; }
-
-    // number of hits for this facet value
-    public required int Count { get; set; }
-}
-
-public class StringExactFacetResult : ExactFacetResult<string> {}
-
-public class IntegerExactFacetResult : ExactFacetResultValue<int> {}
-
-public class DecimalExactFacetResult : ExactFacetResultValue<decimal> {}
-
-public class DateTimeOffsetExactFacetResult : ExactFacetResultValue<DateTimeOffset> {}
-
-public abstract class RangeFacetResult<T> : FacetResult 
-{
-    // the lower bounds in the index
-    public T? MinValue { get; set; }
-
-    // the upper bounds in the index
-    public T? MaxValue { get; set; }
-}
-
-public class IntegerRangeFacetResult : RangeFacetResult<int> {}
-
-public class DecimalRangeFacetResult : RangeFacetResult<decimal> {}
-
-public class DateTimeOffsetRangeFacetResult : RangeFacetResult<DateTimeOffset> {}
-```
+The search abstraction will resolve the actual content items for results generated by the search implementation - for example, retrieve matching published documents from the cache.
 
 ### Configuration
 
-TODO: Any?
+We have not identified any candidates for configuration of the search and indexing abstraction.
+
+The individual search implementations may allow for search provider specific configuration, but this is considered an implementation detail for this RFC.
 
 ## Technical considerations
 
@@ -529,14 +319,15 @@ TODO: Any?
 TODO: Polish?
 
 We do only initially plan to ship a single implementation of the search abstraction, which will be based on Examine to be backward compatible.
+
 We will not support other search providers in the initial release.
 
-TODO: out of scope - index values at property level
-- `GeoPoints` (GeoPoint[])
-- `Dates` (DateOnly[])
-- `Times` (TimeOnly[])
-- `Booleans` (string[]) // TODO Save the property alias?, og how can this work well for nested types
-- `IsKeywordFacet`(bool) TODO: implementation specific configuration???
+The following index values have been identified as potential candidates for future extension, but will not be included in the initial release: 
+
+- `GeoPoints` (`GeoPoint[]`)
+- `Dates` (`DateOnly[]`)
+- `Times` (`TimeOnly[]`)
+- `Booleans` (`bool[]`? `string[]`?)
 
 ### Unresolved issues
 
@@ -809,6 +600,7 @@ Note that "system fields" (like document name and creation date) are included wi
 <li>TextsH2: ["Science Fiction"]</li>
 <li>Texts: ["This is the first book.", "A trilogy of five books.", "Fancy a bite?", "Check The Restaurant at the End of the Universe", "Food", "Restaurant", "Universe"]</li>
 <li>Keywords: ["Related", "Sequel"]</li>
+</ul>
 </td>
 <td>
 <ul>
@@ -825,8 +617,8 @@ Note that "system fields" (like document name and creation date) are included wi
 <li>TextsH1: ["Earthman and Englishman"]</li>
 <li>Texts: ["Arthur Dent", "Arthur is mostly harmless.", "Like poems?", "Be careful with Vogon poetry!"]</li>
 <li>Keywords: ["Main"]</li>
+</ul>
 </td>
-</li>
 <td>
 <ul>
 <li>The media picker is not indexed.</li>
@@ -932,6 +724,7 @@ The following table shows an example of how the default index data could be alte
 <li>TextsH2: ["Science Fiction"]</li>
 <li>Texts: ["This is the first book.", "A trilogy of five books.", "Check The Restaurant at the End of the Universe", "Food", "Restaurant", "Universe"]</li>
 <li>Keywords: ["Related", "Sequel"]</li>
+</ul>
 </td>
 <td>The "heading" property value from the block has been moved to higher value text (from Texts to TextsH1).</td>
 </tr>
@@ -943,8 +736,8 @@ The following table shows an example of how the default index data could be alte
 <li>TextsH4: ["Arthur Dent"]</li>
 <li>Texts: ["Arthur is mostly harmless.", "Like poems?", "Be careful with Vogon poetry!", "Portrait of Author Dent in front of a spaceship"]</li>
 <li>Keywords: ["Main"]</li>
+</ul>
 </td>
-</li>
 <td>
 <ul>
 <li>The "title" property value from the block has been moved to higher value text (from Texts to TextsH4).</li>
@@ -954,4 +747,228 @@ The following table shows an example of how the default index data could be alte
 </tr>
 </table>
 
+## Appendix B: Code example for the search abstraction
+
+The following is an example of what the search abstraction signature _could_ look like.
+
+This is not necessarily how the final version will be implemented. It is meant as a supplement to illustrate the points made in this RFC.
+
+```csharp
+public PagedSearchResult Search(
+    VariantFilter variantFilter,
+    FullTextFilter? fullTextFilter = null,
+    IEnumerable<Filter>? filters = null,
+    IEnumerable<Facet>? facets = null,
+    PrincipalFilter? principalFilter = null,
+    Suggest? suggest = null,
+    Sort? sort = null,
+    int skip = 0,
+    int take = 10
+)
+{
+    // ...
+}
+
+public class VariantFilter
+{
+    // nulls means invariant
+    public string? Culture { get; set; } // null = invariant
+    
+    // null means default (no) segment
+    public string? Segment { get; set; }
+}
+
+public enum FullTextFilterQueryOperator
+{
+    Or,
+    And
+}
+
+public class FullTextFilter 
+{
+    // query to be analyzed
+    public required string Query { get; set; }
+
+    // operator to use between the words in the query
+    public FullTextFilterQueryOperator Operator { get; set; } = FullTextFilterQueryOperator.Or;
+}
+
+public static class SystemFields
+{
+    public const string Name = "_umb_name";
+    public const string CreateDate = "_umb_created";
+    public const string UpdateDate = "_umb_updated";
+    public const string ContentType = "_umb_type";
+}
+
+public enum FilterOperator
+{
+    Is,
+    IsNot
+}
+
+public abstract class Filter
+{
+    // the index field name (system field or property alias)
+    public required string Field { get; set; }
+}
+
+public abstract class ExactFilter<T> : Filter
+{
+    // operator to use against the filter values
+    public FilterOperator Operator { get; set; } = FilterOperator.Is;
+
+    // the filter values (OR filtering applies if multiple values are specified)
+    public required IEnumerable<T> Values { get; set; }
+}
+
+public class StringExactFilter : ExactFilter<string> {}
+
+public class IntegerExactFilter : ExactFilter<int> {}
+
+public class DecimalExactFilter : ExactFilter<decimal> {}
+
+public class DateTimeOffsetExactFilter : ExactFilter<DateTimeOffset> {}
+
+public class GuidExactFilter : ExactFilter<Guid> {}
+
+public abstract class RangeFilter<T> : Filter
+{
+    // null means "no lower bounds"
+    public T? MinValue { get; set; }
+
+    // null means "no upper bounds"
+    public T? MaxValue { get; set; }
+}
+
+public class IntegerRangeFilter : RangeFilter<int> {}
+
+public class DecimalRangeFilter : RangeFilter<decimal> {}
+
+public class DateTimeOffsetRangeFilter : RangeFilter<DateTimeOffset> {}
+
+public abstract class Facet
+{
+    // the index field name (system field or property alias)
+    public required string Field { get; set; }
+}
+
+public abstract class ExactFacet<T> : Facet
+{
+    // the facet values to filter by (OR filtering applies if multiple values are specified)
+    public required IEnumerable<T> Values { get; set; }
+}
+
+public class StringExactFacet : ExactFacet<string> {}
+
+public class IntegerExactFacet : ExactFacet<int> {}
+
+public class DecimalExactFacet : ExactFacet<decimal> {}
+
+public class DateTimeOffsetExactFacet : ExactFacet<DateTimeOffset> {}
+
+public abstract class RangeFacet<T> : Facet
+{
+    // null means "no lower bounds"
+    public T? MinValue { get; set; }
+
+    // null means "no upper bounds"
+    public T? MaxValue { get; set; }
+}
+
+public class IntegerRangeFacet : RangeFacet<int> {}
+
+public class DecimalRangeFacet : RangeFacet<decimal> {}
+
+public class DateTimeOffsetRangeFacet : RangeFacet<DateTimeOffset> {}
+
+public class PrincipalFilter
+{
+    // the principal identifier
+    public required Guid Id { get; set; }
+
+    // the group memberships of the principal
+    public required IEnumerable<string> Groups { get; set; }
+}
+
+public enum SortDirection
+{
+    Ascending = 0,
+    Descending = 1,
+}
+
+public class Suggest
+{
+    // whether to include "suggested next queries" in the search result
+    public bool SuggestNextQuery { get; set; } = false; 
+}
+
+public class Sort
+{
+    public SortDirection Direction { get; set; } = SortDirection.Descending;
+
+    // the index field name (system field or property alias) - null means default (relevance)
+    public string? Key { get; set; } = null; 
+}
+
+public class PagedSearchResult
+{
+    public int TotalCount { get; set; }
+
+    public required IEnumerable<SearchResult> Results { get; set; }
+
+    public IEnumerable<FacetResult>? FacetResults { get; set; }
+
+    public IEnumerable<string>? SuggestedNextQuery { get; set; }
+}
+
+public class SearchResult
+{
+    public required Guid Id { get; set; }
+}
+
+public abstract class FacetResult
+{
+    // the index field name (system field or property alias) - null means default (relevance)
+    public required string Field { get; set; }
+}
+
+public abstract class ExactFacetResult<T> : FacetResult
+{
+    // the available facet values for the query results
+    public required IEnumerable<ExactFacetResultValue<T>> Values { get; set; }
+}
+
+public abstract class ExactFacetResultValue<T> 
+{
+    // the value in the index
+    public required T Value { get; set; }
+
+    // number of hits for this facet value
+    public required int Count { get; set; }
+}
+
+public class StringExactFacetResult : ExactFacetResult<string> {}
+
+public class IntegerExactFacetResult : ExactFacetResultValue<int> {}
+
+public class DecimalExactFacetResult : ExactFacetResultValue<decimal> {}
+
+public class DateTimeOffsetExactFacetResult : ExactFacetResultValue<DateTimeOffset> {}
+
+public abstract class RangeFacetResult<T> : FacetResult 
+{
+    // the lower bounds in the index
+    public T? MinValue { get; set; }
+
+    // the upper bounds in the index
+    public T? MaxValue { get; set; }
+}
+
+public class IntegerRangeFacetResult : RangeFacetResult<int> {}
+
+public class DecimalRangeFacetResult : RangeFacetResult<decimal> {}
+
+public class DateTimeOffsetRangeFacetResult : RangeFacetResult<DateTimeOffset> {}
+```
 
