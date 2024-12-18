@@ -17,13 +17,6 @@ The intended audience for this RFC is
 - Extension developers
 - Package authors
 
-## Terminology
-
-- **Content**: Common denominator for Documents, Media and Members.
-- **Search implementation**: An implementation of the search and indexing abstraction for a specific search provider.
-- **Search provider**: The underlying search technology for a search implementation (e.g. Elasticsearch).
-- **Field**: A container of data in the search index.
-
 ## Summary
 
 TODO: polish
@@ -31,6 +24,13 @@ TODO: polish
 In this RFC we propose a replacement of the current search functionality in Umbraco.
 
 The RFC outlines details for both indexing and searching as we envision it moving forward, and provides concrete examples of both.
+
+## Terminology
+
+- **Content**: Common denominator for Documents, Media and Members.
+- **Search implementation**: An implementation of the search and indexing abstraction for a specific search provider.
+- **Search provider**: The underlying search technology for a search implementation (e.g. Elasticsearch).
+- **Field**: A container of data in the search index.
 
 ## Motivation
 
@@ -63,8 +63,8 @@ The indexing will explicitly exclude sensitive data - e.g. property types marked
 
 Umbraco will be responsible for gathering index data when content changes. This includes the gathering of index data for all relevant related content items - for example:
 
-- Documents affected by the publishing of an ancestor Document.
-- Changes made to Document protection (public access).
+- Documents affected by the publishing of an ancestor document.
+- Changes made to document protection (public access).
 
 Subsequently, the index data will be handed off to the search implementation, which is then responsible for updating the search index accordingly.
 
@@ -328,10 +328,6 @@ The following index values have been identified as potential candidates for futu
 - `Dates` (`DateOnly[]`)
 - `Times` (`TimeOnly[]`)
 - `Booleans` (`bool[]`? `string[]`?)
-
-### Unresolved issues
-
-TODO: Any?
 
 ## Contributors
 
@@ -796,9 +792,11 @@ public class FullTextFilter
 public static class SystemFields
 {
     public const string Name = "_umb_name";
+    public const string Id = "_umb_id";
     public const string CreateDate = "_umb_created";
     public const string UpdateDate = "_umb_updated";
     public const string ContentType = "_umb_type";
+    public const string Ancestors = "_umb_ancestors";
 }
 
 public enum FilterOperator
