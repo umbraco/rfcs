@@ -19,11 +19,11 @@ The intended audience for this RFC is
 
 ## Summary
 
-TODO: polish
-
-In this RFC we propose a replacement of the current search functionality in Umbraco.
-
-The RFC outlines details for both indexing and searching as we envision it moving forward, and provides concrete examples of both.
+This RFC proposes a new search and indexing abstraction for Umbraco, replacing the current Examine-based implementation.
+This new architecture aims to address limitations with network drive hosting, simplify integrations with advanced search providers, and optimize the index rebuilding process for increased performance. 
+The proposed abstraction will allow for the use of different search providers, offering greater flexibility and scalability.
+It outlines details for both indexing and searching, covering aspects like content variance, protected content, full-text search, filtering, faceting, and an extensible architecture.
+This change aims to provide a more robust and performant search experience within Umbraco.
 
 ## Terminology
 
@@ -201,7 +201,7 @@ However, this will not cover all cases, so additional extension points will be c
 
 #### Examples of index data
 
-See Appendix A for a detailed example of index data being gathered for indexing.
+See [Appendix A](#appendix-a-example-of-index-data-being-gathered-for-indexing) for a detailed example of index data being gathered for indexing.
 
 ### Searching
 
@@ -221,7 +221,7 @@ The goal is to cover the most common use cases, not to define an exhaustive sear
 
 #### Example of the search abstraction
 
-See Appendix B for a code example of what the search abstraction signature _could_ look like.
+See [Appendix B](#appendix-b-code-example-for-the-search-abstraction) for a code example of what the search abstraction signature _could_ look like.
 
 #### Full text search
 
@@ -310,13 +310,7 @@ We have not identified any candidates for configuration of the search and indexi
 
 The individual search implementations may allow for search provider specific configuration, but this is considered an implementation detail for this RFC.
 
-## Technical considerations
-
-TODO: Any?
-
 ## Out of Scope
-
-TODO: Polish?
 
 We do only initially plan to ship a single implementation of the search abstraction, which will be based on Examine to be backward compatible.
 
@@ -327,8 +321,7 @@ The following index values have been identified as potential candidates for futu
 - `GeoPoints` (`GeoPoint[]`)
 - `Dates` (`DateOnly[]`)
 - `Times` (`TimeOnly[]`)
-- `Booleans` (`bool[]`? `string[]`?)
-
+- `Booleans` (`bool[]` or maybe `string[]`)
 ## Contributors
 
 This RFC was compiled by:
@@ -521,7 +514,7 @@ Note that "system fields" (like document name and creation date) are included wi
 <tr>
 <td>_umb_name</td>
 <td>TextsH1: ["Hitchhiker's Guide"]</td>
-<td>The document name is indexed as highest value text.</td>
+<td>The document name is indexed as the most significant headline.</td>
 </tr>
 <tr>
 <td>_umb_createDate</td>
