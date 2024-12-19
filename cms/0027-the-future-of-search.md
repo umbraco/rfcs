@@ -42,18 +42,18 @@ Finally, we see an opportunity to optimize the index rebuilding process, enablin
 
 ## Detailed design
 
-We suggest to introduce a complete new search and indexing abstraction, which will allow for different search providers to be used for searching Umbraco content.
+We plan to introduce a complete new search and indexing abstraction, which will allow for different search providers to be used for searching Umbraco content.
 
 During our investigation, we have looked into Elasticsearch, Algolia, Meilisearch and Examine (Lucene.NET) as potential search providers.
 
-We suggest the following design, based on the these criteria:
+We plan the following design, based on the these criteria:
 
 1. The abstraction should be easy to use.
 2. It should be possible to implement with any search provider.
 
 ### Indexing
 
-We suggest handling indexing for the search index via cache refreshers.
+We will handling indexing for the search index via cache refreshers.
 
 This approach allows different search implementations to determine which server roles should perform a task. For all out-of-process search implementations, indexing would only be performed on servers with the `Publisher` role.
 
@@ -70,7 +70,7 @@ Subsequently, the index data will be handed off to the search implementation, wh
 
 #### Required indexes
 
-We suggest creating four core indexes:
+We plan on creating four core indexes:
 
 - **Documents** for end user document search.
     - Contains only published document data.
@@ -205,7 +205,7 @@ See [Appendix A](#appendix-a-example-of-index-data-being-gathered-for-indexing) 
 
 ### Searching
 
-We suggest defining a search abstraction that covers:
+We are going to defining a search abstraction that covers:
 
 - Full text search
 - Filtering
@@ -277,7 +277,7 @@ We propose splitting faceting into two parts:
 
 #### Autocomplete/suggestions
 
-We suggest including an optional "suggested next query" in the search results. This can be used by the search implementation to supply options for autocompletion or query suggestions for a given query.
+We plan to include an optional "suggested next query" in the search results. This can be used by the search implementation to supply options for autocompletion or query suggestions for a given query.
 
 The "suggested next query" will be a collection of strings, meant to replace or complement the active full text search query (if any).
 
