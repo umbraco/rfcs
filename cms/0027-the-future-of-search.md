@@ -89,7 +89,7 @@ It should be possible to define and maintain custom indexes from any Umbraco ext
 
 #### Storing master data in indexes
 
-We do _not_ propose storing master data (commonly known as "stored fields" or "raw fields") within the indexes.
+We will _not_ storing master data (commonly known as "stored fields" or "raw fields") within the indexes.
 
 An index is only meant to be an instrument for querying and resolving IDs for master data records. The actual master data records can subsequently be retrieved from their concrete storage.
 
