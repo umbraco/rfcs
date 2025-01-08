@@ -2,7 +2,7 @@
 
 ### Request for Contribution (RFC) 0027 : The Future of Search
 
-**Please comment on this RFC in this [RFC Discussion](https://github.com/umbraco/rfcs/discussions/TODO)** // TODO
+**Please comment on this RFC in this [RFC Discussion](https://github.com/umbraco/rfcs/discussions/43)**
 
 ## Code of Conduct
 
