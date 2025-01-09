@@ -145,9 +145,11 @@ Additionally, the following content level data will be included, using the same 
 
 We propose storing index data in the database, as calculating it can be highly CPU-intensive — particularly for content with deeply nested types, such as block lists within block lists.
 
-By persisting these data, they only need to be calculated once per change, even for search implementations that require a search index per machine, such as Examine (Lucene.NET).
+The index data stored in the database is not to be confused with the data stored in the search indexes by the search implementations. Instead, the index data in the database should be considered as the "raw" input for the search implementations.
 
-The primary benefit of persisting index data is significantly faster indexing during cold-boot scenarios where the entire index needs to be rebuilt.
+By persisting the index data, it only needs to be calculated once per change, even for search implementations that require a search index per machine, such as Examine (Lucene.NET).
+
+The primary benefit of persisting index data in the database is significantly faster indexing during cold-boot scenarios, where the entire index needs to be rebuilt.
 
 For regular indexing of individual content items, we anticipate no noticeable difference.
 
