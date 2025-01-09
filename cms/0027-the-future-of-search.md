@@ -19,7 +19,7 @@ The intended audience for this RFC is
 
 ## Summary
 
-This RFC proposes a new search and indexing abstraction for Umbraco, replacing the current Examine-based implementation.
+This RFC proposes a new search and indexing abstraction for Umbraco.
 This new architecture aims to address limitations with network drive hosting, simplify integrations with advanced search providers, and optimize the index rebuilding process for increased performance. 
 The proposed abstraction will allow for the use of different search providers, offering greater flexibility and scalability.
 It outlines details for both indexing and searching, covering aspects like content variance, protected content, full-text search, filtering, faceting, and an extensible architecture.
@@ -115,8 +115,11 @@ The index data format will include the following:
 
 In this index data format:
 
-- All `Texts` will be used for full text search. The granular division of text types are to be used for relevance boosting.
+- All `Texts` will be used for full text search.
+  - The granular division of text types are to be used as "buckets" of text for implementation-specific boosting with a defined order of importance.
 - `Keywords`, `Decimals`, `Integers` and `DateTimeOffsets` are meant for filtering and/or faceting.
+
+The property names in the index data format are likely subject to change, but they will serve as a reference point throughout this RFC. 
 
 We will _not_ provide specifics on how the index data should be indexed (e.g. how to analyze for full text search). We consider this an implementation detail for the individual search implementations, as it varies greatly between providers.
 
@@ -316,9 +319,7 @@ The individual search implementations may allow for search provider specific con
 
 ## Out of Scope
 
-We only initially plan to ship a single implementation of the search abstraction, which will be based on Examine to be backward compatible.
-
-We will not support other search providers in the initial release.
+We plan to ship a single implementation of the search abstraction, which will be based on Examine to be backward compatible. We will not implement other search providers for the initial release.
 
 The following index values have been identified as potential candidates for future extension, but will not be included in the initial release: 
 
@@ -502,7 +503,7 @@ In this example, we are indexing a document with:
 
 The resulting index data is listed in the table below.
 
-Note that "system fields" (like document name and creation date) are included with a special "_umb_" prefix. The final prefix is yet to be decided, but there _will_ be a prefix to tell system fields apart from regular document properties.
+Note that "system fields" (like document name and creation date) are included here with an "umb_" prefix. The final prefix is yet to be decided, but there _will_ be a prefix to tell system fields apart from regular document properties.
 
 <table>
 <tr>
@@ -511,37 +512,37 @@ Note that "system fields" (like document name and creation date) are included wi
 <th>Remarks</th>
 </tr>
 <tr>
-<td>_umb_type</td>
+<td>umb_type</td>
 <td>Keywords: ["bookPage"]</td>
 <td>The document type alias is indexed as a keyword.</td>
 </tr>
 <tr>
-<td>_umb_name</td>
+<td>umb_name</td>
 <td>TextsH1: ["Hitchhiker's Guide"]</td>
 <td>The document name is indexed as the most significant headline.</td>
 </tr>
 <tr>
-<td>_umb_createDate</td>
+<td>umb_createDate</td>
 <td>DateTimesOffsets: ["2024-11-27 12:00:00"]</td>
 <td></td>
 </tr>
 <tr>
-<td>_umb_updateDate</td>
+<td>umb_updateDate</td>
 <td>DateTimeOffsets: ["2024-11-27 14:30:00"]</td>
 <td></td>
 </tr>
 <tr>
-<td>_umb_tags</td>
+<td>umb_tags</td>
 <td>Keywords: ["Related", "Sequel", "Science Fiction", "Comedy"]</td>
 <td>All tags on the page (including those in nested property editors) are indexed as individual keywords.</td>
 </tr>
 <tr>
-<td>_umb_id</td>
+<td>umb_id</td>
 <td>Keywords: ["0e88ec21-dc56-4f8c-8247-40f72b2fd676"]</td>
 <td></td>
 </tr>
 <tr>
-<td>_umb_ancestors</td>
+<td>umb_ancestors</td>
 <td>Keywords: ["33d41c8b-f541-4237-96ed-c5c85d4c3edd", "5ce303c9-8e0f-41cd-80d8-3f7906604e6a"]</td>
 <td></td>
 </tr>
@@ -630,37 +631,37 @@ The following table shows an example of how the default index data could be alte
 <th>Changes from default</th>
 </tr>
 <tr>
-<td>_umb_type</td>
+<td>umb_type</td>
 <td>Keywords: ["bookPage"]</td>
 <td></td>
 </tr>
 <tr>
-<td>_umb_name</td>
+<td>umb_name</td>
 <td>TextsH3: ["Hitchhiker's Guide"]</td>
 <td>The document name has been given lesser text value (from TextsH1 to TextsH3).</td>
 </tr>
 <tr>
-<td>_umb_createDate</td>
+<td>umb_createDate</td>
 <td>DateTimesOffsets: ["2024-11-27 12:00:00"]</td>
 <td></td>
 </tr>
 <tr>
-<td>_umb_updateDate</td>
+<td>umb_updateDate</td>
 <td>DateTimeOffsets: ["2024-11-27 14:30:00"]</td>
 <td></td>
 </tr>
 <tr>
-<td>_umb_tags</td>
+<td>umb_tags</td>
 <td>Keywords: ["Related", "Sequel", "Science Fiction", "Comedy", "Robots"]</td>
 <td>An extra tag ("Robots") has been added to the collection of page tags.</td>
 </tr>
 <tr>
-<td>_umb_id</td>
+<td>umb_id</td>
 <td>Keywords: ["0e88ec21-dc56-4f8c-8247-40f72b2fd676"]</td>
 <td></td>
 </tr>
 <tr>
-<td>_umb_ancestors</td>
+<td>umb_ancestors</td>
 <td>Keywords: ["33d41c8b-f541-4237-96ed-c5c85d4c3edd", "5ce303c9-8e0f-41cd-80d8-3f7906604e6a"]</td>
 <td></td>
 </tr>
@@ -788,12 +789,12 @@ public class FullTextFilter
 
 public static class SystemFields
 {
-    public const string Name = "_umb_name";
-    public const string Id = "_umb_id";
-    public const string CreateDate = "_umb_created";
-    public const string UpdateDate = "_umb_updated";
-    public const string ContentType = "_umb_type";
-    public const string Ancestors = "_umb_ancestors";
+    public const string Name = "umb_name";
+    public const string Id = "umb_id";
+    public const string CreateDate = "umb_created";
+    public const string UpdateDate = "umb_updated";
+    public const string ContentType = "umb_type";
+    public const string Ancestors = "umb_ancestors";
 }
 
 public enum FilterOperator
