@@ -20,7 +20,7 @@ The intended audience for this RFC is
 ## Summary
 
 This RFC proposes a new search and indexing abstraction for Umbraco.
-This new architecture aims to address limitations with network drive hosting, simplify integrations with advanced search providers, and optimize the index rebuilding process for increased performance. 
+This new architecture aims to address limitations with network drive hosting, simplify integrations with advanced search providers, and optimize the index rebuilding process for increased performance.
 The proposed abstraction will allow for the use of different search providers, offering greater flexibility and scalability.
 It outlines details for both indexing and searching, covering aspects like content variance, protected content, full-text search, filtering, faceting, and an extensible architecture.
 This change aims to provide a more robust and performant search experience within Umbraco.
@@ -76,7 +76,7 @@ We plan on creating four core indexes:
     - Contains only published document data.
     - Replaces the current indexes "external index" and "Delivery API index".
 - **Draft Documents** to power the backoffice document search.
-    - Contains only draft document data.
+    - Includes the most recent version of the document. So for a published document with no draft, it will have the published version. For an edited document that has a draft and a published version, the draft will be the one indexed.
     - Replaces the current "internal index".
 - **Media** to power all media search.
 - **Members** to power all member search.
@@ -95,7 +95,7 @@ An index is only meant to be an instrument for querying and resolving IDs for ma
 
 #### Index data per property value
 
-We will create new property index value factories to generate the property level index data for property editors. This replaces the `IPropertyIndexValueFactory` implementations in the current codebase. 
+We will create new property index value factories to generate the property level index data for property editors. This replaces the `IPropertyIndexValueFactory` implementations in the current codebase.
 
 There will be different property index value factory implementations for different property editors, and they will return a common data format for indexing property data.
 
@@ -119,7 +119,7 @@ In this index data format:
   - The granular division of text types are to be used as "buckets" of text for implementation-specific boosting with a defined order of importance.
 - `Keywords`, `Decimals`, `Integers` and `DateTimeOffsets` are meant for filtering and/or faceting.
 
-The property names in the index data format are likely subject to change, but they will serve as a reference point throughout this RFC. 
+The property names in the index data format are likely subject to change, but they will serve as a reference point throughout this RFC.
 
 We will _not_ provide specifics on how the index data should be indexed (e.g. how to analyze for full text search). We consider this an implementation detail for the individual search implementations, as it varies greatly between providers.
 
@@ -233,13 +233,13 @@ See [Appendix B](#appendix-b-code-example-for-the-search-abstraction) for a code
 Full text search will be defined as:
 
 - A query (`string`) containing one or more words to search for.
-- An operator (`enum`) specifying if the words in the query should be matched as `OR` or `AND`. 
+- An operator (`enum`) specifying if the words in the query should be matched as `OR` or `AND`.
 
 The search should be performed across the `Texts` from the property level index data.
 
 Relevant boosting should be applied for the individual `Texts` data, e.g. ensuring higher search result relevance for data from `TextsH1` than `TextsH4` (where `Texts` is considered of the least relevance value).
 
-We do _not_ plan to include detailed boosting levels as part of the search abstraction. We consider this an implementation detail for the individual search implementations. 
+We do _not_ plan to include detailed boosting levels as part of the search abstraction. We consider this an implementation detail for the individual search implementations.
 
 #### Filtering
 
@@ -323,7 +323,7 @@ The individual search implementations may allow for search provider specific con
 
 We plan to ship a single implementation of the search abstraction, which will be based on Examine to be backward compatible. We will not implement other search providers for the initial release.
 
-The following index values have been identified as potential candidates for future extension, but will not be included in the initial release: 
+The following index values have been identified as potential candidates for future extension, but will not be included in the initial release:
 
 - `GeoPoints` (`GeoPoint[]`)
 - `Dates` (`DateOnly[]`)
@@ -769,7 +769,7 @@ public class VariantFilter
 {
     // nulls means invariant
     public string? Culture { get; set; } // null = invariant
-    
+
     // null means default (no) segment
     public string? Segment { get; set; }
 }
@@ -780,7 +780,7 @@ public enum FullTextFilterQueryOperator
     And
 }
 
-public class FullTextFilter 
+public class FullTextFilter
 {
     // query to be analyzed
     public required string Query { get; set; }
@@ -898,7 +898,7 @@ public enum SortDirection
 public class Suggest
 {
     // whether to include "suggested next queries" in the search result
-    public bool SuggestNextQuery { get; set; } = false; 
+    public bool SuggestNextQuery { get; set; } = false;
 }
 
 public class Sort
@@ -906,7 +906,7 @@ public class Sort
     public SortDirection Direction { get; set; } = SortDirection.Descending;
 
     // the index field name (system field or property alias) - null means default (relevance)
-    public string? Key { get; set; } = null; 
+    public string? Key { get; set; } = null;
 }
 
 public class PagedSearchResult
@@ -937,7 +937,7 @@ public abstract class ExactFacetResult<T> : FacetResult
     public required IEnumerable<ExactFacetResultValue<T>> Values { get; set; }
 }
 
-public abstract class ExactFacetResultValue<T> 
+public abstract class ExactFacetResultValue<T>
 {
     // the value in the index
     public required T Value { get; set; }
@@ -954,7 +954,7 @@ public class DecimalExactFacetResult : ExactFacetResultValue<decimal> {}
 
 public class DateTimeOffsetExactFacetResult : ExactFacetResultValue<DateTimeOffset> {}
 
-public abstract class RangeFacetResult<T> : FacetResult 
+public abstract class RangeFacetResult<T> : FacetResult
 {
     // the lower bounds in the index
     public T? MinValue { get; set; }
