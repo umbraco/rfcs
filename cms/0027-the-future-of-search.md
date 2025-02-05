@@ -315,6 +315,20 @@ The search abstraction will resolve the actual content items for results generat
 
 We also envision an extension model for searching. The details are yet to be defined, but _will likely_ as a minimum include a means to intercept and perform custom handling for all search results.
 
+### Graceful degradation
+
+We expect the search and indexing abstraction to be able to support graceful degradation for unsupported features of a particular search implementation.
+
+For example, the search implementation might not support:
+
+- Protected content.
+- Segmented content.
+- Faceting.
+- Autocomplete.
+- ...
+
+It is yet to be determined if this can be covered by search implementation documentation alone, or if we need to include code level support for graceful degradation as well (e.g. marker interfaces like `ISupportFaceting`).
+
 ### Configuration
 
 We have not identified any candidates for configuration of the search and indexing abstraction.
