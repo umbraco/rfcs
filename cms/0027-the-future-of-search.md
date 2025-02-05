@@ -51,6 +51,8 @@ We plan the following design, based on the these criteria:
 1. The abstraction should be easy to use.
 2. It should be possible to implement with any search provider.
 
+When reading through this, it is important to keep in mind that the search abstraction will cover both backoffice and frontend search. This is the equivalent of what is currently commonly known as search in "internal" and "external" indexes.
+
 ### Indexing
 
 We will handling indexing for the search index via cache refreshers.
